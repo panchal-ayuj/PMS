@@ -7,15 +7,21 @@ import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserManagementComponent } from './user/user.component';
+import { UploadComponent } from './uploadgoalplan/uploadgoalplan.component';
+import { KeyResultUploadComponent } from './keyresultupload/keyresultupload.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     LogoutComponent,
-    UserManagementComponent
+    UserManagementComponent,
+    UploadComponent,
+    KeyResultUploadComponent
   ],
   imports: [
     BrowserModule,
