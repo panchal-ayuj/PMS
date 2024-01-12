@@ -1,5 +1,7 @@
-package com.accolite.server.models.user;
+package com.accolite.server.service;
 
+import com.accolite.server.models.User;
+import com.accolite.server.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

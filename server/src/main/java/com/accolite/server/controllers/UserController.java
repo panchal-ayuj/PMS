@@ -1,7 +1,8 @@
 package com.accolite.server.controllers;
 
-import com.accolite.server.models.user.User;
-import com.accolite.server.models.user.UserService;
+import com.accolite.server.models.User;
+import com.accolite.server.repository.UserRepository;
+import com.accolite.server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @PostMapping("/register")
     public ResponseEntity<User> registerUser(@RequestBody User user) {
@@ -38,5 +42,11 @@ public class UserController {
     public ResponseEntity<List<User>> getUserHierarchy(@PathVariable Long userId) {
         List<User> hierarchy = userService.getUserHierarchy(userId);
         return new ResponseEntity<>(hierarchy, HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<User>> getUsers() {
+        List<User> users = userRepository.findAll();
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 }

@@ -1,5 +1,6 @@
-package com.accolite.server.models.user;
+package com.accolite.server.repository;
 
+import com.accolite.server.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

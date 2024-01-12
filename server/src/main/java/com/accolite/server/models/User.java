@@ -1,4 +1,4 @@
-package com.accolite.server.models.user;
+package com.accolite.server.models;
 
 import jakarta.persistence.*;
 
