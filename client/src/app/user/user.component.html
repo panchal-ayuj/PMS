@@ -1,0 +1,58 @@
+<!-- user-management.component.html -->
+
+<div>
+  <h2>User Management</h2>
+
+  <!-- User Registration Form -->
+  <form [formGroup]="userForm" (ngSubmit)="registerUser()">
+    <div>
+      <label for="firstName">First Name:</label>
+      <input type="text" id="firstName" formControlName="firstName" />
+    </div>
+    <div>
+      <label for="lastName">Last Name:</label>
+      <input type="text" id="lastName" formControlName="lastName" />
+    </div>
+    <div>
+      <label for="email">Email:</label>
+      <input type="email" id="email" formControlName="email" />
+    </div>
+    <div>
+      <label for="status">Status:</label>
+      <input type="text" id="status" formControlName="status" />
+    </div>
+    <div>
+      <label for="joiningDate">Joining Date:</label>
+      <input type="text" id="joiningDate" formControlName="joiningDate" />
+    </div>
+    <div>
+      <label for="hrId">HR ID:</label>
+      <input type="text" id="hrId" formControlName="hrId" />
+    </div>
+    <div>
+      <label for="band">Band:</label>
+      <input type="text" id="band" formControlName="band" />
+    </div>
+    <div>
+      <label for="reportingManagerId">Reporting Manager ID:</label>
+      <input type="text" id="reportingManagerId" formControlName="reportingManagerId" />
+    </div>
+
+    <div>
+      <label for="roles">Roles (comma-separated):</label>
+      <input type="text" id="roles" formControlName="roles" />
+    </div>
+
+    <div>
+      <label for="teams">Teams (comma-separated):</label>
+      <input type="text" id="teams" formControlName="teams" />
+    </div>
+
+    <button type="submit">Register</button>
+  </form>
+
+  <!-- User List -->
+  <div *ngFor="let user of users">
+    <p>{{ user.firstName }} {{ user.lastName }} ({{ user.email }})</p>
+  </div>
+</div>
