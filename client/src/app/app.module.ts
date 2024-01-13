@@ -13,6 +13,7 @@ import { UserManagementComponent } from './user/user.component';
 import { UploadComponent } from './uploadgoalplan/uploadgoalplan.component';
 import { KeyResultUploadComponent } from './keyresultupload/keyresultupload.component';
 import { TaskComponent } from './task/task.component';
+import { UserUploadComponent } from './user-upload/user-upload.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { TaskComponent } from './task/task.component';
     UserManagementComponent,
     UploadComponent,
     KeyResultUploadComponent,
-    TaskComponent
+    TaskComponent,
+    UserUploadComponent
   ],
   imports: [
     BrowserModule,
