@@ -1,0 +1,68 @@
+<div>
+  <h2>Task Management</h2>
+
+  <!-- Task Creation Form -->
+  <form [formGroup]="taskForm" (ngSubmit)="createTask()">
+    <div>
+      <label for="keyResultId">Key Result ID:</label>
+      <input type="text" id="keyResultId" formControlName="keyResultId" />
+    </div>
+    <div>
+      <label for="description">Description:</label>
+      <input type="text" id="description" formControlName="description" />
+    </div>
+    <div>
+      <label for="creationDate">Creation Date:</label>
+      <input type="text" id="creationDate" formControlName="creationDate" />
+    </div>
+    <div>
+      <label for="deadline">Deadline:</label>
+      <input type="text" id="deadline" formControlName="deadline" />
+    </div>
+    <div>
+      <label for="weight">Weight:</label>
+      <input type="text" id="weight" formControlName="weight" />
+    </div>
+    <div>
+      <label for="completionStatus">Completion Status:</label>
+      <input
+        type="text"
+        id="completionStatus"
+        formControlName="completionStatus"
+      />
+    </div>
+    <div>
+      <label for="userId">User ID:</label>
+      <input type="text" id="userId" formControlName="userId" />
+    </div>
+    <div>
+      <label for="windowId">Window ID:</label>
+      <input type="text" id="windowId" formControlName="windowId" />
+    </div>
+    <div>
+      <label for="rating">Rating:</label>
+      <input type="text" id="rating" formControlName="rating" />
+    </div>
+    <div>
+      <label for="feedback">Feedback:</label>
+      <input type="text" id="feedback" formControlName="feedback" />
+    </div>
+    <div>
+      <label for="period">Period:</label>
+      <input type="text" id="period" formControlName="period" />
+    </div>
+    <div>
+      <label for="taskAttributes">Task Attributes:</label>
+      <input type="text" id="taskAttributes" formControlName="taskAttributes" />
+    </div>
+
+    <button type="submit">Create Task</button>
+  </form>
+
+  <!-- Task List -->
+  <div *ngFor="let task of tasks">
+    <p>{{ task.description }} (ID: {{ task.taskId }})</p>
+    <button (click)="updateTask(task.taskId)">Update</button>
+    <button (click)="deleteTask(task.taskId)">Delete</button>
+  </div>
+</div>

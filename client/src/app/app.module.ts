@@ -12,6 +12,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserManagementComponent } from './user/user.component';
 import { UploadComponent } from './uploadgoalplan/uploadgoalplan.component';
 import { KeyResultUploadComponent } from './keyresultupload/keyresultupload.component';
+import { TaskComponent } from './task/task.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { KeyResultUploadComponent } from './keyresultupload/keyresultupload.comp
     LogoutComponent,
     UserManagementComponent,
     UploadComponent,
-    KeyResultUploadComponent
+    KeyResultUploadComponent,
+    TaskComponent
   ],
   imports: [
     BrowserModule,
