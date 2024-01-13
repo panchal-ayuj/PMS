@@ -1,7 +1,9 @@
 package com.accolite.server.controllers;
 
+import com.accolite.server.models.KeyResult;
 import com.accolite.server.models.ReviewCycle;
 import com.accolite.server.readers.ReviewCycleExcelReader;
+import com.accolite.server.repository.ReviewCycleRepository;
 import com.accolite.server.service.ReviewCycleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +21,9 @@ public class ReviewCycleController {
     @Autowired
     private ReviewCycleService reviewCycleService;
 
+    @Autowired
+    private ReviewCycleRepository reviewCycleRepository;
+
     @PostMapping("")
     public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
         try {
@@ -28,6 +33,18 @@ public class ReviewCycleController {
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error uploading file: " + e.getMessage());
         }
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<ReviewCycle> registerReviewCycle(@RequestBody ReviewCycle reviewCycle) {
+        ReviewCycle registeredReviewCycle = reviewCycleService.registerReviewCycle(reviewCycle);
+        return new ResponseEntity<>(registeredReviewCycle, HttpStatus.CREATED);
+    }
+
+    @GetMapping("")
+    public ResponseEntity<List<ReviewCycle>> getKeyResults() {
+        List<ReviewCycle> reviewCycles = reviewCycleRepository.findAll();
+        return new ResponseEntity<>(reviewCycles, HttpStatus.OK);
     }
 }
 

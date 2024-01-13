@@ -13,6 +13,9 @@ import { UserManagementComponent } from './user/user.component';
 import { UploadComponent } from './uploadgoalplan/uploadgoalplan.component';
 import { KeyResultUploadComponent } from './keyresultupload/keyresultupload.component';
 import { ReviewCycleUploadComponent } from './review-cycle-upload/review-cycle-upload.component';
+import { GoalplanFormComponent } from './goalplan-form/goalplan-form.component';
+import { KeyresultFormComponent } from './keyresult-form/keyresult-form.component';
+import { ReviewcycleFormComponent } from './reviewcycle-form/reviewcycle-form.component';
 
 
 @NgModule({
@@ -23,7 +26,10 @@ import { ReviewCycleUploadComponent } from './review-cycle-upload/review-cycle-u
     UserManagementComponent,
     UploadComponent,
     KeyResultUploadComponent,
-    ReviewCycleUploadComponent
+    ReviewCycleUploadComponent,
+    GoalplanFormComponent,
+    KeyresultFormComponent,
+    ReviewcycleFormComponent
   ],
   imports: [
     BrowserModule,

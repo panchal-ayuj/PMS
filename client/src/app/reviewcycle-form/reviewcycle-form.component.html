@@ -1,0 +1,36 @@
+<!-- user-management.component.html -->
+
+<div>
+    <h2>ReviewCycle Management</h2>
+  
+    <!-- User Registration Form -->
+    <form [formGroup]="reviewCycleForm" (ngSubmit)="registerReviewCycle()">
+      <div>
+        <label for="userId">User Id:</label>
+        <input type="number" id="userId" formControlName="userId" />
+      </div>
+      <div>
+        <label for="startDate">Start Date:</label>
+        <input type="date" id="startDate" formControlName="startDate" />
+      </div>
+      <div>
+        <label for="endDate">End Date:</label>
+        <input type="date" id="endDate" formControlName="endDate" />
+      </div>
+      <div>
+        <label for="period">Period:</label>
+        <input type="text" id="period" formControlName="period" />
+      </div>
+      <div>
+        <label for="reviewStatus">Review Status:</label>
+        <input type="text" id="reviewStatus" formControlName="reviewStatus" />
+      </div>
+  
+      <button type="submit">Register ReviewCycle</button>
+    </form>
+  
+    <!-- User List -->
+    <div *ngFor="let reviewcycle of reviewcycles">
+      <p>{{ reviewcycle.userId }} {{ reviewcycle.startDate }} {{ reviewcycle.endDate }} {{ reviewcycle.period }} {{ reviewcycle.reviewStatus }}</p>
+    </div>
+  </div>
