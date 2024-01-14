@@ -14,6 +14,7 @@ import { UploadComponent } from './uploadgoalplan/uploadgoalplan.component';
 import { KeyResultUploadComponent } from './keyresultupload/keyresultupload.component';
 import { TaskComponent } from './task/task.component';
 import { UserUploadComponent } from './user-upload/user-upload.component';
+import { TaskUploadComponent } from './task-upload/task-upload.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { UserUploadComponent } from './user-upload/user-upload.component';
     UploadComponent,
     KeyResultUploadComponent,
     TaskComponent,
-    UserUploadComponent
+    UserUploadComponent,
+    TaskUploadComponent
   ],
   imports: [
     BrowserModule,
