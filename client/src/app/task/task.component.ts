@@ -55,7 +55,7 @@ export class TaskComponent implements OnInit {
     const task = this.taskForm.value;
     task.taskAttributes = task.taskAttributes.split(',').map((taskAttribute: string) => taskAttribute.trim());
 
-    const apiUrl = 'http://localhost:8080/api/tasks';
+    const apiUrl = 'http://localhost:8080/api/tasks/create';
     this.http.post(apiUrl, task).subscribe(
       (response) => {
         console.log('Task created successfully:', response);

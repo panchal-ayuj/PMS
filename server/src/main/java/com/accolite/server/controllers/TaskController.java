@@ -1,5 +1,6 @@
 package com.accolite.server.controllers;
 
+import com.accolite.server.readers.TaskExcelReader;
 import com.accolite.server.repository.TaskRepository;
 import com.accolite.server.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.accolite.server.models.Task;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +23,17 @@ public class TaskController {
     @Autowired
     public TaskController(TaskService taskService) {
         this.taskService = taskService;
+    }
+
+    @PostMapping
+    public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
+        try {
+            List<Task> tasks = TaskExcelReader.readUsersFromExcel(file);
+            taskService.saveAll(tasks);
+            return ResponseEntity.status(HttpStatus.OK).body("File uploaded successfully.");
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error uploading file: " + e.getMessage());
+        }
     }
 
     @GetMapping
@@ -35,7 +49,7 @@ public class TaskController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<Task> createTask(@RequestBody Task task) {
         Task createdTask = taskService.createTask(task);
         return new ResponseEntity<>(createdTask, HttpStatus.CREATED);

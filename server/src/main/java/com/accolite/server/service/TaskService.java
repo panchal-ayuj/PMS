@@ -38,5 +38,7 @@ public class TaskService {
         return null; // or throw an exception based on your requirement
     }
 
-    // You can add other methods as needed
+    public void saveAll(List<Task> tasks) {
+        taskRepository.saveAll(tasks);
+    }
 }
