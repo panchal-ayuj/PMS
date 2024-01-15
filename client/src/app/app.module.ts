@@ -27,6 +27,7 @@ import { ParentReviewcycleComponent } from './parent-reviewcycle/parent-reviewcy
 import { ParentKeyresultComponent } from './parent-keyresult/parent-keyresult.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { ParentTaskComponent } from './parent-task/parent-task.component';
 
 
 
@@ -49,7 +50,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     ParentUserComponent,
     ParentGoalplanComponent,
     ParentReviewcycleComponent,
-    ParentKeyresultComponent
+    ParentKeyresultComponent,
+    ParentTaskComponent
   ],
   imports: [
     BrowserModule,
