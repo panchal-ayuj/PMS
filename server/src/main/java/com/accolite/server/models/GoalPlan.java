@@ -13,7 +13,7 @@ public class GoalPlan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long goalPlanId;
     private Long userId;
-    private int financialYear;
+    private Integer financialYear;
 
     public GoalPlan() {
     }
@@ -40,11 +40,11 @@ public class GoalPlan {
         this.userId = userId;
     }
 
-    public int getFinancialYear() {
+    public Integer getFinancialYear() {
         return financialYear;
     }
 
-    public void setFinancialYear(int financialYear) {
+    public void setFinancialYear(Integer financialYear) {
         this.financialYear = financialYear;
     }
 

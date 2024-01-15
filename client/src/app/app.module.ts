@@ -7,7 +7,6 @@ import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
-
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserManagementComponent } from './user/user.component';
 import { UploadComponent } from './uploadgoalplan/uploadgoalplan.component';
@@ -15,6 +14,11 @@ import { KeyResultUploadComponent } from './keyresultupload/keyresultupload.comp
 import { TaskComponent } from './task/task.component';
 import { UserUploadComponent } from './user-upload/user-upload.component';
 import { TaskUploadComponent } from './task-upload/task-upload.component';
+import { ReviewCycleUploadComponent } from './review-cycle-upload/review-cycle-upload.component';
+import { GoalplanFormComponent } from './goalplan-form/goalplan-form.component';
+import { KeyresultFormComponent } from './keyresult-form/keyresult-form.component';
+import { ReviewcycleFormComponent } from './reviewcycle-form/reviewcycle-form.component';
+
 
 
 @NgModule({
@@ -28,6 +32,10 @@ import { TaskUploadComponent } from './task-upload/task-upload.component';
     TaskComponent,
     UserUploadComponent,
     TaskUploadComponent
+    ReviewCycleUploadComponent,
+    GoalplanFormComponent,
+    KeyresultFormComponent,
+    ReviewcycleFormComponent
   ],
   imports: [
     BrowserModule,
