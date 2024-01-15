@@ -1,24 +1,44 @@
-<!-- user-management.component.html -->
+<!-- goal-plan-management.component.html -->
+<!-- goal-plan-management.component.html -->
 
-<div>
+<div class="goal-plan-management-container">
   <h2>GoalPlan Management</h2>
 
-  <!-- User Registration Form -->
+  <!-- GoalPlan Registration Form -->
   <form [formGroup]="goalPlanForm" (ngSubmit)="registerGoalPlan()">
-    <div>
-      <label for="financialYear">Financial Year:</label>
-      <input type="number" id="financialYear" formControlName="financialYear" />
-    </div>
-    <div>
-      <label for="userId">User Id:</label>
-      <input type="number" id="userId" formControlName="userId" />
-    </div>
+    <mat-form-field appearance="fill">
+      <mat-label>Financial Year</mat-label>
+      <input
+        matInput
+        type="number"
+        placeholder="Enter financial year"
+        formControlName="financialYear"
+      />
+    </mat-form-field>
 
-    <button type="submit">Register GoalPlan</button>
+    <mat-form-field appearance="fill">
+      <mat-label>User Id</mat-label>
+      <input
+        matInput
+        type="number"
+        placeholder="Enter user ID"
+        formControlName="userId"
+      />
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit">
+      Register GoalPlan
+    </button>
   </form>
 
-  <!-- User List -->
-  <div *ngFor="let goalplan of goalplans">
-    <p>{{ goalplan.financialYear }} ({{ goalplan.userId }})</p>
-  </div>
+  <!-- GoalPlan List -->
+  <!-- <div class="goal-plan-list" *ngFor="let goalplan of goalplans">
+    <mat-card class="goalplan-card">
+      <mat-card-content>
+        <p class="goalplan-info">
+          {{ goalplan.financialYear }} ({{ goalplan.userId }})
+        </p>
+      </mat-card-content>
+    </mat-card>
+  </div> -->
 </div>

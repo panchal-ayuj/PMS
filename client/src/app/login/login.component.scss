@@ -1,0 +1,24 @@
+/* login.component.scss */
+
+.center-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* Set height to 100% of viewport height */
+}
+
+.login-card {
+  max-width: 400px; /* Adjust the maximum width of the card as needed */
+  width: 100%;
+  padding: 20px;
+  text-align: center;
+  align-items: center;
+}
+
+.login-header{
+  margin-bottom: 3%;
+}
+
+button {
+  width: 100%; /* Make the button take up 100% width of its container */
+}

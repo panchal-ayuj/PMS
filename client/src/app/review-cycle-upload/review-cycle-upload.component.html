@@ -1,4 +1,6 @@
-<div>
+<div class="file-upload-container">
   <input type="file" (change)="onFileSelected($event)" />
-  <button (click)="onUpload()">Upload Review Cycle File</button>
+  <button mat-raised-button color="primary" (click)="onUpload()">
+    Upload Review Cycle File
+  </button>
 </div>

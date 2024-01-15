@@ -18,6 +18,15 @@ import { ReviewCycleUploadComponent } from './review-cycle-upload/review-cycle-u
 import { GoalplanFormComponent } from './goalplan-form/goalplan-form.component';
 import { KeyresultFormComponent } from './keyresult-form/keyresult-form.component';
 import { ReviewcycleFormComponent } from './reviewcycle-form/reviewcycle-form.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { AdminPageComponent } from './admin-page/admin-page.component';
+import { ParentUserComponent } from './parent-user/parent-user.component';
+import { ParentGoalplanComponent } from './parent-goalplan/parent-goalplan.component';
+import { ParentReviewcycleComponent } from './parent-reviewcycle/parent-reviewcycle.component';
+import { ParentKeyresultComponent } from './parent-keyresult/parent-keyresult.component';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 
 
@@ -35,7 +44,12 @@ import { ReviewcycleFormComponent } from './reviewcycle-form/reviewcycle-form.co
     ReviewCycleUploadComponent,
     GoalplanFormComponent,
     KeyresultFormComponent,
-    ReviewcycleFormComponent
+    ReviewcycleFormComponent,
+    AdminPageComponent,
+    ParentUserComponent,
+    ParentGoalplanComponent,
+    ParentReviewcycleComponent,
+    ParentKeyresultComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +57,11 @@ import { ReviewcycleFormComponent } from './reviewcycle-form/reviewcycle-form.co
     BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatCardModule,
+    MatInputModule,
+    MatFormFieldModule
   ],
   providers: [],
   bootstrap: [AppComponent]

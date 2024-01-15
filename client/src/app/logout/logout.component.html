@@ -1,14 +1,30 @@
-<app-user></app-user>
 <app-user-upload></app-user-upload>
-<app-goalplan-form></app-goalplan-form>
-<app-upload></app-upload>
-<app-keyresult-form></app-keyresult-form>
-<app-keyresult-upload></app-keyresult-upload>
-<app-reviewcycle-form></app-reviewcycle-form>
-<app-review-cycle-upload></app-review-cycle-upload>
 <app-task></app-task>
 <app-task-upload></app-task-upload>
-<div>
-  <h2>Logout Option</h2>
-  <button (click)="onSignOut()">Sign out</button>
+<!-- app.component.html -->
+
+<div class="center-container">
+  <div *ngIf="admin" class="options-container">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Admin Option</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <button mat-raised-button color="primary" routerLink="/admin">Admin</button>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  
+  <div class="options-container">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Logout Option</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <button mat-raised-button color="warn" (click)="onSignOut()">Sign out</button>
+      </mat-card-content>
+    </mat-card>
+  </div>
 </div>
+
+<router-outlet></router-outlet>
