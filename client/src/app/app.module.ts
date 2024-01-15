@@ -12,7 +12,6 @@ import { UploadComponent } from './uploadgoalplan/uploadgoalplan.component';
 import { KeyResultUploadComponent } from './keyresultupload/keyresultupload.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { SidebarComponent } from './sidebar/sidebar.component';
@@ -25,22 +24,18 @@ import { HierarchyComponent } from './hierarchy/hierarchy.component';
 import { ReviewTeamComponent } from './review-team/review-team.component';
 import { FeedbackComponent } from './feedback/feedback.component';
 import { AdminComponent } from './admin/admin.component';
-import { TaskComponent } from './task/task.component';
 import { UserUploadComponent } from './user-upload/user-upload.component';
 import { TaskUploadComponent } from './task-upload/task-upload.component';
 import { ReviewCycleUploadComponent } from './review-cycle-upload/review-cycle-upload.component';
 import { GoalplanFormComponent } from './goalplan-form/goalplan-form.component';
 import { KeyresultFormComponent } from './keyresult-form/keyresult-form.component';
 import { ReviewcycleFormComponent } from './reviewcycle-form/reviewcycle-form.component';
-import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { AdminPageComponent } from './admin-page/admin-page.component';
 import { ParentUserComponent } from './parent-user/parent-user.component';
 import { ParentGoalplanComponent } from './parent-goalplan/parent-goalplan.component';
 import { ParentReviewcycleComponent } from './parent-reviewcycle/parent-reviewcycle.component';
 import { ParentKeyresultComponent } from './parent-keyresult/parent-keyresult.component';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
 
 
 @NgModule({
@@ -58,7 +53,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     ReviewTeamComponent,
     FeedbackComponent,
     AdminComponent,
-    TaskComponent,
     UserUploadComponent,
     TaskUploadComponent,
     ReviewCycleUploadComponent,
@@ -85,10 +79,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatInputModule,
     MatSidenavModule,
     MatListModule,
-    MatToolbarModule,
-    MatCardModule,
-    MatInputModule,
-    MatFormFieldModule
+    MatToolbarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
