@@ -40,7 +40,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     KeyResultUploadComponent,
     TaskComponent,
     UserUploadComponent,
-    TaskUploadComponent
+    TaskUploadComponent,
     ReviewCycleUploadComponent,
     GoalplanFormComponent,
     KeyresultFormComponent,
