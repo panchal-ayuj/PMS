@@ -25,12 +25,15 @@ public class KeyResultExcelReader {
             while (rowIterator.hasNext()) {
                 Row row = rowIterator.next();
                 KeyResult keyResult = new KeyResult();
+                keyResult.setKeyResultId((long) (row.getCell(0).getNumericCellValue()));
                 keyResult.setUserId((long) (row.getCell(1).getNumericCellValue()));
                 keyResult.setGoalPlanId((long) (row.getCell(2).getNumericCellValue()));
                 keyResult.setKeyResultName(row.getCell(3).getStringCellValue());
                 keyResult.setDescription(row.getCell(4).getStringCellValue());
                 keyResult.setWeight((int) (row.getCell(5).getNumericCellValue()));
                 keyResult.setPeriod(row.getCell(6).getStringCellValue());
+                keyResult.setWindowId(row.getCell(7) != null && row.getCell(7).getCellType() == CellType.NUMERIC ? (int) row.getCell(7).getNumericCellValue() : null);
+                keyResult.setRating(row.getCell(8) != null && row.getCell(8).getCellType() == CellType.NUMERIC ? (int) row.getCell(8).getNumericCellValue() : null);
                 keyResults.add(keyResult);
             }
         }

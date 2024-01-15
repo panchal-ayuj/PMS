@@ -13,13 +13,15 @@ public class KeyResult {
     private Long goalPlanId; // Foreign key referencing GoalPlan
     private String keyResultName;
     private String description;
-    private int weight;
+    private Integer weight;
     private String period;
+    private Integer windowId;
+    private Integer rating;
 
     public KeyResult() {
     }
 
-    public KeyResult(Long keyResultId, Long userId, Long goalPlanId, String keyResultName, String description, int weight, String period) {
+    public KeyResult(Long keyResultId, Long userId, Long goalPlanId, String keyResultName, String description, int weight, String period, int windowId, int rating) {
         this.keyResultId = keyResultId;
         this.userId = userId;
         this.goalPlanId = goalPlanId;
@@ -27,6 +29,8 @@ public class KeyResult {
         this.description = description;
         this.weight = weight;
         this.period = period;
+        this.windowId = windowId;
+        this.rating = rating;
     }
 
     public Long getKeyResultId() {
@@ -69,11 +73,11 @@ public class KeyResult {
         this.description = description;
     }
 
-    public int getWeight() {
+    public Integer getWeight() {
         return weight;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(Integer weight) {
         this.weight = weight;
     }
 
@@ -83,6 +87,22 @@ public class KeyResult {
 
     public void setPeriod(String period) {
         this.period = period;
+    }
+
+    public Integer getWindowId() {
+        return windowId;
+    }
+
+    public void setWindowId(Integer windowId) {
+        this.windowId = windowId;
+    }
+
+    public Integer getRating() {
+        return rating;
+    }
+
+    public void setRating(Integer rating) {
+        this.rating = rating;
     }
 
     @Override
@@ -95,6 +115,8 @@ public class KeyResult {
                 ", description='" + description + '\'' +
                 ", weight=" + weight +
                 ", period='" + period + '\'' +
+                ", windowId=" + windowId +
+                ", rating=" + rating +
                 '}';
     }
 }

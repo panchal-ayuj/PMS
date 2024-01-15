@@ -1,25 +1,22 @@
-.login-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-  
-  mat-card {
-    max-width: 400px;
-    width: 100%;
-    text-align: center;
-  }
-  
-  mat-card-title {
-    margin-bottom: 16px; /* Adjust as needed */
-  }
-  
-  button {
-    width: 100%;
-  }
-  
-  mat-card-header{
-    margin: 0 auto;
-    width: 50%;
-  }
+.center-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* Set height to 100% of viewport height */
+}
+
+.login-card {
+  max-width: 400px; /* Adjust the maximum width of the card as needed */
+  width: 100%;
+  padding: 20px;
+  text-align: center;
+  align-items: center;
+}
+
+.login-header{
+  margin-bottom: 3%;
+}
+
+button {
+  width: 100%; /* Make the button take up 100% width of its container */
+}

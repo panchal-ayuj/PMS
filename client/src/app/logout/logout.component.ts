@@ -35,9 +35,13 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./logout.component.scss']
 })
 export class LogoutComponent implements OnInit {
+  admin: boolean = false;
+
   constructor(private cookieService: CookieService, private router: Router, private service: AuthService, private _ngZone: NgZone) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.handleResponseAsync();
+  }
 
   // onSignOut() {
   //   // Clear the stored token or perform other logout actions
@@ -52,4 +56,22 @@ export class LogoutComponent implements OnInit {
       this.router.navigate(['/']).then(() => window.location.reload());
     })
   }
+
+  async handleResponseAsync() {
+    try {
+      // Assume this is an asynchronous method that returns a Promise
+      const user = await this.service.getUser(localStorage.getItem('token')).toPromise();
+      console.log(user);
+
+      const isAdmin = user.roles.includes('Admin');
+    
+      if (isAdmin) {
+        // User has the 'Admin' role, you can perform actions accordingly
+        this.admin = true;
+      } 
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+  }
+
 }

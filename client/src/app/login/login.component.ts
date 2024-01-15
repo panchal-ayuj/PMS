@@ -125,18 +125,56 @@ export class LoginComponent implements AfterViewInit {
     }
   }
 
+  // async handleCredentialResponse(response: any) {
+  //   // Call your AuthService method to get the user's email
+  //   const userEmail = await this.service.getEmail(response.credential).toPromise();
+  
+  //   if (userEmail) {
+  //     // Proceed with login and navigation
+  //     await this.service.LoginWithGoogle(response.credential).subscribe(
+  //       (x: any) => {
+  //         localStorage.setItem('token', response.credential);
+  //         console.log(response.credential);
+  //         this.ngZone.run(() => {
+  //           this.router.navigate(['/logout']);
+  //         });
+  //       },
+  //       (error: any) => {
+  //         console.log(error);
+  //       }
+  //     );
+  //   } else {
+  //     // Handle the case where the user's email is not present
+  //     console.error("User's email is not present in the database.");
+  //   }
+  // }
+
   async handleCredentialResponse(response: any) {
-    await this.service.LoginWithGoogle(response.credential).subscribe(
-      (x: any) => {
-        localStorage.setItem('token', response.credential);
-        console.log(response.credential);
-        this.ngZone.run(() => {
-          this.router.navigate(['/logout']);
-        });
-      },
-      (error: any) => {
-        console.log(error);
-      }
-    );
+    // Call your AuthService method to check if the user's email is present
+    // console.log(response.credential);
+    const userEmail = await this.service.getEmail(response.credential).toPromise();
+    // const userEmail = "panchal.kumar@accolitedigital.com";
+    console.log(userEmail);
+
+    const userEmailPresent = await this.service.isUserEmailPresent(userEmail).toPromise();
+
+    if (userEmailPresent) {
+      // Proceed with login and navigation
+      await this.service.LoginWithGoogle(response.credential).subscribe(
+        (x: any) => {
+          localStorage.setItem('token', response.credential);
+          // console.log(response.credential);
+          this.ngZone.run(() => {
+            this.router.navigate(['/logout']);
+          });
+        },
+        (error: any) => {
+          console.log(error);
+        }
+      );
+    } else {
+      // Handle the case where the user's email is not present
+      console.error("User's email is not present in the database.");
+    }
   }
 }

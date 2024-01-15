@@ -1,10 +1,25 @@
-<!-- 
-<div class="continer">
-  <app-sidebar></app-sidebar>
+<div class="center-container">
+  <div *ngIf="admin" class="options-container">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Admin Option</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <button mat-raised-button color="primary" routerLink="/admin">Admin</button>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  
+  <div class="options-container">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Logout Option</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <button mat-raised-button color="warn" (click)="onSignOut()">Sign out</button>
+      </mat-card-content>
+    </mat-card>
+  </div>
 </div>
- -->
 
-<div>
-  <!-- <h2>Logout Option</h2> -->
-  <button (click)="onSignOut()">Sign out</button>
-</div>
+<router-outlet></router-outlet>

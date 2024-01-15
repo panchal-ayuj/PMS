@@ -2,7 +2,7 @@ package com.accolite.server.models;
 
 import jakarta.persistence.*;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -26,12 +26,6 @@ public class User {
 
     @ElementCollection
     private List<String> teams;
-
-    // Add this field for Google authentication token
-    // private String googleAuthToken;
-
-    // Getters and setters
-
 
     public User(Long userId, String firstName, String lastName, String email, String status, Date joiningDate, Long hrId, String band, Long reportingManagerId, List<String> roles, List<String> teams) {
         this.userId = userId;

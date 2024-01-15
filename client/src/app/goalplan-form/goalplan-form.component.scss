@@ -1,0 +1,44 @@
+/* goal-plan-management.component.scss */
+
+.goal-plan-management-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+
+  h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  mat-form-field {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+
+  button {
+    margin-top: 15px;
+  }
+
+  .goal-plan-list {
+    margin-top: 20px;
+  }
+}
+
+/* goal-plan-management.component.scss */
+
+.goal-plan-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.goalplan-card {
+  width: 200px;
+}
+
+.goalplan-info {
+  font-size: 16px;
+  margin: 0;
+}
