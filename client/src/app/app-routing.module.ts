@@ -7,17 +7,19 @@ import { ParentUserComponent } from './parent-user/parent-user.component';
 import { ParentGoalplanComponent } from './parent-goalplan/parent-goalplan.component';
 import { ParentKeyresultComponent } from './parent-keyresult/parent-keyresult.component';
 import { ParentReviewcycleComponent } from './parent-reviewcycle/parent-reviewcycle.component';
+import { AdminGuard } from './admin.guard'; // Import the AdminGuard
+import { UserGuard } from './user.guard'; // Import the AdminGuard
 import { ParentTaskComponent } from './parent-task/parent-task.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
-  { path: 'logout', component: LogoutComponent },
-  { path: 'admin', component: AdminPageComponent},
-  { path: 'user', component: ParentUserComponent},
-  { path: 'goalplan', component: ParentGoalplanComponent},
-  { path: 'keyresult', component: ParentKeyresultComponent},
-  { path: 'reviewcycle', component: ParentReviewcycleComponent},
-  { path: 'task', component:ParentTaskComponent}
+  { path: 'logout', component: LogoutComponent,canActivate: [UserGuard] },
+  { path: 'admin', component: AdminPageComponent,canActivate: [AdminGuard]},
+  { path: 'admin/user', component: ParentUserComponent,canActivate: [AdminGuard]},
+  { path: 'admin/goalplan', component: ParentGoalplanComponent,canActivate: [AdminGuard]},
+  { path: 'admin/keyresult', component: ParentKeyresultComponent,canActivate: [AdminGuard]},
+  { path: 'admin/reviewcycle', component: ParentReviewcycleComponent,canActivate: [AdminGuard]},
+  { path: 'admin/task', component:ParentTaskComponent}
 ];
 
 @NgModule({
