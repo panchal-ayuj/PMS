@@ -12,6 +12,21 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserManagementComponent } from './user/user.component';
 import { UploadComponent } from './uploadgoalplan/uploadgoalplan.component';
 import { KeyResultUploadComponent } from './keyresultupload/keyresultupload.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { TaskComponent } from './task/task.component';
+import { ReviewComponent } from './review/review.component';
+import { HierarchyComponent } from './hierarchy/hierarchy.component';
+import { ReviewTeamComponent } from './review-team/review-team.component';
+import { FeedbackComponent } from './feedback/feedback.component';
+import { AdminComponent } from './admin/admin.component';
 
 
 @NgModule({
@@ -21,7 +36,14 @@ import { KeyResultUploadComponent } from './keyresultupload/keyresultupload.comp
     LogoutComponent,
     UserManagementComponent,
     UploadComponent,
-    KeyResultUploadComponent
+    KeyResultUploadComponent,
+    SidebarComponent,
+    TaskComponent,
+    ReviewComponent,
+    HierarchyComponent,
+    ReviewTeamComponent,
+    FeedbackComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +51,16 @@ import { KeyResultUploadComponent } from './keyresultupload/keyresultupload.comp
     BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSidenavModule,
+    MatListModule,
+    MatToolbarModule
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,44 @@
+<!-- sidebar.component.html -->
+<!-- 
+<mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #sidenav mode="over" class="mat-elevation-z2">
+      <mat-toolbar color="primary">Menu</mat-toolbar>
+      <mat-nav-list>
+        <a mat-list-item routerLink="/" (click)="sidenav.close()">Home</a>
+        <a mat-list-item routerLink="/page1" (click)="sidenav.close()">Page 1</a>
+        <a mat-list-item routerLink="/page2" (click)="sidenav.close()">Page 2</a>
+        <a mat-list-item routerLink="/settings" (click)="sidenav.close()">Settings</a>
+      </mat-nav-list>
+    </mat-sidenav>
+  
+    <mat-sidenav-content>
+      <button mat-icon-button (click)="toggleSidebar()" class="menu-button">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <ng-content></ng-content>
+    </mat-sidenav-content>
+  </mat-sidenav-container> -->
+  
+  <div class="sidenav" [ngClass]="collapsed ? 'sidenav-collapsed': ''">
+    <div class="logo-container">
+        <button class="logo" (click)="toggleCollapse()">P</button>
+        <div class="logo-text" *ngIf="collapsed">PMS</div>
+        <button class="btn-close" *ngIf="collapsed" (click)="closeSidenav()">
+            <i class="fal fa-times close-icon"></i>
+        </button>
+    </div>
+    <ul class="sidenav-nav">
+        <li class="sidenav-nav-item" *ngFor="let data of navData">
+            <a class="sidenav-nav-link" [routerLink]="[data.routeLink]" 
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{exact: true}"
+            >
+                <mat-icon  class="sidenav-link-icon" >{{data.icon}}</mat-icon >
+                <span class="sidenav-link-text" *ngIf="collapsed">
+                    {{data.label}}
+                </span>
+            </a>
+        </li>
+    </ul>
+</div>
+

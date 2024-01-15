@@ -1,7 +1,14 @@
-<div>
-  <h2>Login below with Google</h2>
-  <div id="buttonDiv" (click)="onSignIn()">
-    <!-- Handle button click -->
-    <span>Sign in with Google</span>
-  </div>
+<div class="login-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Sign In to PMS Portal</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <button mat-raised-button color="primary" (click)="onSignIn()">
+        <!-- <mat-icon svgIcon="google"></mat-icon> -->
+        Google Single Sign-On
+      </button>
+    </mat-card-content>
+  </mat-card>
 </div>
+
