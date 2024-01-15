@@ -40,4 +40,8 @@ public class UserService {
         // Implement hierarchy retrieval logic based on the requirements
         return userRepository.findByReportingManagerId(userId);
     }
+
+    public void saveAll(List<User> users) {
+        userRepository.saveAll(users);
+    }
 }
