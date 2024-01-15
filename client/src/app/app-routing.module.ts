@@ -9,7 +9,7 @@ import { ParentKeyresultComponent } from './parent-keyresult/parent-keyresult.co
 import { ParentReviewcycleComponent } from './parent-reviewcycle/parent-reviewcycle.component';
 import { AdminGuard } from './admin.guard'; // Import the AdminGuard
 import { UserGuard } from './user.guard'; // Import the AdminGuard
-
+import { ParentTaskComponent } from './parent-task/parent-task.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -19,6 +19,7 @@ const routes: Routes = [
   { path: 'admin/goalplan', component: ParentGoalplanComponent,canActivate: [AdminGuard]},
   { path: 'admin/keyresult', component: ParentKeyresultComponent,canActivate: [AdminGuard]},
   { path: 'admin/reviewcycle', component: ParentReviewcycleComponent,canActivate: [AdminGuard]},
+  { path: 'admin/task', component:ParentTaskComponent}
 ];
 
 @NgModule({
