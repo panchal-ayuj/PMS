@@ -1,58 +1,71 @@
 <!-- user-management.component.html -->
 
-<div>
-  <h2>User Management</h2>
+<div class="user-management-container">
 
   <!-- User Registration Form -->
-  <form [formGroup]="userForm" (ngSubmit)="registerUser()">
-    <div>
-      <label for="firstName">First Name:</label>
-      <input type="text" id="firstName" formControlName="firstName" />
-    </div>
-    <div>
-      <label for="lastName">Last Name:</label>
-      <input type="text" id="lastName" formControlName="lastName" />
-    </div>
-    <div>
-      <label for="email">Email:</label>
-      <input type="email" id="email" formControlName="email" />
-    </div>
-    <div>
-      <label for="status">Status:</label>
-      <input type="text" id="status" formControlName="status" />
-    </div>
-    <div>
-      <label for="joiningDate">Joining Date:</label>
-      <input type="text" id="joiningDate" formControlName="joiningDate" />
-    </div>
-    <div>
-      <label for="hrId">HR ID:</label>
-      <input type="text" id="hrId" formControlName="hrId" />
-    </div>
-    <div>
-      <label for="band">Band:</label>
-      <input type="text" id="band" formControlName="band" />
-    </div>
-    <div>
-      <label for="reportingManagerId">Reporting Manager ID:</label>
-      <input type="text" id="reportingManagerId" formControlName="reportingManagerId" />
-    </div>
+  <form [formGroup]="userForm" (ngSubmit)="registerUser()" class="user-form">
+    <h2>User Registration</h2>
 
-    <div>
-      <label for="roles">Roles (comma-separated):</label>
-      <input type="text" id="roles" formControlName="roles" />
-    </div>
+    <mat-form-field appearance="fill">
+      <mat-label>First Name</mat-label>
+      <input matInput formControlName="firstName" />
+    </mat-form-field>
 
-    <div>
-      <label for="teams">Teams (comma-separated):</label>
-      <input type="text" id="teams" formControlName="teams" />
-    </div>
+    <mat-form-field appearance="fill">
+      <mat-label>Last Name</mat-label>
+      <input matInput formControlName="lastName" />
+    </mat-form-field>
 
-    <button type="submit">Register</button>
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" formControlName="email" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Status</mat-label>
+      <input matInput formControlName="status" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Joining Date</mat-label>
+      <input matInput type="date" formControlName="joiningDate" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>HR ID</mat-label>
+      <input matInput formControlName="hrId" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Band</mat-label>
+      <input matInput formControlName="band" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Reporting Manager ID</mat-label>
+      <input matInput formControlName="reportingManagerId" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Roles (comma-separated)</mat-label>
+      <input matInput formControlName="roles" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Teams (comma-separated)</mat-label>
+      <input matInput formControlName="teams" />
+    </mat-form-field>
+
+    <button type="submit" mat-raised-button color="primary">Register</button>
   </form>
 
   <!-- User List -->
-  <div *ngFor="let user of users">
-    <p>{{ user.firstName }} {{ user.lastName }} ({{ user.email }})</p>
+  <div class="user-list" *ngFor="let user of users">
+    <mat-card class="user-card">
+      <mat-card-content>
+        <p>{{ user.firstName }} {{ user.lastName }} ({{ user.email }})</p>
+      </mat-card-content>
+    </mat-card>
   </div>
+
 </div>

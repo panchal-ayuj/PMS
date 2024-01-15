@@ -1,0 +1,50 @@
+/* key-result-management.component.scss */
+
+.key-result-management-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  max-width: 50%;
+  margin: auto;
+
+  h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  mat-form-field {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+
+  button {
+    margin-top: 15px;
+  }
+}
+
+/* key-result-list.component.scss */
+
+.key-result-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.keyresult-card {
+  width: 200px;
+  mat-card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease-in-out;
+
+    &:hover {
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  .keyresult-info {
+    font-size: 16px;
+    margin: 0;
+  }
+}

@@ -1,4 +1,11 @@
-<div>
+<!-- goal-plan-upload.component.html -->
+
+<!-- user-management.component.html -->
+
+<div class="file-upload-container">
   <input type="file" (change)="onFileSelected($event)" />
-  <button (click)="onUpload()">Upload GoalPlan File</button>
+
+  <button mat-raised-button color="primary" (click)="onUpload()">
+    Upload GoalPlan File
+  </button>
 </div>

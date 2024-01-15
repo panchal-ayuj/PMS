@@ -1,19 +1,23 @@
 package com.accolite.server.controllers;
 
 import com.accolite.server.models.GoogleTokenPayload;
+import com.accolite.server.models.User;
+import com.accolite.server.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 public class AuthController {
+
+    @Autowired
+    UserRepository userRepository;
 
     private String googleTokenInfoUrl = "https://www.googleapis.com/oauth2/v3/tokeninfo";
 
@@ -79,4 +83,45 @@ public class AuthController {
             return null;
         }
     }
+
+    @PostMapping("/getEmail")
+    private ResponseEntity<GoogleTokenPayload> Email(@RequestBody String googleToken){
+        RestTemplate restTemplate = new RestTemplate();
+        //  System.out.println(googleToken);
+
+        String accessTokenValue = googleToken.substring(1);
+
+        String tokenInfoUrl = googleTokenInfoUrl + "?id_token=" + accessTokenValue;
+        ResponseEntity<GoogleTokenPayload> response = restTemplate.getForEntity(tokenInfoUrl, GoogleTokenPayload.class);
+
+        // System.out.println(response.getBody().getEmail()); To get the email
+
+        if (response.getStatusCode() == HttpStatus.OK) {
+            return response;
+        } else {
+            return null;
+        }
+    }
+
+    @PostMapping("/getUser")
+    private ResponseEntity<User> User(@RequestBody String googleToken){
+        RestTemplate restTemplate = new RestTemplate();
+        //  System.out.println(googleToken);
+
+        String accessTokenValue = googleToken.substring(1);
+
+        String tokenInfoUrl = googleTokenInfoUrl + "?id_token=" + accessTokenValue;
+        ResponseEntity<GoogleTokenPayload> response = restTemplate.getForEntity(tokenInfoUrl, GoogleTokenPayload.class);
+
+        Optional<User> user = userRepository.findByEmail(response.getBody().getEmail());
+        // System.out.println(response.getBody().getEmail()); To get the email
+
+        if (response.getStatusCode() == HttpStatus.OK) {
+            return ResponseEntity.ok(user.get());
+        } else {
+            return null;
+        }
+    }
+
+
 }

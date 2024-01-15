@@ -1,5 +1,6 @@
 package com.accolite.server.controllers;
 
+import com.accolite.server.models.GoogleTokenPayload;
 import com.accolite.server.models.User;
 import com.accolite.server.repository.UserRepository;
 import com.accolite.server.service.UserService;
@@ -9,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")
@@ -48,5 +51,16 @@ public class UserController {
     public ResponseEntity<List<User>> getUsers() {
         List<User> users = userRepository.findAll();
         return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
+    @PostMapping("/checkEmail")
+    public ResponseEntity<Boolean> checkEmailExists(@RequestBody GoogleTokenPayload googleTokenPayload) {
+        Optional<User> emailExists = userRepository.findByEmail(googleTokenPayload.getEmail());
+        System.out.println(googleTokenPayload.getEmail());
+        boolean exists = false;
+        if(emailExists.isPresent()){
+            exists = true;
+        }
+        return ResponseEntity.ok(exists);
     }
 }

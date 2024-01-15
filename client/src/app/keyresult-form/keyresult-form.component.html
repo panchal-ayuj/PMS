@@ -1,44 +1,73 @@
 <!-- user-management.component.html -->
 
-<div>
+<div class="key-result-management-container">
   <h2>KeyResult Management</h2>
 
-  <!-- User Registration Form -->
+  <!-- KeyResult Registration Form -->
   <form [formGroup]="keyResultForm" (ngSubmit)="registerKeyResult()">
-    <div>
-      <label for="userId">User Id:</label>
-      <input type="number" id="userId" formControlName="userId" />
-    </div>
-    <div>
-      <label for="goalPlanId">GoalPlan Id:</label>
-      <input type="number" id="goalPlanId" formControlName="goalPlanId" />
-    </div>
-    <div>
-      <label for="keyResultName">KeyResult Name:</label>
-      <input type="text" id="keyResultName" formControlName="keyResultName" />
-    </div>
-    <div>
-      <label for="description">Description:</label>
-      <input type="text" id="description" formControlName="description" />
-    </div>
-    <div>
-      <label for="weight">Weight:</label>
-      <input type="number" id="weight" formControlName="weight" />
-    </div>
-    <div>
-      <label for="period">Period:</label>
-      <input type="text" id="period" formControlName="period" />
-    </div>
-    <div>
-      <label for="windowId">Window Id:</label>
-      <input type="number" id="windowId" formControlName="windowId" />
-    </div>
+    <mat-form-field appearance="fill">
+      <mat-label>User Id</mat-label>
+      <input matInput type="number" id="userId" formControlName="userId" />
+    </mat-form-field>
 
-    <button type="submit">Register KeyResult</button>
+    <mat-form-field appearance="fill">
+      <mat-label>GoalPlan Id</mat-label>
+      <input
+        matInput
+        type="number"
+        id="goalPlanId"
+        formControlName="goalPlanId"
+      />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>KeyResult Name</mat-label>
+      <input
+        matInput
+        type="text"
+        id="keyResultName"
+        formControlName="keyResultName"
+      />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Description</mat-label>
+      <input
+        matInput
+        type="text"
+        id="description"
+        formControlName="description"
+      />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Weight</mat-label>
+      <input matInput type="number" id="weight" formControlName="weight" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Period</mat-label>
+      <input matInput type="text" id="period" formControlName="period" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Window Id</mat-label>
+      <input matInput type="number" id="windowId" formControlName="windowId" />
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit">
+      Register KeyResult
+    </button>
   </form>
 
-  <!-- User List -->
-  <div *ngFor="let keyresult of keyresults">
-    <p>{{ keyresult.userId }} ({{ keyresult.goalPlanId }})</p>
-  </div>
+  <!-- KeyResult List -->
+  <!-- <div class="key-result-list">
+    <div class="key-result-card" *ngFor="let keyresult of keyresults">
+      <mat-card>
+        <mat-card-content>
+          <p>{{ keyresult.userId }} ({{ keyresult.goalPlanId }})</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div> -->
 </div>
