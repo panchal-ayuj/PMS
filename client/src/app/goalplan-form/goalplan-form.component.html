@@ -1,0 +1,24 @@
+<!-- user-management.component.html -->
+
+<div>
+  <h2>GoalPlan Management</h2>
+
+  <!-- User Registration Form -->
+  <form [formGroup]="goalPlanForm" (ngSubmit)="registerGoalPlan()">
+    <div>
+      <label for="financialYear">Financial Year:</label>
+      <input type="number" id="financialYear" formControlName="financialYear" />
+    </div>
+    <div>
+      <label for="userId">User Id:</label>
+      <input type="number" id="userId" formControlName="userId" />
+    </div>
+
+    <button type="submit">Register GoalPlan</button>
+  </form>
+
+  <!-- User List -->
+  <div *ngFor="let goalplan of goalplans">
+    <p>{{ goalplan.financialYear }} ({{ goalplan.userId }})</p>
+  </div>
+</div>

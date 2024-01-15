@@ -1,6 +1,7 @@
 package com.accolite.server.service;
 
 import com.accolite.server.models.GoalPlan;
+import com.accolite.server.models.User;
 import com.accolite.server.repository.GoalPlanRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,11 @@ public class GoalPlanService {
 
     @Autowired
     private GoalPlanRepository goalPlanRepository;
+
+    public GoalPlan registerGoalPlan(GoalPlan goalPlan) {
+        // Implement registration logic, e.g., validation, setting default values, etc.
+        return goalPlanRepository.save(goalPlan);
+    }
 
     public void saveAll(List<GoalPlan> goalPlans) {
         goalPlanRepository.saveAll(goalPlans);

@@ -1,13 +1,12 @@
 package com.accolite.server.controllers;
 
+import com.accolite.server.models.GoalPlan;
 import com.accolite.server.models.KeyResult;
 import com.accolite.server.readers.KeyResultExcelReader;
+import com.accolite.server.repository.KeyResultRepository;
 import com.accolite.server.service.KeyResultService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
@@ -22,6 +21,9 @@ public class KeyResultController {
     @Autowired
     private KeyResultService keyResultService;
 
+    @Autowired
+    private KeyResultRepository keyResultRepository;
+
     @PostMapping("")
     public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
         try {
@@ -31,5 +33,17 @@ public class KeyResultController {
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error uploading file: " + e.getMessage());
         }
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<KeyResult> registerKeyResult(@RequestBody KeyResult keyResult) {
+        KeyResult registeredKeyResult = keyResultService.registerKeyResult(keyResult);
+        return new ResponseEntity<>(registeredKeyResult, HttpStatus.CREATED);
+    }
+
+    @GetMapping("")
+    public ResponseEntity<List<KeyResult>> getKeyResults() {
+        List<KeyResult> keyResults = keyResultRepository.findAll();
+        return new ResponseEntity<>(keyResults, HttpStatus.OK);
     }
 }

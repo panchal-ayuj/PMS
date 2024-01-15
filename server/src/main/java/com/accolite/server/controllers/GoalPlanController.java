@@ -1,7 +1,9 @@
 package com.accolite.server.controllers;
 
+import com.accolite.server.models.User;
 import com.accolite.server.readers.GoalPlanExcelReader;
 import com.accolite.server.models.GoalPlan;
+import com.accolite.server.repository.GoalPlanRepository;
 import com.accolite.server.service.GoalPlanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,9 @@ public class GoalPlanController {
     @Autowired
     private GoalPlanService goalPlanService;
 
+    @Autowired
+    private GoalPlanRepository goalPlanRepository;
+
     @PostMapping("/goalPlan")
     public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
         try {
@@ -34,5 +39,17 @@ public class GoalPlanController {
     public ResponseEntity<List<GoalPlan>> getGoalPlansByUserId(@PathVariable Long userId) {
         List<GoalPlan> goalPlans = goalPlanService.getGoalPlansByUserId(userId);
         return ResponseEntity.ok(goalPlans);
+    }
+
+    @GetMapping("/goalPlan")
+    public ResponseEntity<List<GoalPlan>> getGoalPlans() {
+        List<GoalPlan> goalPlans = goalPlanRepository.findAll();
+        return new ResponseEntity<>(goalPlans, HttpStatus.OK);
+    }
+
+    @PostMapping("/goalPlan/register")
+    public ResponseEntity<GoalPlan> registerGoalPlan(@RequestBody GoalPlan goalPlan) {
+        GoalPlan registeredGoalPlan = goalPlanService.registerGoalPlan(goalPlan);
+        return new ResponseEntity<>(registeredGoalPlan, HttpStatus.CREATED);
     }
 }
