@@ -1,68 +1,83 @@
-<div>
-  <h2>Task Management</h2>
+<div class="task-management-container">
+  <form [formGroup]="taskForm" (ngSubmit)="createTask()" class="task-form">
+    <h2>Task Management</h2>
 
-  <!-- Task Creation Form -->
-  <form [formGroup]="taskForm" (ngSubmit)="createTask()">
-    <div>
-      <label for="keyResultId">Key Result ID:</label>
-      <input type="text" id="keyResultId" formControlName="keyResultId" />
-    </div>
-    <div>
-      <label for="description">Description:</label>
-      <input type="text" id="description" formControlName="description" />
-    </div>
-    <div>
-      <label for="creationDate">Creation Date:</label>
-      <input type="text" id="creationDate" formControlName="creationDate" />
-    </div>
-    <div>
-      <label for="deadline">Deadline:</label>
-      <input type="text" id="deadline" formControlName="deadline" />
-    </div>
-    <div>
-      <label for="weight">Weight:</label>
-      <input type="text" id="weight" formControlName="weight" />
-    </div>
-    <div>
-      <label for="completionStatus">Completion Status:</label>
+    <mat-form-field appearance="fill">
+      <mat-label for="keyResultId">Key Result ID:</mat-label>
       <input
+        matInput
+        type="text"
+        id="keyResultId"
+        formControlName="keyResultId"
+      />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label for="description">Description:</mat-label>
+      <input matInput type="text" id="description" formControlName="description" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label for="creationDate">Creation Date:</mat-label>
+      <input matInput type="text" id="creationDate" formControlName="creationDate" />
+    </mat-form-field>
+    
+    <mat-form-field appearance="fill">
+      <mat-label for="deadline">Deadline:</mat-label>
+      <input matInput type="text" id="deadline" formControlName="deadline" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label for="weight">Weight:</mat-label>
+      <input matInput type="text" id="weight" formControlName="weight" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label for="completionStatus">Completion Status:</mat-label>
+      <input matInput
         type="text"
         id="completionStatus"
         formControlName="completionStatus"
       />
-    </div>
-    <div>
-      <label for="userId">User ID:</label>
-      <input type="text" id="userId" formControlName="userId" />
-    </div>
-    <div>
-      <label for="windowId">Window ID:</label>
-      <input type="text" id="windowId" formControlName="windowId" />
-    </div>
-    <div>
-      <label for="rating">Rating:</label>
-      <input type="text" id="rating" formControlName="rating" />
-    </div>
-    <div>
-      <label for="feedback">Feedback:</label>
-      <input type="text" id="feedback" formControlName="feedback" />
-    </div>
-    <div>
-      <label for="period">Period:</label>
-      <input type="text" id="period" formControlName="period" />
-    </div>
-    <div>
-      <label for="taskAttributes">Task Attributes:</label>
-      <input type="text" id="taskAttributes" formControlName="taskAttributes" />
-    </div>
+    </mat-form-field>
+    
+    <mat-form-field appearance="fill">
+      <mat-label for="userId">User ID:</mat-label>
+      <input matInput type="text" id="userId" formControlName="userId" />
+    </mat-form-field>
 
-    <button type="submit">Create Task</button>
+    <mat-form-field appearance="fill">
+      <mat-label for="windowId">Window ID:</mat-label>
+      <input matInput type="text" id="windowId" formControlName="windowId" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label for="rating">Rating:</mat-label>
+      <input matInput type="text" id="rating" formControlName="rating" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label for="feedback">Feedback:</mat-label>
+      <input matInput type="text" id="feedback" formControlName="feedback" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label for="period">Period:</mat-label>
+      <input matInput type="text" id="period" formControlName="period" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label for="taskAttributes">Task Attributes:</mat-label>
+      <input matInput type="text" id="taskAttributes" formControlName="taskAttributes" />
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit">Create Task</button>
   </form>
 
-  <!-- Task List -->
+  <!-- Task List
   <div *ngFor="let task of tasks">
     <p>{{ task.description }} (ID: {{ task.taskId }})</p>
     <button (click)="updateTask(task.taskId)">Update</button>
     <button (click)="deleteTask(task.taskId)">Delete</button>
-  </div>
+  </div> -->
 </div>

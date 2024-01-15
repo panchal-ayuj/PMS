@@ -7,6 +7,7 @@ import { ParentUserComponent } from './parent-user/parent-user.component';
 import { ParentGoalplanComponent } from './parent-goalplan/parent-goalplan.component';
 import { ParentKeyresultComponent } from './parent-keyresult/parent-keyresult.component';
 import { ParentReviewcycleComponent } from './parent-reviewcycle/parent-reviewcycle.component';
+import { ParentTaskComponent } from './parent-task/parent-task.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'goalplan', component: ParentGoalplanComponent},
   { path: 'keyresult', component: ParentKeyresultComponent},
   { path: 'reviewcycle', component: ParentReviewcycleComponent},
+  { path: 'task', component:ParentTaskComponent}
 ];
 
 @NgModule({
