@@ -1,23 +1,73 @@
-/* user-management.component.scss */
-
 .user-management-container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row; /* Change to row */
   align-items: center;
+  justify-content: space-around; /* Adjust as needed */
   padding: 20px;
-
-  .user-form {
-    width: 100%;
-    max-width: 400px;
+  text-align: center;
+  height: auto;
+  h2 {
+    font-size: 24px;
     margin-bottom: 20px;
+  }
+
+  .form-container {
+    display: flex;
+    flex-direction: column;
+    width: 40%; /* Adjust as needed */
 
     mat-form-field {
       width: 100%;
       margin-bottom: 15px;
     }
 
+  }
+
+  .edit-container{
+    margin-top: -50%;
+  }
+
+  .search-form {
+    display: flex;
+    align-items: center;
+    margin-top: 3%;
+    padding: 3%;
+
+    mat-form-field {
+      margin-right: 10px;
+      width: 250px;
+      margin-bottom: -10px;
+
+      input {
+        font-size: 14px;
+      }
+    }
+
     button {
-      width: 100%;
+      font-size: 16px;
+      margin-right: 2%;
+    }
+  }
+
+  .reset-button {
+    button {
+      font-size: 16px;
+    }
+  }
+
+  .file-upload-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+
+    input {
+      display: none;
+    }
+
+    button {
+      font-size: 16px;
+      margin-top: 10px;
     }
   }
 
@@ -25,10 +75,16 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    gap: 20px;
+  }
 
-    .user-card {
-      width: 300px;
-      margin: 10px;
-    }
+  .user-card {
+    width: 200px;
+  }
+
+  .user-info {
+    font-size: 16px;
+    margin: 0;
   }
 }
+

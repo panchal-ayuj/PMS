@@ -10,6 +10,9 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class ReviewcycleFormComponent {
   reviewCycleForm!: FormGroup;
   reviewcycles: any[] = [];
+  reviewCycleId: number | undefined;
+
+  searchReviewCycleId: number | undefined;
 
   constructor(private formBuilder: FormBuilder, private http: HttpClient) { }
 
@@ -28,20 +31,35 @@ export class ReviewcycleFormComponent {
     });
   }
 
-  registerReviewCycle() {
+  registerOrUpdateReviewCycle() {
     const reviewcycle = this.reviewCycleForm.value;
 
-    const apiUrl = 'http://localhost:8080/reviewCycle/register';
+    const apiUrl = 'http://localhost:8080/reviewCycle/';
 
-    this.http.post(apiUrl, reviewcycle).subscribe(
-      (response) => {
-        console.log('ReviewCycle registered successfully:', response);
-        this.loadReviewCycles(); // Refresh user list after registration
-      },
-      (error) => {
-        console.error('Error registering reviewCycle:', error);
-      }
-    );
+    // Check if ID is present for update
+    if (this.searchReviewCycleId) {
+      this.http.put(`${apiUrl}reviewCycleById/${this.searchReviewCycleId}`, reviewcycle).subscribe(
+        (response) => {
+          console.log('Review Cycle updated successfully:', response);
+          this.loadReviewCycles();
+          this.resetForm();
+        },
+        (error) => {
+          console.error('Error updating Review Cycle:', error);
+        }
+      );
+    } else {
+      this.http.post('http://localhost:8080/reviewCycle/register', reviewcycle).subscribe(
+        (response) => {
+          console.log('Review Cycle registered successfully:', response);
+          this.loadReviewCycles();
+          this.resetForm();
+        },
+        (error) => {
+          console.error('Error registering Review Cycle:', error);
+        }
+      );
+    }
   }
 
   loadReviewCycles() {
@@ -60,6 +78,24 @@ export class ReviewcycleFormComponent {
     );
   }
 
-  
+  searchReviewCycle(reviewCycleId: number | undefined) {
+    if (reviewCycleId) {
+      this.searchReviewCycleId = reviewCycleId;
+      const apiUrl = `http://localhost:8080/reviewCycle/reviewCycleById/${reviewCycleId}`;
+      this.http.get(apiUrl).subscribe(
+        (data: any) => {
+          this.reviewCycleForm.patchValue(data); // Autofill the form with the fetched data
+        },
+        (error) => {
+          console.error('Error fetching Review Cycle:', error);
+        }
+      );
+    }
+  }
+
+  resetForm() {
+    this.reviewCycleForm.reset();
+    this.searchReviewCycleId = undefined;
+  }
 
 }
