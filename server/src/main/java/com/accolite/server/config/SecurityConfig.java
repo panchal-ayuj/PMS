@@ -20,7 +20,7 @@ import org.springframework.security.config.annotation.web.configurers.oauth2.ser
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig{
 
-    public static final String[] WHITE_LIST_URL = {"/LoginWithGoogle"};
+    public static final String[] WHITE_LIST_URL = {"/LoginWithGoogle", "/goalPlan"};
     public static final String[] PROTECTED_LIST_URL = {};
 
     @Bean
