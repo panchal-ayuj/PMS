@@ -1,0 +1,57 @@
+<!-- review-cycle-management.component.html -->
+
+<div class="review-cycle-management-container">
+  <h2>ReviewCycle Management</h2>
+
+  <!-- ReviewCycle Registration Form -->
+  <form [formGroup]="reviewCycleForm" (ngSubmit)="registerReviewCycle()">
+    <mat-form-field appearance="fill">
+      <mat-label>User Id</mat-label>
+      <input matInput type="number" id="userId" formControlName="userId" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Start Date</mat-label>
+      <input matInput type="date" id="startDate" formControlName="startDate" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>End Date</mat-label>
+      <input matInput type="date" id="endDate" formControlName="endDate" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Period</mat-label>
+      <input matInput type="text" id="period" formControlName="period" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Review Status</mat-label>
+      <input
+        matInput
+        type="text"
+        id="reviewStatus"
+        formControlName="reviewStatus"
+      />
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit">
+      Register ReviewCycle
+    </button>
+  </form>
+
+  <!-- ReviewCycle List -->
+  <!-- <div class="review-cycle-list">
+    <div class="reviewcycle-card" *ngFor="let reviewcycle of reviewcycles">
+      <mat-card>
+        <mat-card-content class="reviewcycle-info">
+          <p>
+            {{ reviewcycle.userId }} {{ reviewcycle.startDate }}
+            {{ reviewcycle.endDate }} {{ reviewcycle.period }}
+            {{ reviewcycle.reviewStatus }}
+          </p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div> -->
+</div>

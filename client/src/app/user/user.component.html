@@ -1,0 +1,66 @@
+<div class="user-management-container">
+  <form [formGroup]="userForm" (ngSubmit)="registerUser()" class="user-form">
+    <h2>User Registration</h2>
+
+    <mat-form-field appearance="fill">
+      <mat-label>First Name</mat-label>
+      <input matInput formControlName="firstName" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Last Name</mat-label>
+      <input matInput formControlName="lastName" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" formControlName="email" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Status</mat-label>
+      <input matInput formControlName="status" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Joining Date</mat-label>
+      <input matInput type="date" formControlName="joiningDate" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>HR ID</mat-label>
+      <input matInput formControlName="hrId" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Band</mat-label>
+      <input matInput formControlName="band" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Reporting Manager ID</mat-label>
+      <input matInput formControlName="reportingManagerId" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Roles (comma-separated)</mat-label>
+      <input matInput formControlName="roles" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Teams (comma-separated)</mat-label>
+      <input matInput formControlName="teams" />
+    </mat-form-field>
+
+    <button type="submit" mat-raised-button color="primary">Register</button>
+  </form>
+
+  <!-- User List -->
+  <div class="user-list" *ngFor="let user of users">
+    <mat-card class="user-card">
+      <mat-card-content>
+        <p>{{ user.firstName }} {{ user.lastName }} ({{ user.email }})</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
