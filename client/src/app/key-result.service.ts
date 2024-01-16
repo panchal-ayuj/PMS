@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -21,7 +21,13 @@ export class KeyResultService {
   }
 
   getTasksByKeyResultId(keyResultId: number): Observable<any[]> {
+    const authToken = localStorage.getItem('authToken');
+    console.log(authToken);
+    const header = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('Authorization', 'Bearer ' + authToken);
+    console.log(header);
     const url = `http://localhost:8080/api/tasks/byKeyResultId/${keyResultId}`;
-    return this.http.get<any[]>(url);
+    return this.http.get<any[]>(url, { headers : header });
   }
 }
