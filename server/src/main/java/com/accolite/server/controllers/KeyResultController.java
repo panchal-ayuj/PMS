@@ -2,6 +2,7 @@ package com.accolite.server.controllers;
 
 import com.accolite.server.models.GoalPlan;
 import com.accolite.server.models.KeyResult;
+import com.accolite.server.models.User;
 import com.accolite.server.readers.KeyResultExcelReader;
 import com.accolite.server.repository.KeyResultRepository;
 import com.accolite.server.service.KeyResultService;
@@ -45,5 +46,33 @@ public class KeyResultController {
     public ResponseEntity<List<KeyResult>> getKeyResults() {
         List<KeyResult> keyResults = keyResultRepository.findAll();
         return new ResponseEntity<>(keyResults, HttpStatus.OK);
+    }
+
+
+    @GetMapping("/keyResultById/{keyResultId}")
+    public ResponseEntity<KeyResult> getKeyResultById(@PathVariable Long keyResultId) {
+        KeyResult keyResult = keyResultService.getKeyResultById(keyResultId);
+        if (keyResult != null) {
+            return ResponseEntity.ok(keyResult);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
+    @PutMapping("/keyResultById/{keyResultId}")
+    public ResponseEntity<KeyResult> updateKeyResult(@PathVariable Long keyResultId, @RequestBody KeyResult updatedKeyResult) {
+        KeyResult existingKeyResult = keyResultService.getKeyResultById(keyResultId);
+
+        if (existingKeyResult != null) {
+            // Update the existing goal plan with the values from the updatedGoalPlan
+            updatedKeyResult.setKeyResultId(existingKeyResult.getKeyResultId());
+            // ... (set other fields accordingly)
+
+            KeyResult savedKeyResult = keyResultRepository.save(updatedKeyResult); // Assuming you have a method like this
+
+            return ResponseEntity.ok(updatedKeyResult);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
     }
 }

@@ -12,6 +12,9 @@ import { HttpClient } from '@angular/common/http';
 export class UserManagementComponent implements OnInit {
   userForm!: FormGroup;
   users: any[] = [];
+  userId: number | undefined;
+
+  searchUserId: number | undefined;
 
   constructor(private formBuilder: FormBuilder, private http: HttpClient) { }
 
@@ -35,23 +38,63 @@ export class UserManagementComponent implements OnInit {
     });
   }
 
-  registerUser() {
+  // registerUser() {
+  //   const user = this.userForm.value;
+  //   user.roles = user.roles.split(',').map((role: string) => role.trim());
+  //   user.teams = user.teams.split(',').map((team: string) => team.trim());
+
+  //   const apiUrl = 'http://localhost:8080/api/users/register';
+
+  //   this.http.post(apiUrl, user).subscribe(
+  //     (response) => {
+  //       console.log('User registered successfully:', response);
+  //       this.loadUsers(); // Refresh user list after registration
+  //     },
+  //     (error) => {
+  //       console.error('Error registering user:', error);
+  //     }
+  //   );
+  // }
+
+  registerOrUpdateUser() {
     const user = this.userForm.value;
-    user.roles = user.roles.split(',').map((role: string) => role.trim());
-    user.teams = user.teams.split(',').map((team: string) => team.trim());
+    console.log(typeof user.roles);
+    console.log(user.roles);
+    if (typeof user.roles === 'string'){
+      user.roles = user.roles.split(',').map((role: string) => role.trim());
+    }
+    if (typeof user.teams === 'string'){
+      user.teams = user.teams.split(',').map((team: string) => team.trim());
+    }
 
-    const apiUrl = 'http://localhost:8080/api/users/register';
+    const apiUrl = 'http://localhost:8080/api/users/';
 
-    this.http.post(apiUrl, user).subscribe(
-      (response) => {
-        console.log('User registered successfully:', response);
-        this.loadUsers(); // Refresh user list after registration
-      },
-      (error) => {
-        console.error('Error registering user:', error);
-      }
-    );
+    // Check if ID is present for update
+    if (this.searchUserId) {
+      this.http.put(`${apiUrl}userById/${this.searchUserId}`, user).subscribe(
+        (response) => {
+          console.log('User updated successfully:', response);
+          this.loadUsers();
+          this.resetForm();
+        },
+        (error) => {
+          console.error('Error updating User:', error);
+        }
+      );
+    } else {
+      this.http.post('http://localhost:8080/api/users/register', user).subscribe(
+        (response) => {
+          console.log('User registered successfully:', response);
+          this.loadUsers();
+          this.resetForm();
+        },
+        (error) => {
+          console.error('Error registering User:', error);
+        }
+      );
+    }
   }
+
 
   loadUsers() {
     const apiUrl = 'http://localhost:8080/api/users';
@@ -67,5 +110,25 @@ export class UserManagementComponent implements OnInit {
         console.error('Error loading users:', error);
       }
     );
+  }
+
+  searchUser(userId: number | undefined) {
+    if (userId) {
+      this.searchUserId = userId;
+      const apiUrl = `http://localhost:8080/api/users/userById/${userId}`;
+      this.http.get(apiUrl).subscribe(
+        (data: any) => {
+          this.userForm.patchValue(data); // Autofill the form with the fetched data
+        },
+        (error) => {
+          console.error('Error fetching User:', error);
+        }
+      );
+    }
+  }
+
+  resetForm() {
+    this.userForm.reset();
+    this.searchUserId = undefined;
   }
 }
