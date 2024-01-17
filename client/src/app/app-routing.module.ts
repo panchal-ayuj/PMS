@@ -10,15 +10,20 @@ import { ParentReviewcycleComponent } from './parent-reviewcycle/parent-reviewcy
 import { AppComponent } from './app.component';
 import { HierarchyComponent } from './hierarchy/hierarchy.component';
 import { UserManagementComponent } from './user/user.component';
+import { TaskComponent } from './task/task.component';
+import { ReviewcycleFormComponent } from './reviewcycle-form/reviewcycle-form.component';
+import { KeyresultFormComponent } from './keyresult-form/keyresult-form.component';
+import { GoalplanFormComponent } from './goalplan-form/goalplan-form.component';
 
 const routes: Routes = [
-  { path: '', component: UserManagementComponent },
+  { path: '', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },
   { path: 'admin', component: AdminPageComponent},
   { path: 'user', component: ParentUserComponent},
   { path: 'goalplan', component: ParentGoalplanComponent},
   { path: 'keyresult', component: ParentKeyresultComponent},
   { path: 'reviewcycle', component: ParentReviewcycleComponent},
+  { path: 'hierarchy', component: HierarchyComponent}
 ];
 
 @NgModule({

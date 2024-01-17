@@ -1,36 +1,35 @@
 package com.accolite.server.writers;
 
-import com.accolite.server.models.User;
+import com.accolite.server.models.ReviewCycle;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Component;
 
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
-import  java.io.IOException;
 @Component
-public class UserExcelWriter {
+public class ReviewCycleWriter {
     private Workbook workbook;
     private Sheet sheet;
     private int currentRow;
 
-    public UserExcelWriter() {
+    public ReviewCycleWriter() {
         workbook = new XSSFWorkbook();
-        sheet = workbook.createSheet("Employee Data");
+        sheet = workbook.createSheet("ReviewCycle Data");
         currentRow = 0;
     }
 
-    public void addUser(User user) {
+    public void addReviewCycle(ReviewCycle reviewCycle) {
         if (currentRow == 0) {
-            createHeaderRow(user.toMap().keySet());
+            createHeaderRow(reviewCycle.toMap().keySet());
         }
 
         Row row = sheet.createRow(++currentRow);
 
         int cellIndex = 0;
-        for (Object value : user.toMap().values()) {
+        for (Object value : reviewCycle.toMap().values()) {
             Cell cell = row.createCell(cellIndex++);
             if (value instanceof String) {
                 cell.setCellValue((String) value);
@@ -40,10 +39,8 @@ public class UserExcelWriter {
                 cell.setCellValue((Date) value);
                 CellStyle dateStyle = workbook.createCellStyle();
                 CreationHelper createHelper = workbook.getCreationHelper();
-                dateStyle.setDataFormat(createHelper.createDataFormat().getFormat("yyyy-MM-dd"));
+                dateStyle.setDataFormat(createHelper.createDataFormat().getFormat("yyyy-MM-dd HH:mm:ss"));
                 cell.setCellStyle(dateStyle);
-            } else if (value instanceof List) {
-                cell.setCellValue(value.toString());
             }
             // Add more conditions based on the data types you want to support
         }
@@ -63,12 +60,13 @@ public class UserExcelWriter {
         try (FileOutputStream outputStream = new FileOutputStream(filename)) {
             workbook.write(outputStream);
             System.out.println("Excel file '" + filename + "' created successfully.");
-        }
-        finally {
+        } finally {
             // Close workbook and release resources
             if (workbook != null) {
                 workbook.close();
             }
         }
+
+
     }
 }

@@ -2,6 +2,8 @@ package com.accolite.server.models;
 
 import jakarta.persistence.*;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Entity
 public class ReviewCycle {
@@ -173,5 +175,23 @@ public class ReviewCycle {
                 ", superSeniorRMId=" + superSeniorRMId +
                 ", userFeedback='" + userFeedback + '\'' +
                 '}';
+    }
+    public Map<String, Object> toMap() {
+        Map<String, Object> reviewCycleMap = new HashMap<>();
+        reviewCycleMap.put("userId", userId);
+        reviewCycleMap.put("startDate", startDate);
+        reviewCycleMap.put("endDate", endDate);
+        reviewCycleMap.put("period", period);
+        reviewCycleMap.put("overallRating", overallRating);
+        reviewCycleMap.put("reviewStatus", reviewStatus);
+        reviewCycleMap.put("feedback", feedback);
+        reviewCycleMap.put("reviewerId", reviewerId);
+        reviewCycleMap.put("seniorRMfeedback", seniorRMfeedback);
+        reviewCycleMap.put("seniorRMId", seniorRMId);
+        reviewCycleMap.put("superSeniorRMfeedback", superSeniorRMfeedback);
+        reviewCycleMap.put("superSeniorRMId", superSeniorRMId);
+        reviewCycleMap.put("userFeedback", userFeedback);
+
+        return reviewCycleMap;
     }
 }

@@ -5,45 +5,31 @@ import jakarta.persistence.Table;
 
 import jakarta.persistence.*;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Table(name = "Task")
 public class Task {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long taskId;
-
-//    @ManyToOne
-//    @JoinColumn(name = "keyResultId")
     private int keyResultId;
-
     private String description;
-
     @Temporal(TemporalType.TIMESTAMP)
     private Date creationDate;
-
     @Temporal(TemporalType.TIMESTAMP)
     private Date deadline;
-
     private int weight;
-
     private String completionStatus;
-
-
     private int userId;
-
-//    @ManyToOne
+    //    @ManyToOne
 //    @JoinColumn(name = "windowId")
     private int windowId;
-
     private int rating;
-
     private String feedback;
-
     private String period;
-
     @ElementCollection
     @CollectionTable(name = "TaskAttribute", joinColumns = @JoinColumn(name = "taskId"))
     @Column(name = "taskAttributeName")
@@ -189,6 +175,24 @@ public class Task {
                 ", period='" + period + '\'' +
                 ", taskAttributes=" + taskAttributes +
                 '}';
+    }
+    public Map<String, Object> toMap() {
+        Map<String, Object> taskMap = new HashMap<>();
+        taskMap.put("taskId", taskId);
+        taskMap.put("keyResultId", keyResultId);
+        taskMap.put("description", description);
+        taskMap.put("creationDate", creationDate);
+        taskMap.put("deadline", deadline);
+        taskMap.put("weight", weight);
+        taskMap.put("completionStatus", completionStatus);
+        taskMap.put("userId", userId);
+        taskMap.put("windowId", windowId);
+        taskMap.put("rating", rating);
+        taskMap.put("feedback", feedback);
+        taskMap.put("period", period);
+        taskMap.put("taskAttributes", taskAttributes);
+
+        return taskMap;
     }
 
 

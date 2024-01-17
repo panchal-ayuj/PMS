@@ -1,16 +1,21 @@
 package com.accolite.server.controllers;
 
+import com.accolite.server.models.Task;
+import com.accolite.server.models.User;
 import com.accolite.server.readers.TaskExcelReader;
-import com.accolite.server.repository.TaskRepository;
 import com.accolite.server.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.accolite.server.models.Task;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,7 +23,7 @@ import java.util.Optional;
 @RequestMapping("/api/tasks")
 public class TaskController {
 
-    private final TaskService taskService;
+    private TaskService taskService;
 
     @Autowired
     public TaskController(TaskService taskService) {
@@ -54,6 +59,37 @@ public class TaskController {
         Task createdTask = taskService.createTask(task);
         return new ResponseEntity<>(createdTask, HttpStatus.CREATED);
     }
+    @GetMapping("/export")
+    public ResponseEntity<?> exportTasksToExcel() {
+        List<Task> tasks = taskService.getAllTasks();
+        String filePath = "task_data_export.xlsx";
+
+        try {
+            taskService.exportTasksToExcel(tasks,filePath);
+
+            // Read the file content
+            byte[] fileContent = Files.readAllBytes(Paths.get(filePath));
+
+            // Create a ByteArrayResource from the file content
+            ByteArrayResource resource = new ByteArrayResource(fileContent);
+
+            // Set the Content-Disposition header to prompt the user for download
+            HttpHeaders headers = new HttpHeaders();
+            headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=task_data_export.xlsx");
+
+            // Return the ResponseEntity with the ByteArrayResource and headers
+            return ResponseEntity.ok()
+                    .headers(headers)
+                    .contentLength(fileContent.length)
+                    .contentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
+                    .body(resource);
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Handle the exception and return an error response if needed
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
 
     @PutMapping("/{taskId}")
     public ResponseEntity<Task> updateTask(@PathVariable Long taskId, @RequestBody Task updatedTask) {

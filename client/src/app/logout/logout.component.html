@@ -1,8 +1,3 @@
-<app-user-upload></app-user-upload>
-<app-task></app-task>
-<app-task-upload></app-task-upload>
-<!-- app.component.html -->
-
 <div class="center-container">
   <div *ngIf="admin" class="options-container">
     <mat-card>
@@ -11,6 +6,17 @@
       </mat-card-header>
       <mat-card-content>
         <button mat-raised-button color="primary" routerLink="/admin">Admin</button>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="options-container">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>View Hierarchy</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <button mat-raised-button color="primary" routerLink="/hierarchy">View</button>
       </mat-card-content>
     </mat-card>
   </div>

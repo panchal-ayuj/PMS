@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -29,16 +28,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { HierarchyComponent } from './hierarchy/hierarchy.component';
 import { DiagramModule } from '@syncfusion/ej2-angular-diagrams';
-import { NgxOrgChartModule } from 'ngx-org-chart';
 import { RouterModule } from '@angular/router';
-import { OrgchartModule } from '@dabeng/ng-orgchart';
 import { OrganizationChartModule } from 'primeng/organizationchart';
 import { ExportService } from './export.service';
-
-
-
-
-
 
 @NgModule({
   declarations: [
@@ -60,7 +52,7 @@ import { ExportService } from './export.service';
     ParentGoalplanComponent,
     ParentReviewcycleComponent,
     ParentKeyresultComponent,
-    HierarchyComponent,
+    HierarchyComponent
     
   ],
   imports: [
@@ -76,12 +68,9 @@ import { ExportService } from './export.service';
     MatFormFieldModule,
     DiagramModule,
     AppRoutingModule,
-  
-  OrganizationChartModule,
- 
-    
+    OrganizationChartModule,
   ],
   providers: [ExportService],
-  bootstrap: [AppComponent, HierarchyComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -3,6 +3,9 @@ package com.accolite.server.models;
 
 import jakarta.persistence.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Entity
 public class KeyResult {
 
@@ -118,5 +121,18 @@ public class KeyResult {
                 ", windowId=" + windowId +
                 ", rating=" + rating +
                 '}';
+    }
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("keyResultId", keyResultId);
+        map.put("userId", userId);
+        map.put("goalPlanId", goalPlanId);
+        map.put("keyResultName", keyResultName);
+        map.put("description", description);
+        map.put("weight", weight);
+        map.put("period", period);
+        map.put("windowId", windowId);
+        map.put("rating", rating);
+        return map;
     }
 }

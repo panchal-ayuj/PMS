@@ -74,6 +74,7 @@ export class UserManagementComponent implements OnInit {
   exportData() {
     this.exportService.exportData().subscribe(
       (data: Blob) => {
+        console.log(data);
         // Create a blob URL and trigger a download
         const blobUrl = window.URL.createObjectURL(data);
         const link = document.createElement('a');

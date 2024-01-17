@@ -5,6 +5,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 @Entity
 public class GoalPlan {
@@ -56,4 +59,13 @@ public class GoalPlan {
                 ", financialYear=" + financialYear +
                 '}';
     }
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("goalPlanId", goalPlanId);
+        map.put("userId", userId);
+        map.put("financialYear", financialYear);
+        return map;
+    }
+
+
 }

@@ -1,55 +1,49 @@
 package com.accolite.server.writers;
 
-import com.accolite.server.models.User;
-import org.apache.poi.ss.usermodel.*;
+import com.accolite.server.models.KeyResult;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Component;
 
 import java.io.FileOutputStream;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
-import  java.io.IOException;
+import java.io.IOException;
+
 @Component
-public class UserExcelWriter {
+public class KeyResultExcelWriter {
     private Workbook workbook;
     private Sheet sheet;
     private int currentRow;
 
-    public UserExcelWriter() {
+    public KeyResultExcelWriter() {
         workbook = new XSSFWorkbook();
-        sheet = workbook.createSheet("Employee Data");
+        sheet = workbook.createSheet("KeyResult Data");
         currentRow = 0;
     }
 
-    public void addUser(User user) {
+    public void addKeyResult(KeyResult keyResult) {
         if (currentRow == 0) {
-            createHeaderRow(user.toMap().keySet());
+            createHeaderRow(keyResult.toMap().keySet());
         }
 
         Row row = sheet.createRow(++currentRow);
 
         int cellIndex = 0;
-        for (Object value : user.toMap().values()) {
+        for (Object value : keyResult.toMap().values()) {
             Cell cell = row.createCell(cellIndex++);
             if (value instanceof String) {
                 cell.setCellValue((String) value);
             } else if (value instanceof Number) {
                 cell.setCellValue(((Number) value).doubleValue());
-            } else if (value instanceof Date) {
-                cell.setCellValue((Date) value);
-                CellStyle dateStyle = workbook.createCellStyle();
-                CreationHelper createHelper = workbook.getCreationHelper();
-                dateStyle.setDataFormat(createHelper.createDataFormat().getFormat("yyyy-MM-dd"));
-                cell.setCellStyle(dateStyle);
-            } else if (value instanceof List) {
-                cell.setCellValue(value.toString());
+            } else {
+                // Handle other data types as needed
             }
-            // Add more conditions based on the data types you want to support
         }
     }
 
-    private void createHeaderRow(Set<String> headers) {
+    private void createHeaderRow(Iterable<String> headers) {
         Row row = sheet.createRow(currentRow++);
 
         int cellIndex = 0;
@@ -63,12 +57,11 @@ public class UserExcelWriter {
         try (FileOutputStream outputStream = new FileOutputStream(filename)) {
             workbook.write(outputStream);
             System.out.println("Excel file '" + filename + "' created successfully.");
-        }
-        finally {
-            // Close workbook and release resources
+        } finally {
             if (workbook != null) {
                 workbook.close();
             }
         }
     }
+
 }

@@ -15,18 +15,21 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    private final UserExcelWriter userExcelWriter;
+    private UserExcelWriter userExcelWriter;
     @Autowired
     public UserService(UserExcelWriter userExcelWriter) {
         this.userExcelWriter = userExcelWriter;
     }
 
     public void generateEmployeeExcelFile(List<User> employees, String filePath) {
-        for (User employee : employees) {
-            userExcelWriter.addUser(employee);
-        }
 
         try {
+            userExcelWriter = new UserExcelWriter();  // Reset the UserExcelWriter before each export
+
+            for (User employee : employees) {
+                userExcelWriter.addUser(employee);
+            }
+
             userExcelWriter.writeToFile(filePath);
         } catch (IOException e) {
             // Handle or log the exception appropriately
@@ -64,4 +67,6 @@ public class UserService {
     public void saveAll(List<User> users) {
         userRepository.saveAll(users);
     }
+
+
 }
