@@ -1,0 +1,69 @@
+// Define variables for common colors
+$primary-color: #3498db;
+$navbar-background: #2c3e50;
+$navbar-text-color: #ecf0f1;
+
+// Navbar styles
+.navbar {
+  position: fixed;
+  height: 65px;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: $navbar-background;
+  color: $navbar-text-color;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  z-index: 1000; // Set a high z-index to ensure it's on top of other elements
+
+  .navbar-logo {
+    img {
+      max-width: 100px; // Adjust the max-width of your logo
+      height: auto;
+    }
+  }
+
+  .navbar-links {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+
+    li {
+      margin-right: 20px;
+      font-size: 16px;
+
+      a {
+        text-decoration: none;
+        color: $navbar-text-color;
+        transition: color 0.3s ease;
+
+        &:hover {
+          color: $primary-color;
+        }
+      }
+    }
+  }
+
+  .navbar-actions {
+    // Add styles for login/logout buttons or user-related actions
+    
+  }
+}
+
+.mat-icon-size{
+  font-size: 50px;
+  height: 50px;
+  width: 50px;
+}
+
+
+.input{
+  margin-top: 25px;
+  height: 70px;
+  width: 400px;
+}

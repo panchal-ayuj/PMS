@@ -8,16 +8,19 @@ import { ParentUserComponent } from './parent-user/parent-user.component';
 import { ParentGoalplanComponent } from './parent-goalplan/parent-goalplan.component';
 import { ParentKeyresultComponent } from './parent-keyresult/parent-keyresult.component';
 import { ParentReviewcycleComponent } from './parent-reviewcycle/parent-reviewcycle.component';
+import { AppComponent } from './app.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 const routes: Routes = [
-  { path: '', component: LoginComponent },
+  // { path: '', component: SidebarComponent },
+  { path: '', component:  LoginComponent},
   { path: 'logout', component: LogoutComponent },
   { path: 'admin', component: AdminPageComponent},
   { path: 'user', component: ParentUserComponent},
   { path: 'goalplan', component: ParentGoalplanComponent},
   { path: 'keyresult', component: ParentKeyresultComponent},
   { path: 'reviewcycle', component: ParentReviewcycleComponent},
-  {path: 'sidebar', component: SidebarComponent}
+  { path: 'navbar', component: NavbarComponent}
 ];
 
 @NgModule({

@@ -36,6 +36,8 @@ import { ParentUserComponent } from './parent-user/parent-user.component';
 import { ParentGoalplanComponent } from './parent-goalplan/parent-goalplan.component';
 import { ParentReviewcycleComponent } from './parent-reviewcycle/parent-reviewcycle.component';
 import { ParentKeyresultComponent } from './parent-keyresult/parent-keyresult.component';
+import { BodyComponent } from './body/body.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 
 @NgModule({
@@ -63,7 +65,9 @@ import { ParentKeyresultComponent } from './parent-keyresult/parent-keyresult.co
     ParentUserComponent,
     ParentGoalplanComponent,
     ParentReviewcycleComponent,
-    ParentKeyresultComponent
+    ParentKeyresultComponent,
+    BodyComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,

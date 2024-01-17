@@ -1,47 +1,4 @@
-
-
-// .sidenav-container {
-//     height: 100vh;
-//   }
-  
-//   .menu-button {
-//     position: fixed;
-//     top: 20px;
-//     left: 20px;
-//     z-index: 2;
-//   }
-  
-//   .mat-sidenav {
-//     width: 250px;
-//     background-color: #333; 
-//     color: white; 
-//   }
-  
-//   .mat-sidenav a {
-//     color: white; 
-//     text-decoration: none;
-//   }
-  
-//   .mat-sidenav a:hover {
-//     background-color: #555; 
-//   }
-  
-//   .mat-sidenav-content {
-//     transition: margin-left 0.5s;
-//     margin-left: 0;
-//     padding: 20px;
-//   }
-  
-//   .mat-sidenav-opened .mat-sidenav-content {
-//     margin-left: 250px;
-//   }
-  
-
-//   .mat-toolbar {
-//     background-color: #2196F3;
-//   }
-  
-.sidenav {
+ .sidenav {
     background: #263238;
     transition: all .5s ease;
     position: fixed;
@@ -50,6 +7,7 @@
     width: 5rem;
     height: 100vh;
     box-shadow: 0.063rem 0 1.25rem 0 #8690a3;
+    margin-top: 59.6px;
 
     .logo-container {
         display: flex;
