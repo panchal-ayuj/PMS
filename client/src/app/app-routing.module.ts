@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
 import { AdminPageComponent } from './admin-page/admin-page.component';
 import { ParentUserComponent } from './parent-user/parent-user.component';
 import { ParentGoalplanComponent } from './parent-goalplan/parent-goalplan.component';
@@ -12,6 +13,8 @@ import { UserGuard } from './user.guard'; // Import the AdminGuard
 import { ParentTaskComponent } from './parent-task/parent-task.component';
 import { KeyresultPageComponent } from './keyresult-page/keyresult-page.component';
 import { ProfilePageComponent } from './profile-page/profile-page.component';
+import { AppComponent } from './app.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -23,7 +26,8 @@ const routes: Routes = [
   { path: 'admin/keyresult', component: ParentKeyresultComponent,canActivate: [AdminGuard]},
   { path: 'admin/reviewcycle', component: ParentReviewcycleComponent,canActivate: [AdminGuard]},
   { path: 'admin/task', component:ParentTaskComponent},
-  { path: 'profile',component:ProfilePageComponent }
+  { path: 'profile',component:ProfilePageComponent },
+  { path: 'navbar', component: NavbarComponent}
 ];
 
 @NgModule({

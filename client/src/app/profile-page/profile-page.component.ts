@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { HttpClient } from '@angular/common/http';
+import { SharedDataService } from '../shared-data.service';
+import { UserInfoService } from '../user-info.service';
 
 @Component({
   selector: 'app-profile-page',
@@ -20,10 +22,18 @@ export class ProfilePageComponent implements OnInit {
     reportingManagerId: '',
   };
 
-  constructor(private service: AuthService, private http:HttpClient) {}
+  constructor(private service: AuthService, private http:HttpClient, private sharedDataService: SharedDataService, private userInfoService: UserInfoService) {}
 
   ngOnInit(): void {
-    this.handleAsyncResponse();
+
+    this.sharedDataService.currentUserId.subscribe(userId => {
+      if (userId) {
+        this.getUserById(userId);
+      } else {
+        this.handleAsyncResponse();
+      }
+    });
+
   }
 
   async handleAsyncResponse() {
@@ -41,7 +51,7 @@ export class ProfilePageComponent implements OnInit {
     }
   }
 
-  getUserById(userId: string): void {
+  getUserById(userId: any): void {
     console.log('User ID:', userId);
     if (!userId) {
       console.error('User ID is undefined');

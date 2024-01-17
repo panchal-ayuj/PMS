@@ -7,6 +7,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   templateUrl: './task.component.html',
   styleUrl: './task.component.scss'
 })
+
 export class TaskComponent implements OnInit {
   taskForm!: FormGroup;
   tasks: any[] = [];

@@ -2,7 +2,6 @@
   <div class="form-container">
     <form [formGroup]="taskForm" (ngSubmit)="registerOrUpdateTask()">
       <h2>Task Management</h2>
-
       <mat-form-field appearance="fill">
         <mat-label for="keyResultId">Key Result ID:</mat-label>
         <input
@@ -12,7 +11,6 @@
           formControlName="keyResultId"
         />
       </mat-form-field>
-
       <mat-form-field appearance="fill">
         <mat-label for="description">Description:</mat-label>
         <input
@@ -22,7 +20,6 @@
           formControlName="description"
         />
       </mat-form-field>
-
       <mat-form-field appearance="fill">
         <mat-label for="creationDate">Creation Date:</mat-label>
         <input
@@ -32,17 +29,14 @@
           formControlName="creationDate"
         />
       </mat-form-field>
-
       <mat-form-field appearance="fill">
         <mat-label for="deadline">Deadline:</mat-label>
         <input matInput type="date" id="deadline" formControlName="deadline" />
       </mat-form-field>
-
       <mat-form-field appearance="fill">
         <mat-label for="weight">Weight:</mat-label>
         <input matInput type="number" id="weight" formControlName="weight" />
       </mat-form-field>
-
       <mat-form-field appearance="fill">
         <mat-label for="completionStatus">Completion Status:</mat-label>
         <input
@@ -52,12 +46,10 @@
           formControlName="completionStatus"
         />
       </mat-form-field>
-
       <mat-form-field appearance="fill">
         <mat-label for="userId">User ID:</mat-label>
         <input matInput type="number" id="userId" formControlName="userId" />
       </mat-form-field>
-
       <mat-form-field appearance="fill">
         <mat-label for="windowId">Window ID:</mat-label>
         <input
@@ -67,22 +59,18 @@
           formControlName="windowId"
         />
       </mat-form-field>
-
       <mat-form-field appearance="fill">
         <mat-label for="rating">Rating:</mat-label>
         <input matInput type="number" id="rating" formControlName="rating" />
       </mat-form-field>
-
       <mat-form-field appearance="fill">
         <mat-label for="feedback">Feedback:</mat-label>
         <input matInput type="text" id="feedback" formControlName="feedback" />
       </mat-form-field>
-
       <mat-form-field appearance="fill">
         <mat-label for="period">Period:</mat-label>
         <input matInput type="text" id="period" formControlName="period" />
       </mat-form-field>
-
       <mat-form-field appearance="fill">
         <mat-label for="taskAttributes">Task Attributes:</mat-label>
         <input
@@ -92,13 +80,11 @@
           formControlName="taskAttributes"
         />
       </mat-form-field>
-
       <button mat-raised-button color="primary" type="submit">
         {{ searchTaskId ? "Update Task" : "Register Task" }}
       </button>
     </form>
   </div>
-
   <div class="edit-container">
     <div class="search-form">
       <mat-form-field appearance="fill">
@@ -113,12 +99,10 @@
         <button mat-raised-button (click)="resetForm()">Reset</button>
       </div>
     </div>
-
     <div class="file-upload-container">
       <app-task-upload></app-task-upload>
     </div>
   </div>
-
   <!-- Task List
   <div *ngFor="let task of tasks">
     <p>{{ task.description }} (ID: {{ task.taskId }})</p>
