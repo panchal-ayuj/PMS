@@ -1,74 +1,100 @@
-<!-- user-management.component.html -->
-
 <div class="user-management-container">
-
-  <!-- User Registration Form -->
-  <form [formGroup]="userForm" (ngSubmit)="registerUser()" class="user-form">
+  <div class="form-container">
     <h2>User Registration</h2>
 
-    <mat-form-field appearance="fill">
-      <mat-label>First Name</mat-label>
-      <input matInput formControlName="firstName" />
-    </mat-form-field>
+    <form [formGroup]="userForm" (ngSubmit)="registerOrUpdateUser()">
+      <mat-form-field appearance="fill">
+        <mat-label>First Name</mat-label>
+        <input matInput formControlName="firstName" />
+      </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Last Name</mat-label>
-      <input matInput formControlName="lastName" />
-    </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Last Name</mat-label>
+        <input matInput formControlName="lastName" />
+      </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Email</mat-label>
-      <input matInput type="email" formControlName="email" />
-    </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="email" />
+      </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Status</mat-label>
-      <input matInput formControlName="status" />
-    </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Status</mat-label>
+        <input matInput formControlName="status" />
+      </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Joining Date</mat-label>
-      <input matInput type="date" formControlName="joiningDate" />
-    </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Joining Date</mat-label>
+        <input matInput type="date" formControlName="joiningDate" />
+      </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>HR ID</mat-label>
-      <input matInput formControlName="hrId" />
-    </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>HR ID</mat-label>
+        <input matInput formControlName="hrId" />
+      </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Band</mat-label>
-      <input matInput formControlName="band" />
-    </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Band</mat-label>
+        <input matInput formControlName="band" />
+      </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Reporting Manager ID</mat-label>
-      <input matInput formControlName="reportingManagerId" />
-    </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Reporting Manager ID</mat-label>
+        <input matInput formControlName="reportingManagerId" />
+      </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Roles (comma-separated)</mat-label>
-      <input matInput formControlName="roles" />
-    </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Roles (comma-separated)</mat-label>
+        <input matInput formControlName="roles" />
+      </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Teams (comma-separated)</mat-label>
-      <input matInput formControlName="teams" />
-    </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Teams (comma-separated)</mat-label>
+        <input matInput formControlName="teams" />
+      </mat-form-field>
 
-    <button type="submit" mat-raised-button color="primary">Register</button>
-  </form>
-<div>
-  <button type="export" mat-raised-button color="primary" (click)="exportData()">Export</button>
-</div>
+      <div>
+        <button
+          type="export"
+          mat-raised-button
+          color="primary"
+          (click)="exportData()"
+        >
+          Export
+        </button>
+      </div>
+      <button type="submit" mat-raised-button color="primary">
+        {{ searchUserId ? "Update User" : "Register User" }}
+      </button>
+    </form>
+  </div>
+
+  <div class="edit-container">
+    <div class="search-form">
+      <mat-form-field appearance="fill">
+        <mat-label>Search User by ID:</mat-label>
+        <input matInput type="number" id="userId" [(ngModel)]="userId" />
+      </mat-form-field>
+      <button mat-raised-button color="primary" (click)="searchUser(userId)">
+        Search
+      </button>
+      <!-- Reset Form Button -->
+      <div class="reset-button">
+        <button mat-raised-button (click)="resetForm()">Reset</button>
+      </div>
+    </div>
+
+    <div class="file-upload-container">
+      <app-user-upload></app-user-upload>
+    </div>
+  </div>
 
   <!-- User List -->
-  <div class="user-list" *ngFor="let user of users">
+  <!-- <div class="user-list" *ngFor="let user of users">
     <mat-card class="user-card">
       <mat-card-content>
         <p>{{ user.firstName }} {{ user.lastName }} ({{ user.email }})</p>
       </mat-card-content>
     </mat-card>
-  </div>
-
+  </div> -->
 </div>

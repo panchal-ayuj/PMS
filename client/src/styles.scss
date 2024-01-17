@@ -2,9 +2,7 @@
 @import 'primeng/resources/themes/saga-blue/theme.css';
 @import 'primeng/resources/primeng.min.css';
 @import 'primeicons/primeicons.css';
-html, body { 
-    height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
 .card {
     background: var(--surface-card);
     padding: 2rem;
@@ -12,3 +10,21 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     margin-bottom: 1rem;
 }
 
+@import "bootstrap/dist/css/bootstrap.min.css";
+@import "bootstrap-icons/font/bootstrap-icons.css";
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: 'Roboto', "Helvetica Neue", sans-serif;
+  position: relative;
+/* You can add global styles to this file, and also import other style files */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+}

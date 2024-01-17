@@ -1,5 +1,6 @@
 package com.accolite.server.service;
 
+import com.accolite.server.models.GoalPlan;
 import com.accolite.server.models.User;
 import com.accolite.server.repository.UserRepository;
 import com.accolite.server.writers.UserExcelWriter;
@@ -55,8 +56,7 @@ public class UserService {
     }
 
     public User getUserDetails(Long userId) {
-        return userRepository.findByUserId(userId)
-                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+        return userRepository.findByUserId(userId);
     }
 
     public List<User> getUserHierarchy(Long userId) {
@@ -68,5 +68,7 @@ public class UserService {
         userRepository.saveAll(users);
     }
 
-
+    public User getUserById(Long userId) {
+        return userRepository.findByUserId(userId);
+    }
 }

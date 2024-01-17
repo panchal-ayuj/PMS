@@ -1,38 +1,71 @@
-<!-- goal-plan-management.component.html -->
-<!-- goal-plan-management.component.html -->
-
 <div class="goal-plan-management-container">
-  <h2>GoalPlan Management</h2>
+  <div class="form-container">
+    <h2>Goal Plan Management</h2>
 
-  <!-- GoalPlan Registration Form -->
-  <form [formGroup]="goalPlanForm" (ngSubmit)="registerGoalPlan()">
-    <mat-form-field appearance="fill">
-      <mat-label>Financial Year</mat-label>
-      <input
-        matInput
-        type="number"
-        placeholder="Enter financial year"
-        formControlName="financialYear"
-      />
-    </mat-form-field>
+    <!-- GoalPlan Registration Form -->
+    <form [formGroup]="goalPlanForm" (ngSubmit)="registerOrUpdateGoalPlan()">
+      <mat-form-field appearance="fill">
+        <mat-label>Financial Year</mat-label>
+        <input
+          matInput
+          type="number"
+          placeholder="Enter financial year"
+          formControlName="financialYear"
+        />
+      </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>User Id</mat-label>
-      <input
-        matInput
-        type="number"
-        placeholder="Enter user ID"
-        formControlName="userId"
-      />
-    </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>User Id</mat-label>
+        <input
+          matInput
+          type="number"
+          placeholder="Enter user ID"
+          formControlName="userId"
+        />
+      </mat-form-field>
 
-    <button mat-raised-button color="primary" type="submit">
-      Register GoalPlan
-    </button>
+      <button
+        mat-raised-button
+        color="primary"
+        type="export"
+        (click)="exportGoalPlans()"
+      >
+        Export Goal Plans
+      </button>
+      <button mat-raised-button color="primary" type="submit">
+        {{ searchGoalPlanId ? "Update Goal Plan" : "Register Goal Plan" }}
+      </button>
+    </form>
+  </div>
 
-    <button mat-raised-button color="primary" type="export" (click)="exportGoalPlans()">Export Goal Plans</button>
-  </form>
+  <div class="edit-container">
+    <div class="search-form">
+      <mat-form-field appearance="fill">
+        <mat-label>Search Goal Plan by ID:</mat-label>
+        <input
+          matInput
+          type="number"
+          id="goalPlanId"
+          [(ngModel)]="goalPlanId"
+        />
+      </mat-form-field>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="searchGoalPlan(goalPlanId)"
+      >
+        Search
+      </button>
+      <!-- Reset Form Button -->
+      <div class="reset-button">
+        <button mat-raised-button (click)="resetForm()">Reset</button>
+      </div>
+    </div>
 
+    <div class="file-upload-container">
+      <app-upload></app-upload>
+    </div>
+  </div>
   <!-- GoalPlan List -->
   <!-- <div class="goal-plan-list" *ngFor="let goalplan of goalplans">
     <mat-card class="goalplan-card">

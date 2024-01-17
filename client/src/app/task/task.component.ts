@@ -7,9 +7,13 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   templateUrl: './task.component.html',
   styleUrl: './task.component.scss'
 })
+
 export class TaskComponent implements OnInit {
   taskForm!: FormGroup;
   tasks: any[] = [];
+  taskId: number | undefined;
+
+  searchTaskId: number | undefined;
 
   constructor(private fb: FormBuilder, private http: HttpClient) { }
 
@@ -51,47 +55,58 @@ export class TaskComponent implements OnInit {
     );
   }
 
-  createTask() {
+  registerOrUpdateTask() {
     const task = this.taskForm.value;
-    task.taskAttributes = task.taskAttributes.split(',').map((taskAttribute: string) => taskAttribute.trim());
+    if (typeof task.taskAttributes === 'string'){
+      task.taskAttributes = task.taskAttributes.split(',').map((taskAttribute: string) => taskAttribute.trim());
+    }
 
-    const apiUrl = 'http://localhost:8080/api/tasks/create';
-    this.http.post(apiUrl, task).subscribe(
-      (response) => {
-        console.log('Task created successfully:', response);
-        this.loadTasks(); // Refresh the task list
-      },
-      (error) => {
-        console.error('Error creating task:', error);
-      }
-    );
+    const apiUrl = 'http://localhost:8080/api/tasks/';
+
+    // Check if ID is present for update
+    if (this.searchTaskId) {
+      this.http.put(`${apiUrl}taskById/${this.searchTaskId}`, task).subscribe(
+        (response) => {
+          console.log('Task updated successfully:', response);
+          this.loadTasks();
+          this.resetForm();
+        },
+        (error) => {
+          console.error('Error updating Task:', error);
+        }
+      );
+    } else {
+      this.http.post('http://localhost:8080/api/tasks/create', task).subscribe(
+        (response) => {
+          console.log('Task registered successfully:', response);
+          this.loadTasks();
+          this.resetForm();
+        },
+        (error) => {
+          console.error('Error registering Task:', error);
+        }
+      );
+    }
   }
 
-  updateTask(taskId: number) {
-    const updatedTask = this.taskForm.value;
-    const apiUrl = `http://localhost:8080/api/tasks/${taskId}`;
-    this.http.put(apiUrl, updatedTask).subscribe(
-      (response) => {
-        console.log('Task updated successfully:', response);
-        this.loadTasks(); // Refresh the task list
-      },
-      (error) => {
-        console.error('Error updating task:', error);
-      }
-    );
+  searchTask(taskId: number | undefined) {
+    if (taskId) {
+      this.searchTaskId = taskId;
+      const apiUrl = `http://localhost:8080/api/tasks/taskById/${taskId}`;
+      this.http.get(apiUrl).subscribe(
+        (data: any) => {
+          this.taskForm.patchValue(data); // Autofill the form with the fetched data
+        },
+        (error) => {
+          console.error('Error fetching Task:', error);
+        }
+      );
+    }
   }
 
-  deleteTask(taskId: number) {
-    const apiUrl = `http://localhost:8080/api/tasks/${taskId}`;
-    this.http.delete(apiUrl).subscribe(
-      (response) => {
-        console.log('Task deleted successfully:', response);
-        this.loadTasks(); // Refresh the task list
-      },
-      (error) => {
-        console.error('Error deleting task:', error);
-      }
-    );
+  resetForm() {
+    this.taskForm.reset();
+    this.searchTaskId = undefined;
   }
 
   exportTasks() {

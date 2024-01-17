@@ -52,4 +52,8 @@ public class KeyResultService {
     public void saveAll(List<KeyResult> keyResults) {
         keyResultRepository.saveAll(keyResults);
     }
+
+    public KeyResult getKeyResultById(Long keyResultId) {
+        return keyResultRepository.findByKeyResultId(keyResultId);
+    }
 }

@@ -34,11 +34,12 @@ input[type="file"] {
   font-size: 16px; /* Text font size */
   transition: background-color 0.3s ease; /* Smooth transition on hover */
   margin: 1%;
-  align-items: c;
+  align-items: center;
 
   &:hover {
     background-color: #BBDEFB; /* Change background color on hover */
   }
+  
 }
 
 mat-label {
@@ -54,4 +55,8 @@ mat-form-field {
       color: #1976d2; /* Adjust the color as needed */
     }
   }
+}
+
+button {
+  margin-top: 3%;
 }

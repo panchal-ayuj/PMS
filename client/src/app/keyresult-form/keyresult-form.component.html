@@ -1,67 +1,109 @@
 <!-- user-management.component.html -->
 
 <div class="key-result-management-container">
-  <h2>KeyResult Management</h2>
+  <div class="form-container">
+    <h2>KeyResult Management</h2>
 
-  <!-- KeyResult Registration Form -->
-  <form [formGroup]="keyResultForm" (ngSubmit)="registerKeyResult()">
-    <mat-form-field appearance="fill">
-      <mat-label>User Id</mat-label>
-      <input matInput type="number" id="userId" formControlName="userId" />
-    </mat-form-field>
+    <!-- KeyResult Registration Form -->
+    <form [formGroup]="keyResultForm" (ngSubmit)="registerOrUpdateKeyResult()">
+      <mat-form-field appearance="fill">
+        <mat-label>User Id</mat-label>
+        <input matInput type="number" id="userId" formControlName="userId" />
+      </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>GoalPlan Id</mat-label>
-      <input
-        matInput
-        type="number"
-        id="goalPlanId"
-        formControlName="goalPlanId"
-      />
-    </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>GoalPlan Id</mat-label>
+        <input
+          matInput
+          type="number"
+          id="goalPlanId"
+          formControlName="goalPlanId"
+        />
+      </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>KeyResult Name</mat-label>
-      <input
-        matInput
-        type="text"
-        id="keyResultName"
-        formControlName="keyResultName"
-      />
-    </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>KeyResult Name</mat-label>
+        <input
+          matInput
+          type="text"
+          id="keyResultName"
+          formControlName="keyResultName"
+        />
+      </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Description</mat-label>
-      <input
-        matInput
-        type="text"
-        id="description"
-        formControlName="description"
-      />
-    </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Description</mat-label>
+        <input
+          matInput
+          type="text"
+          id="description"
+          formControlName="description"
+        />
+      </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Weight</mat-label>
-      <input matInput type="number" id="weight" formControlName="weight" />
-    </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Weight</mat-label>
+        <input matInput type="number" id="weight" formControlName="weight" />
+      </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Period</mat-label>
-      <input matInput type="text" id="period" formControlName="period" />
-    </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Period</mat-label>
+        <input matInput type="text" id="period" formControlName="period" />
+      </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Window Id</mat-label>
-      <input matInput type="number" id="windowId" formControlName="windowId" />
-    </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Window Id</mat-label>
+        <input
+          matInput
+          type="number"
+          id="windowId"
+          formControlName="windowId"
+        />
+      </mat-form-field>
 
-    <button mat-raised-button color="primary" type="submit">
-      Register KeyResult
-    </button>
+      <button
+        mat-raised-button
+        color="primary"
+        type="export"
+        (click)="exportKeyResults()"
+      >
+        Export Key Results
+      </button>
 
-    <button mat-raised-button color="primary" type="export" (click)="exportKeyResults()">Export Key Results</button>
-  </form>
+      <button mat-raised-button color="primary" type="submit">
+        {{ searchKeyResultId ? "Update Key Result" : "Register Key Result" }}
+      </button>
+    </form>
+  </div>
 
+  <div class="edit-container">
+    <div class="search-form">
+      <mat-form-field appearance="fill">
+        <mat-label>Search Key Result by ID:</mat-label>
+        <input
+          matInput
+          type="number"
+          id="keyResultId"
+          [(ngModel)]="keyResultId"
+        />
+      </mat-form-field>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="searchKeyResult(keyResultId)"
+      >
+        Search
+      </button>
+      <!-- Reset Form Button -->
+      <div class="reset-button">
+        <button mat-raised-button (click)="resetForm()">Reset</button>
+      </div>
+    </div>
+
+    <div class="file-upload-container">
+      <app-keyresult-upload></app-keyresult-upload>
+    </div>
+  </div>
   <!-- KeyResult List -->
   <!-- <div class="key-result-list">
     <div class="key-result-card" *ngFor="let keyresult of keyresults">

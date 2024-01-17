@@ -88,4 +88,31 @@ public class GoalPlanController {
         GoalPlan registeredGoalPlan = goalPlanService.registerGoalPlan(goalPlan);
         return new ResponseEntity<>(registeredGoalPlan, HttpStatus.CREATED);
     }
+
+    @GetMapping("/goalPlanById/{goalPlanId}")
+    public ResponseEntity<GoalPlan> getGoalPlanById(@PathVariable Long goalPlanId) {
+        GoalPlan goalPlan = goalPlanService.getGoalPlanById(goalPlanId);
+        if (goalPlan != null) {
+            return ResponseEntity.ok(goalPlan);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
+    @PutMapping("/goalPlanById/{goalPlanId}")
+    public ResponseEntity<GoalPlan> updateGoalPlan(@PathVariable Long goalPlanId, @RequestBody GoalPlan updatedGoalPlan) {
+        GoalPlan existingGoalPlan = goalPlanService.getGoalPlanById(goalPlanId);
+
+        if (existingGoalPlan != null) {
+            // Update the existing goal plan with the values from the updatedGoalPlan
+            updatedGoalPlan.setGoalPlanId(existingGoalPlan.getGoalPlanId());
+            // ... (set other fields accordingly)
+
+            GoalPlan savedGoalPlan = goalPlanRepository.save(updatedGoalPlan); // Assuming you have a method like this
+
+            return ResponseEntity.ok(savedGoalPlan);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
 }

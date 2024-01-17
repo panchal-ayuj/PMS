@@ -44,6 +44,11 @@ public class ReviewCycleService {
     public List<ReviewCycle> getAllReviewCycles() {
         return reviewCycleRepository.findAll();
     }
+
+    public ReviewCycle getReviewCycleById(Long reviewCycleId) {
+        return reviewCycleRepository.findByWindowId(reviewCycleId);
+    }
+
     public void saveAll(List<ReviewCycle> reviewCycles) {
         reviewCycleRepository.saveAll(reviewCycles);
     }

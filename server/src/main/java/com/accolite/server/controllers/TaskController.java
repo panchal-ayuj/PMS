@@ -3,6 +3,7 @@ package com.accolite.server.controllers;
 import com.accolite.server.models.Task;
 import com.accolite.server.models.User;
 import com.accolite.server.readers.TaskExcelReader;
+import com.accolite.server.repository.TaskRepository;
 import com.accolite.server.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -30,6 +31,9 @@ public class TaskController {
         this.taskService = taskService;
     }
 
+    @Autowired
+    TaskRepository taskRepository;
+
     @PostMapping
     public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
         try {
@@ -45,13 +49,6 @@ public class TaskController {
     public ResponseEntity<List<Task>> getAllTasks() {
         List<Task> tasks = taskService.getAllTasks();
         return new ResponseEntity<>(tasks, HttpStatus.OK);
-    }
-
-    @GetMapping("/{taskId}")
-    public ResponseEntity<Task> getTaskById(@PathVariable Long taskId) {
-        Optional<Task> task = taskService.getTaskById(taskId);
-        return task.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping("/create")
@@ -91,15 +88,37 @@ public class TaskController {
     }
 
 
-    @PutMapping("/{taskId}")
-    public ResponseEntity<Task> updateTask(@PathVariable Long taskId, @RequestBody Task updatedTask) {
-        Task updated = taskService.updateTask(taskId, updatedTask);
-        if (updated != null) {
-            return new ResponseEntity<>(updated, HttpStatus.OK);
+    @GetMapping("/taskById/{taskId}")
+    public ResponseEntity<Task> getTaskById(@PathVariable Long taskId) {
+        Task task = taskService.getTaskById(taskId);
+        if (task != null) {
+            return ResponseEntity.ok(task);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
 
+    @PutMapping("/taskById/{taskId}")
+    public ResponseEntity<Task> updateTask(@PathVariable Long taskId, @RequestBody Task updatedTask) {
+        Task existingTask = taskService.getTaskById(taskId);
+
+        if (existingTask != null) {
+            // Update the existing goal plan with the values from the updatedGoalPlan
+            updatedTask.setTaskId(existingTask.getTaskId());
+            // ... (set other fields accordingly)
+
+            Task savedTask = taskRepository.save(updatedTask); // Assuming you have a method like this
+
+            return ResponseEntity.ok(updatedTask);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
+    @GetMapping("/byKeyResultId/{keyResultId}")
+    public ResponseEntity<List<Task>> getTasksByKeyResultId(@PathVariable Long keyResultId) {
+        List<Task> tasks = taskService.getTasksByKeyResultId(keyResultId);
+        return new ResponseEntity<>(tasks, HttpStatus.OK);
+    }
     // You can add other methods as needed
 }

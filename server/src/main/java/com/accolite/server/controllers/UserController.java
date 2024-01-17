@@ -1,5 +1,6 @@
 package com.accolite.server.controllers;
 
+import com.accolite.server.models.GoalPlan;
 import com.accolite.server.models.GoogleTokenPayload;
 import com.accolite.server.models.User;
 import com.accolite.server.readers.UserExcelReader;
@@ -110,5 +111,32 @@ public class UserController {
             exists = true;
         }
         return ResponseEntity.ok(exists);
+    }
+
+    @GetMapping("/userById/{userId}")
+    public ResponseEntity<User> getGoalPlanById(@PathVariable Long userId) {
+        User user = userService.getUserById(userId);
+        if (user != null) {
+            return ResponseEntity.ok(user);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
+    @PutMapping("/userById/{userId}")
+    public ResponseEntity<User> updateGoalPlan(@PathVariable Long userId, @RequestBody User updatedUser) {
+        User existingUser = userService.getUserById(userId);
+
+        if (existingUser != null) {
+            // Update the existing goal plan with the values from the updatedGoalPlan
+            updatedUser.setUserId(existingUser.getUserId());
+            // ... (set other fields accordingly)
+
+            User savedUser = userRepository.save(updatedUser); // Assuming you have a method like this
+
+            return ResponseEntity.ok(updatedUser);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
     }
 }

@@ -52,4 +52,8 @@ public class GoalPlanService {
     public List<GoalPlan> getGoalPlansByUserId(Long userId) {
         return goalPlanRepository.findByUserId(userId);
     }
+
+    public GoalPlan getGoalPlanById(Long goalPlanId) {
+        return goalPlanRepository.findByGoalPlanId(goalPlanId);
+    }
 }

@@ -28,6 +28,7 @@ import { Component, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthService } from '../auth.service';
+import { UserInfoService } from '../user-info.service';
 
 @Component({
   selector: 'app-logout',
@@ -37,7 +38,7 @@ import { AuthService } from '../auth.service';
 export class LogoutComponent implements OnInit {
   admin: boolean = false;
 
-  constructor(private cookieService: CookieService, private router: Router, private service: AuthService, private _ngZone: NgZone) {}
+  constructor(private cookieService: CookieService, private router: Router, private service: AuthService, private _ngZone: NgZone, private userInfoService: UserInfoService) {}
 
   ngOnInit(): void {
     this.handleResponseAsync();
@@ -62,6 +63,10 @@ export class LogoutComponent implements OnInit {
       // Assume this is an asynchronous method that returns a Promise
       const user = await this.service.getUser(localStorage.getItem('token')).toPromise();
       console.log(user);
+      this.userInfoService.changeUserInfo({
+        firstName: user.firstName,
+        lastName: user.lastName,
+      });
 
       const isAdmin = user.roles.includes('Admin');
     

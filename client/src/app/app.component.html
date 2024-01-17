@@ -1,5 +1,9 @@
-
-
-<div>
-  <router-outlet></router-outlet>
-</div>
+<!-- <app-login></app-login> -->
+<div *ngIf="hideBar()">
+  <app-sidebar  (onToggleSideNav)="onToggleSideNav($event)"></app-sidebar>
+  <app-navbar></app-navbar>
+  </div>
+<app-body
+    [collapsed]="isSideNavCollapsed"
+    [screenWidth]="screenWidth"
+></app-body>

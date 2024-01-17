@@ -10,6 +10,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserManagementComponent } from './user/user.component';
 import { UploadComponent } from './uploadgoalplan/uploadgoalplan.component';
 import { KeyResultUploadComponent } from './keyresultupload/keyresultupload.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { TaskComponent } from './task/task.component';
 import { UserUploadComponent } from './user-upload/user-upload.component';
 import { TaskUploadComponent } from './task-upload/task-upload.component';
@@ -17,20 +24,28 @@ import { ReviewCycleUploadComponent } from './review-cycle-upload/review-cycle-u
 import { GoalplanFormComponent } from './goalplan-form/goalplan-form.component';
 import { KeyresultFormComponent } from './keyresult-form/keyresult-form.component';
 import { ReviewcycleFormComponent } from './reviewcycle-form/reviewcycle-form.component';
-import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { AdminPageComponent } from './admin-page/admin-page.component';
 import { ParentUserComponent } from './parent-user/parent-user.component';
 import { ParentGoalplanComponent } from './parent-goalplan/parent-goalplan.component';
 import { ParentReviewcycleComponent } from './parent-reviewcycle/parent-reviewcycle.component';
 import { ParentKeyresultComponent } from './parent-keyresult/parent-keyresult.component';
-import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { HierarchyComponent } from './hierarchy/hierarchy.component';
 import { DiagramModule } from '@syncfusion/ej2-angular-diagrams';
 import { RouterModule } from '@angular/router';
 import { OrganizationChartModule } from 'primeng/organizationchart';
 import { ExportService } from './export.service';
+import { ParentTaskComponent } from './parent-task/parent-task.component';
+import { KeyresultPageComponent } from './keyresult-page/keyresult-page.component';
+import { MatSelectModule } from '@angular/material/select';
+import { MatTableModule } from '@angular/material/table';
+import { MatDialogModule } from '@angular/material/dialog';
+import { DiaglogoverviewComponent } from './diaglogoverview/diaglogoverview.component';
+import { ProfilePageComponent } from './profile-page/profile-page.component';
+import { BodyComponent } from './body/body.component';
+import { NavbarComponent } from './navbar/navbar.component';
+
 
 @NgModule({
   declarations: [
@@ -40,6 +55,7 @@ import { ExportService } from './export.service';
     UserManagementComponent,
     UploadComponent,
     KeyResultUploadComponent,
+    SidebarComponent,
     TaskComponent,
     UserUploadComponent,
     TaskUploadComponent,
@@ -52,8 +68,13 @@ import { ExportService } from './export.service';
     ParentGoalplanComponent,
     ParentReviewcycleComponent,
     ParentKeyresultComponent,
-    HierarchyComponent
-    
+    HierarchyComponent,
+    ParentTaskComponent,
+    KeyresultPageComponent,
+    DiaglogoverviewComponent,
+    ProfilePageComponent,
+    BodyComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
@@ -63,14 +84,22 @@ import { ExportService } from './export.service';
     FormsModule,
     ReactiveFormsModule,
     MatButtonModule,
+    MatIconModule,
     MatCardModule,
+    MatFormFieldModule,
     MatInputModule,
     MatFormFieldModule,
     DiagramModule,
     AppRoutingModule,
     OrganizationChartModule,
+    MatSelectModule,
+    MatTableModule,
+    MatDialogModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatListModule
   ],
   providers: [ExportService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

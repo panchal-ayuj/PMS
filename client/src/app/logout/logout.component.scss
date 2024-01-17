@@ -1,5 +1,3 @@
-/* app.component.scss */
-
 .center-container {
   display: flex;
   align-items: center;
@@ -15,4 +13,16 @@
 mat-card {
   max-width: 400px; /* Adjust the maximum width of the card as needed */
   width: 100%;
+}
+
+.profile-icon-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.profile-icon {
+  cursor: pointer;
+  font-size: 28px; /* Adjust the font size of the icon */
+  color: #333; /* Adjust the color of the icon */
 }

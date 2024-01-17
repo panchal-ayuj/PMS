@@ -83,9 +83,10 @@ export class LoginComponent implements AfterViewInit {
   ) {}
 
   ngAfterViewInit(): void {
+    console.log("ngAfterviwe init ");
     // @ts-ignore
     window.onGoogleScriptLoad = this.initializeGoogleOneTap.bind(this);
-
+    console.log("initialize g onetap");
     // Check if the script is already loaded
           // @ts-ignore
     if (window.google && window.google.accounts) {
@@ -101,6 +102,7 @@ export class LoginComponent implements AfterViewInit {
 
   initializeGoogleOneTap() {
     this.ngZone.run(() => {
+      console.log("initialize g one tap");
       // Trigger Google One Tap after the script is loaded
             // @ts-ignore
       window.google.accounts.id.initialize({
@@ -111,11 +113,14 @@ export class LoginComponent implements AfterViewInit {
   }
 
   onSignIn() {
+    console.log("onsignin working");
     // @ts-ignore
     if (window.google && window.google.accounts && window.google.accounts.id) {
+      console.log("in IF");
       // @ts-ignore
       window.google.accounts.id.prompt();
     } else {
+      console.log("in else");
       console.error('Google One Tap is not initialized.');
     }
   }
@@ -148,9 +153,10 @@ export class LoginComponent implements AfterViewInit {
     // Call your AuthService method to check if the user's email is present
     // console.log(response.credential);
     const userEmail = await this.service.getEmail(response.credential).toPromise();
+    const authToken = await this.service.getAuthToken(response.credential).toPromise();
     // const userEmail = "panchal.kumar@accolitedigital.com";
     console.log(userEmail);
-
+    console.log(authToken);
     const userEmailPresent = await this.service.isUserEmailPresent(userEmail).toPromise();
 
     if (userEmailPresent) {
@@ -158,6 +164,11 @@ export class LoginComponent implements AfterViewInit {
       await this.service.LoginWithGoogle(response.credential).subscribe(
         (x: any) => {
           localStorage.setItem('token', response.credential);
+          if (authToken !== undefined) {
+            localStorage.setItem('authToken', authToken.jwtToken);
+          } else {
+            console.error('Authentication token is undefined');
+          }
           // console.log(response.credential);
           this.ngZone.run(() => {
             this.router.navigate(['/logout']);
