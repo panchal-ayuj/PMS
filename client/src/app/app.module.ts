@@ -28,7 +28,14 @@ import { ParentKeyresultComponent } from './parent-keyresult/parent-keyresult.co
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ParentTaskComponent } from './parent-task/parent-task.component';
-
+import { KeyresultPageComponent } from './keyresult-page/keyresult-page.component';
+import { MatSelectModule } from '@angular/material/select';
+import { MatTableModule } from '@angular/material/table';
+import { MatDialogModule } from '@angular/material/dialog';
+import { DiaglogoverviewComponent } from './diaglogoverview/diaglogoverview.component';
+import { ProfilePageComponent } from './profile-page/profile-page.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
 
 
 @NgModule({
@@ -51,7 +58,10 @@ import { ParentTaskComponent } from './parent-task/parent-task.component';
     ParentGoalplanComponent,
     ParentReviewcycleComponent,
     ParentKeyresultComponent,
-    ParentTaskComponent
+    ParentTaskComponent,
+    KeyresultPageComponent,
+    DiaglogoverviewComponent,
+    ProfilePageComponent
   ],
   imports: [
     BrowserModule,
@@ -63,7 +73,12 @@ import { ParentTaskComponent } from './parent-task/parent-task.component';
     MatButtonModule,
     MatCardModule,
     MatInputModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatSelectModule,
+    MatTableModule,
+    MatDialogModule,
+    MatToolbarModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

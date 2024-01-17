@@ -41,4 +41,11 @@ public class TaskService {
     public void saveAll(List<Task> tasks) {
         taskRepository.saveAll(tasks);
     }
+
+    public List<Task> getTasksByKeyResultId(Long keyResultId) {
+        // Implement the logic to retrieve tasks based on keyResultId
+        // You can use taskRepository.findByKeyResultId(keyResultId) or any other method
+        return taskRepository.findByKeyResultId(keyResultId);
+    }
+
 }

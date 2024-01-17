@@ -1,5 +1,7 @@
 package com.accolite.server.controllers;
 
+import com.accolite.server.config.JWTService;
+import com.accolite.server.models.AuthTokenPayload;
 import com.accolite.server.models.GoogleTokenPayload;
 import com.accolite.server.models.User;
 import com.accolite.server.repository.UserRepository;
@@ -15,6 +17,9 @@ import java.util.Optional;
 
 @RestController
 public class AuthController {
+
+    @Autowired
+    JWTService jwtService;
 
     @Autowired
     UserRepository userRepository;
@@ -51,6 +56,7 @@ public class AuthController {
     private String validateGoogleToken(String googleToken){
         RestTemplate restTemplate = new RestTemplate();
         //  System.out.println(googleToken);
+        String jwtToken;
 
         String accessTokenValue = googleToken.substring(1);
 
@@ -60,7 +66,9 @@ public class AuthController {
         // System.out.println(response.getBody().getEmail()); To get the email
 
         if (response.getStatusCode() == HttpStatus.OK) {
-            return accessTokenValue;
+            jwtToken = jwtService.generateJWTToken(userRepository.findByEmail(response.getBody().getEmail()).get());
+            System.out.println(jwtToken);
+            return jwtToken;
         } else {
             return null;
         }
@@ -79,6 +87,29 @@ public class AuthController {
 
         if (response.getStatusCode() == HttpStatus.OK) {
             return response.getBody().getEmail();
+        } else {
+            return null;
+        }
+    }
+
+    @PostMapping("/getAuthToken")
+    private ResponseEntity<AuthTokenPayload> getAuthToken(@RequestBody String googleToken){
+        RestTemplate restTemplate = new RestTemplate();
+        //  System.out.println(googleToken);
+        String jwtToken;
+
+        String accessTokenValue = googleToken.substring(1);
+
+        String tokenInfoUrl = googleTokenInfoUrl + "?id_token=" + accessTokenValue;
+        ResponseEntity<GoogleTokenPayload> response = restTemplate.getForEntity(tokenInfoUrl, GoogleTokenPayload.class);
+
+        AuthTokenPayload authTokenPayload = new AuthTokenPayload();
+        // System.out.println(response.getBody().getEmail()); To get the email
+
+        if (response.getStatusCode() == HttpStatus.OK) {
+            jwtToken = jwtService.generateJWTToken(userRepository.findByEmail(response.getBody().getEmail()).get());
+            authTokenPayload.setJwtToken(jwtToken);
+            return ResponseEntity.ok(authTokenPayload);
         } else {
             return null;
         }

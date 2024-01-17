@@ -148,9 +148,10 @@ export class LoginComponent implements AfterViewInit {
     // Call your AuthService method to check if the user's email is present
     // console.log(response.credential);
     const userEmail = await this.service.getEmail(response.credential).toPromise();
+    const authToken = await this.service.getAuthToken(response.credential).toPromise();
     // const userEmail = "panchal.kumar@accolitedigital.com";
     console.log(userEmail);
-
+    console.log(authToken);
     const userEmailPresent = await this.service.isUserEmailPresent(userEmail).toPromise();
 
     if (userEmailPresent) {
@@ -158,6 +159,11 @@ export class LoginComponent implements AfterViewInit {
       await this.service.LoginWithGoogle(response.credential).subscribe(
         (x: any) => {
           localStorage.setItem('token', response.credential);
+          if (authToken !== undefined) {
+            localStorage.setItem('authToken', authToken.jwtToken);
+          } else {
+            console.error('Authentication token is undefined');
+          }
           // console.log(response.credential);
           this.ngZone.run(() => {
             this.router.navigate(['/logout']);
