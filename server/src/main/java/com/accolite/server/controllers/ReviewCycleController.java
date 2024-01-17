@@ -2,6 +2,7 @@ package com.accolite.server.controllers;
 
 import com.accolite.server.models.KeyResult;
 import com.accolite.server.models.ReviewCycle;
+import com.accolite.server.models.Task;
 import com.accolite.server.readers.ReviewCycleExcelReader;
 import com.accolite.server.repository.ReviewCycleRepository;
 import com.accolite.server.service.ReviewCycleService;
@@ -45,6 +46,33 @@ public class ReviewCycleController {
     public ResponseEntity<List<ReviewCycle>> getKeyResults() {
         List<ReviewCycle> reviewCycles = reviewCycleRepository.findAll();
         return new ResponseEntity<>(reviewCycles, HttpStatus.OK);
+    }
+
+    @GetMapping("/reviewCycleById/{reviewCycleId}")
+    public ResponseEntity<ReviewCycle> getReviewCycleById(@PathVariable Long reviewCycleId) {
+        ReviewCycle reviewCycle = reviewCycleService.getReviewCycleById(reviewCycleId);
+        if (reviewCycle != null) {
+            return ResponseEntity.ok(reviewCycle);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
+    @PutMapping("/reviewCycleById/{reviewCycleId}")
+    public ResponseEntity<ReviewCycle> updateReviewCycle(@PathVariable Long reviewCycleId, @RequestBody ReviewCycle updatedReviewCycle) {
+        ReviewCycle existingReviewCycle = reviewCycleService.getReviewCycleById(reviewCycleId);
+
+        if (existingReviewCycle != null) {
+            // Update the existing goal plan with the values from the updatedGoalPlan
+            updatedReviewCycle.setWindowId(existingReviewCycle.getWindowId());
+            // ... (set other fields accordingly)
+
+            ReviewCycle savedReviewCycle = reviewCycleRepository.save(updatedReviewCycle); // Assuming you have a method like this
+
+            return ResponseEntity.ok(updatedReviewCycle);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
     }
 }
 

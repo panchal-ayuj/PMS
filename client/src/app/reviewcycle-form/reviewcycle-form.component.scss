@@ -1,71 +1,90 @@
-/* review-cycle-management.component.scss */
-
 .review-cycle-management-container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row; /* Change to row */
   align-items: center;
+  justify-content: space-around; /* Adjust as needed */
   padding: 20px;
-  margin: auto;
-  max-width: 50%;
-
+  text-align: center;
+  height: auto;
   h2 {
     font-size: 24px;
     margin-bottom: 20px;
   }
 
-  mat-form-field {
-    width: 100%;
-    margin-bottom: 15px;
+  .form-container {
+    display: flex;
+    flex-direction: column;
+    width: 40%; /* Adjust as needed */
+
+    mat-form-field {
+      width: 100%;
+      margin-bottom: 15px;
+    }
+
   }
 
-  button {
-    margin-top: 15px;
+  .edit-container{
+    margin-top: -15%;
   }
 
-  .review-cycle-list {
-    margin-top: 20px;
-  }
+  .search-form {
+    display: flex;
+    align-items: center;
+    margin-top: 3%;
+    padding: 3%;
 
-  .reviewcycle-card {
-    mat-card {
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      transition: box-shadow 0.3s ease-in-out;
+    mat-form-field {
+      margin-right: 10px;
+      width: 250px;
+      margin-bottom: -10px;
 
-      &:hover {
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      input {
+        font-size: 14px;
       }
     }
 
-    mat-card-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-  }
-}
-
-/* review-cycle-list.component.scss */
-
-.review-cycle-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-}
-
-.reviewcycle-card {
-  width: 200px;
-  mat-card {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s ease-in-out;
-
-    &:hover {
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    button {
+      font-size: 16px;
+      margin-right: 2%;
     }
   }
 
-  .reviewcycle-info {
+  .reset-button {
+    button {
+      font-size: 16px;
+    }
+  }
+
+  .file-upload-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+
+    input {
+      display: none;
+    }
+
+    button {
+      font-size: 16px;
+      margin-top: 10px;
+    }
+  }
+
+  .review-cycle-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .review-cycle-card {
+    width: 200px;
+  }
+
+  .review-cycle-info {
     font-size: 16px;
     margin: 0;
   }
 }
+

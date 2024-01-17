@@ -1,44 +1,87 @@
-/* goal-plan-management.component.scss */
-
 .goal-plan-management-container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row; /* Change to row */
   align-items: center;
+  justify-content: space-around; /* Adjust as needed */
   padding: 20px;
+  text-align: center;
+  height: 90vh;
 
   h2 {
     font-size: 24px;
     margin-bottom: 20px;
   }
 
-  mat-form-field {
-    width: 100%;
-    margin-bottom: 15px;
+  .form-container {
+    display: flex;
+    flex-direction: column;
+    width: 40%; /* Adjust as needed */
+
+    mat-form-field {
+      width: 100%;
+      margin-bottom: 15px;
+    }
+
   }
 
-  button {
-    margin-top: 15px;
+  .search-form {
+    display: flex;
+    align-items: center;
+    margin-top: 3%;
+    padding: 3%;
+
+    mat-form-field {
+      margin-right: 10px;
+      width: 250px;
+      margin-bottom: -10px;
+
+      input {
+        font-size: 14px;
+      }
+    }
+
+    button {
+      font-size: 16px;
+      margin-right: 2%;
+    }
+  }
+
+  .reset-button {
+    button {
+      font-size: 16px;
+    }
+  }
+
+  .file-upload-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+
+    input {
+      display: none;
+    }
+
+    button {
+      font-size: 16px;
+      margin-top: 10px;
+    }
   }
 
   .goal-plan-list {
-    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .goalplan-card {
+    width: 200px;
+  }
+
+  .goalplan-info {
+    font-size: 16px;
+    margin: 0;
   }
 }
 
-/* goal-plan-management.component.scss */
-
-.goal-plan-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-}
-
-.goalplan-card {
-  width: 200px;
-}
-
-.goalplan-info {
-  font-size: 16px;
-  margin: 0;
-}

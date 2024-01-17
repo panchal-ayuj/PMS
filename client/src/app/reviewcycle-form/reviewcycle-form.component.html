@@ -1,44 +1,84 @@
 <!-- review-cycle-management.component.html -->
 
 <div class="review-cycle-management-container">
-  <h2>ReviewCycle Management</h2>
+  <div class="form-container">
+    <!-- ReviewCycle Registration Form -->
+    <form
+      [formGroup]="reviewCycleForm"
+      (ngSubmit)="registerOrUpdateReviewCycle()"
+    >
+      <h2>Review Cycle Management</h2>
+      <mat-form-field appearance="fill">
+        <mat-label>User Id</mat-label>
+        <input matInput type="number" id="userId" formControlName="userId" />
+      </mat-form-field>
 
-  <!-- ReviewCycle Registration Form -->
-  <form [formGroup]="reviewCycleForm" (ngSubmit)="registerReviewCycle()">
-    <mat-form-field appearance="fill">
-      <mat-label>User Id</mat-label>
-      <input matInput type="number" id="userId" formControlName="userId" />
-    </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Start Date</mat-label>
+        <input
+          matInput
+          type="date"
+          id="startDate"
+          formControlName="startDate"
+        />
+      </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Start Date</mat-label>
-      <input matInput type="date" id="startDate" formControlName="startDate" />
-    </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>End Date</mat-label>
+        <input matInput type="date" id="endDate" formControlName="endDate" />
+      </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>End Date</mat-label>
-      <input matInput type="date" id="endDate" formControlName="endDate" />
-    </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Period</mat-label>
+        <input matInput type="text" id="period" formControlName="period" />
+      </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Period</mat-label>
-      <input matInput type="text" id="period" formControlName="period" />
-    </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Review Status</mat-label>
+        <input
+          matInput
+          type="text"
+          id="reviewStatus"
+          formControlName="reviewStatus"
+        />
+      </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Review Status</mat-label>
-      <input
-        matInput
-        type="text"
-        id="reviewStatus"
-        formControlName="reviewStatus"
-      />
-    </mat-form-field>
+      <button mat-raised-button color="primary" type="submit">
+        {{
+          searchReviewCycleId ? "Update Review Cycle" : "Register Review Cycle"
+        }}
+      </button>
+    </form>
+  </div>
 
-    <button mat-raised-button color="primary" type="submit">
-      Register ReviewCycle
-    </button>
-  </form>
+  <div class="edit-container">
+    <div class="search-form">
+      <mat-form-field appearance="fill">
+        <mat-label>Search Review Cycle by ID:</mat-label>
+        <input
+          matInput
+          type="number"
+          id="reviewCycleId"
+          [(ngModel)]="reviewCycleId"
+        />
+      </mat-form-field>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="searchReviewCycle(reviewCycleId)"
+      >
+        Search
+      </button>
+      <!-- Reset Form Button -->
+      <div class="reset-button">
+        <button mat-raised-button (click)="resetForm()">Reset</button>
+      </div>
+    </div>
+
+    <div class="file-upload-container">
+      <app-review-cycle-upload></app-review-cycle-upload>
+    </div>
+  </div>
 
   <!-- ReviewCycle List -->
   <!-- <div class="review-cycle-list">

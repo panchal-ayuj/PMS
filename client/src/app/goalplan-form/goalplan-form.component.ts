@@ -10,6 +10,9 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class GoalplanFormComponent {
   goalPlanForm!: FormGroup;
   goalplans: any[] = [];
+  goalPlanId: number | undefined;
+
+  searchGoalPlanId: number | undefined;
 
   constructor(private formBuilder: FormBuilder, private http: HttpClient) { }
 
@@ -25,21 +28,37 @@ export class GoalplanFormComponent {
     });
   }
 
-  registerGoalPlan() {
+  registerOrUpdateGoalPlan() {
     const goalplan = this.goalPlanForm.value;
 
-    const apiUrl = 'http://localhost:8080/goalPlan/register';
+    const apiUrl = 'http://localhost:8080/';
 
-    this.http.post(apiUrl, goalplan).subscribe(
-      (response) => {
-        console.log('User registered successfully:', response);
-        this.loadGoalPlans(); // Refresh user list after registration
-      },
-      (error) => {
-        console.error('Error registering goalPlan:', error);
-      }
-    );
+    // Check if ID is present for update
+    if (this.searchGoalPlanId) {
+      this.http.put(`${apiUrl}goalPlanById/${this.searchGoalPlanId}`, goalplan).subscribe(
+        (response) => {
+          console.log('GoalPlan updated successfully:', response);
+          this.loadGoalPlans();
+          this.resetForm();
+        },
+        (error) => {
+          console.error('Error updating GoalPlan:', error);
+        }
+      );
+    } else {
+      this.http.post('http://localhost:8080/goalPlan/register', goalplan).subscribe(
+        (response) => {
+          console.log('GoalPlan registered successfully:', response);
+          this.loadGoalPlans();
+          this.resetForm();
+        },
+        (error) => {
+          console.error('Error registering GoalPlan:', error);
+        }
+      );
+    }
   }
+
 
   loadGoalPlans() {
     const apiUrl = 'http://localhost:8080/goalPlan';
@@ -55,6 +74,26 @@ export class GoalplanFormComponent {
         console.error('Error loading users:', error);
       }
     );
+  }
+
+  searchGoalPlan(goalPlanId: number | undefined) {
+    if (goalPlanId) {
+      this.searchGoalPlanId = goalPlanId;
+      const apiUrl = `http://localhost:8080/goalPlanById/${goalPlanId}`;
+      this.http.get(apiUrl).subscribe(
+        (data: any) => {
+          this.goalPlanForm.patchValue(data); // Autofill the form with the fetched data
+        },
+        (error) => {
+          console.error('Error fetching GoalPlan:', error);
+        }
+      );
+    }
+  }
+
+  resetForm() {
+    this.goalPlanForm.reset();
+    this.searchGoalPlanId = undefined;
   }
 
 }
