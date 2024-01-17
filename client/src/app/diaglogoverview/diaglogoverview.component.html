@@ -1,0 +1,26 @@
+
+<!-- Update your HTML file with Angular Material components -->
+<mat-table [dataSource]="data.tasks" class="mat-elevation-z8">
+  <ng-container matColumnDef="description">
+    <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+    <mat-cell *matCellDef="let task">{{ task.description }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="weight">
+    <mat-header-cell *matHeaderCellDef>Weight</mat-header-cell>
+    <mat-cell *matCellDef="let task">{{ task.weight }}</mat-cell>
+  </ng-container>
+  
+  <ng-container matColumnDef="completionStatus">
+    <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+    <mat-cell *matCellDef="let task">{{ task.completionStatus }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="rating">
+    <mat-header-cell *matHeaderCellDef>Rating</mat-header-cell>
+    <mat-cell *matCellDef="let task">{{ task.rating }}</mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="['description', 'weight', 'rating', 'completionStatus']"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: ['description', 'weight', 'rating', 'completionStatus'];"></mat-row>
+</mat-table>

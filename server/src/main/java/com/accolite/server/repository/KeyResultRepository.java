@@ -9,5 +9,7 @@ public interface KeyResultRepository extends JpaRepository<KeyResult, Long> {
     List<KeyResult> findByUserId(Long userId);
 
     KeyResult findByKeyResultId(Long keyResultId);
+
+    List<KeyResult> findByUserIdAndPeriod(Long userId, String period);
 }
 

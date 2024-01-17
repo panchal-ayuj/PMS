@@ -77,5 +77,11 @@ public class TaskController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
+
+    @GetMapping("/byKeyResultId/{keyResultId}")
+    public ResponseEntity<List<Task>> getTasksByKeyResultId(@PathVariable Long keyResultId) {
+        List<Task> tasks = taskService.getTasksByKeyResultId(keyResultId);
+        return new ResponseEntity<>(tasks, HttpStatus.OK);
+    }
     // You can add other methods as needed
 }
