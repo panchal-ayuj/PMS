@@ -10,16 +10,18 @@ import { ParentReviewcycleComponent } from './parent-reviewcycle/parent-reviewcy
 import { AdminGuard } from './admin.guard'; // Import the AdminGuard
 import { UserGuard } from './user.guard'; // Import the AdminGuard
 import { ParentTaskComponent } from './parent-task/parent-task.component';
+import { ProfilePageComponent } from './profile-page/profile-page.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'logout', component: LogoutComponent,canActivate: [UserGuard] },
-  { path: 'admin', component: AdminPageComponent,canActivate: [AdminGuard]},
-  { path: 'admin/user', component: ParentUserComponent,canActivate: [AdminGuard]},
-  { path: 'admin/goalplan', component: ParentGoalplanComponent,canActivate: [AdminGuard]},
-  { path: 'admin/keyresult', component: ParentKeyresultComponent,canActivate: [AdminGuard]},
-  { path: 'admin/reviewcycle', component: ParentReviewcycleComponent,canActivate: [AdminGuard]},
-  { path: 'admin/task', component:ParentTaskComponent}
+  { path: 'admin', component: AdminPageComponent,canActivate: [AdminGuard] },
+  { path: 'admin/user', component: ParentUserComponent,canActivate: [AdminGuard] },
+  { path: 'admin/goalplan', component: ParentGoalplanComponent,canActivate: [AdminGuard] },
+  { path: 'admin/keyresult', component: ParentKeyresultComponent,canActivate: [AdminGuard] },
+  { path: 'admin/reviewcycle', component: ParentReviewcycleComponent,canActivate: [AdminGuard] },
+  { path: 'admin/task', component:ParentTaskComponent },
+  { path: 'profile',component:ProfilePageComponent },
 ];
 
 @NgModule({
