@@ -33,7 +33,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DiaglogoverviewComponent } from './diaglogoverview/diaglogoverview.component';
-
+import { ProfilePageComponent } from './profile-page/profile-page.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
 
 
 @NgModule({
@@ -58,7 +60,8 @@ import { DiaglogoverviewComponent } from './diaglogoverview/diaglogoverview.comp
     ParentKeyresultComponent,
     ParentTaskComponent,
     KeyresultPageComponent,
-    DiaglogoverviewComponent
+    DiaglogoverviewComponent,
+    ProfilePageComponent
   ],
   imports: [
     BrowserModule,
@@ -73,7 +76,9 @@ import { DiaglogoverviewComponent } from './diaglogoverview/diaglogoverview.comp
     MatFormFieldModule,
     MatSelectModule,
     MatTableModule,
-    MatDialogModule
+    MatDialogModule,
+    MatToolbarModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]
