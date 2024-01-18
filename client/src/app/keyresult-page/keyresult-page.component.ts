@@ -3,21 +3,24 @@ import { KeyResultService } from '../key-result.service';
 import { AuthService } from '../auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DiaglogoverviewComponent } from '../diaglogoverview/diaglogoverview.component';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-keyresult-page',
   templateUrl: './keyresult-page.component.html',
   styleUrl: './keyresult-page.component.scss'
 })
-export class KeyresultPageComponent implements OnInit{
+export class KeyresultPageComponent implements OnInit {
   userId: number = 2; // Replace with the actual user ID
   period: string = 'q1'; // Replace with the desired period (e.g., 'Q1', 'Q2', etc.)
   year: number = 2023; // Replace with the desired year
   status: boolean = false;
 
   keyResults: any[] = [];
-
-  constructor(private keyResultService: KeyResultService, private service: AuthService, private dialog: MatDialog) {
+  constructor(
+    private keyResultService: KeyResultService,
+    private service: AuthService,
+    private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -63,5 +66,13 @@ export class KeyresultPageComponent implements OnInit{
           data: { tasks },
         });
       });
+  }
+
+  calculateNormalizedWeight(weight: number): number {
+    // Calculate the sum of all weights
+    const totalWeight = this.keyResults.reduce((sum, keyResult) => sum + keyResult.weight, 0);
+
+    // Return the normalized weight
+    return Math.round((weight / totalWeight)*100);
   }
 }

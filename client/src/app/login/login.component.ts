@@ -83,7 +83,6 @@ export class LoginComponent implements AfterViewInit {
   ) {}
 
   ngAfterViewInit(): void {
-    console.log("ngAfterviwe init ");
     // @ts-ignore
     window.onGoogleScriptLoad = this.initializeGoogleOneTap.bind(this);
     console.log("initialize g onetap");

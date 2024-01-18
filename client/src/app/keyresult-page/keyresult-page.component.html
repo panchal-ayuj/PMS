@@ -46,7 +46,7 @@
 
     <ng-container matColumnDef="weight">
       <mat-header-cell *matHeaderCellDef> Weight </mat-header-cell>
-      <mat-cell *matCellDef="let keyResult"> {{ keyResult.weight }} </mat-cell>
+      <mat-cell *matCellDef="let keyResult"> {{ calculateNormalizedWeight(keyResult.weight) }} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="rating">

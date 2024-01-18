@@ -50,30 +50,52 @@ $navbar-text-color: #ecf0f1;
   }
 
   .navbar-actions {
-    // Add styles for login/logout buttons or user-related actions
     position: relative;
-    top:5px;
-    
+    top: 5px;
   }
 }
 
-
-
-.mat-icon-size{
+.mat-icon-size {
   font-size: 40px;
   height: 60px;
   width: 50px;
 }
 
-
-.input{
+.input {
   height: 20px;
-  width: 400px;
+  width: 100%; /* Full width on smaller screens */
+  max-width: 400px; /* Limited width on larger screens */
 }
 
 .profile-username {
   position: relative;
   bottom: 35px;
   margin-right: 10px;
+}
 
+#userId {
+  width: 100%; /* Full width on smaller screens */
+  max-width: 400px; /* Limited width on larger screens */
+}
+
+// Media query for responsive styles
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navbar-links {
+    flex-direction: column;
+    align-items: flex-start;
+
+    li {
+      margin-right: 0;
+      margin-bottom: 10px;
+    }
+  }
+
+  .navbar-actions {
+    margin-top: 10px;
+  }
 }
