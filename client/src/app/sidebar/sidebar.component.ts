@@ -2,6 +2,8 @@ import { Component, EventEmitter, HostListener, Input, Output, ViewChild } from 
 import { MatSidenav } from '@angular/material/sidenav';
 import { navbarData } from './nav-data';
 import { animate, keyframes, style, transition, trigger } from '@angular/animations';
+import { Router } from '@angular/router';
+import { SharedDataService } from '../shared-data.service';
 
 
 interface SideNavToggle{
@@ -48,6 +50,8 @@ export class SidebarComponent {
   screenWidth = 0;
   navData = navbarData;
 
+  constructor(private router : Router, private sharedDataService : SharedDataService) {}
+
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
     this.screenWidth = window.innerWidth;
@@ -71,5 +75,19 @@ export class SidebarComponent {
     this.onToggleSideNav.emit({collapsed: this.collapsed, screenWidth: this.screenWidth});
   }
 
-  
+  viewDetails(link: any): void {
+    // console.log(link);
+    if(link === "logout"){
+    this.sharedDataService.changeUserId(null);
+  }
+    // this.sharedDataService.changeUserId(null);
+    // if(userId !== null && userId !== undefined && userId !== ""){
+      // console.log("Hitting profile");
+      this.router.navigate([link]);
+    // } 
+  }
+
+  isActive(route: string): boolean {
+    return this.router.isActive(route, true);
+  }
 }
