@@ -17,6 +17,9 @@ import { map, mergeMap } from 'rxjs/operators';
 import { TreeNode } from 'primeng/api';
 import { AuthService } from '../auth.service';
 import { EmployeeService } from '../employee.service';
+import { UserService } from '../user.service';
+import { SharedDataService } from '../shared-data.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-hierarchy',
@@ -106,7 +109,10 @@ export class HierarchyComponent {
 
   constructor(
     private employeeService: EmployeeService,
-    private authService: AuthService
+    private authService: AuthService,
+    private userService: UserService,
+    private sharedDataService: SharedDataService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -122,7 +128,7 @@ export class HierarchyComponent {
   loadEmployeeHierarchy(userId: number) {
     this.employeeService.getUsersAndReportingChain(userId).subscribe(
       (userReportingChainMap) => {
-        this.data = this.mapToTreeNode(userReportingChainMap);
+        this.data = this.mapTreeNode(userReportingChainMap);
       },
       (error) => {
         console.error('Error fetching employee hierarchy:', error);
@@ -144,6 +150,42 @@ export class HierarchyComponent {
     }
   }
 
+
+  mapTreeNode(userReportingChainMap: { [key: string]: { [key: string]: { [key: string]: string[] } }}): TreeNode[] {
+    const mappedTreeNodes: TreeNode[] = [];
+    // console.log(userReportingChainMap);
+  
+    // Use Object.keys() to iterate over the keys of the object
+    Object.keys(userReportingChainMap).forEach((managerFirstName) => {
+      const directReportFirstNames = userReportingChainMap[managerFirstName];
+
+      this.userService.getUserById(managerFirstName).subscribe(
+        (data) => {
+          console.log("got data!!!");
+          console.log(data);
+          const managerNode: TreeNode = {
+            expanded: true,
+            type: 'person',
+            data: {
+              name: data.firstName,
+              band: data.band,
+              userId: data.userId, // You can modify this based on your requirements
+            },
+            children: this.mapToTreeNode(directReportFirstNames),
+          };
+      
+          mappedTreeNodes.push(managerNode);
+        },
+        (error) => {
+          console.error('Error fetching team members:', error);
+        }
+      );
+
+    });
+    console.log(mappedTreeNodes);
+    return mappedTreeNodes;
+  }
+
   mapToTreeNode(userReportingChainMap: { [key: string]: { [key: string]: string[] } }): TreeNode[] {
     const mappedTreeNodes: TreeNode[] = [];
     console.log(userReportingChainMap);
@@ -152,17 +194,27 @@ export class HierarchyComponent {
     Object.keys(userReportingChainMap).forEach((managerFirstName) => {
       const directReportFirstNames = userReportingChainMap[managerFirstName];
   
-      const managerNode: TreeNode = {
-        expanded: true,
-        type: 'person',
-        data: {
-          name: managerFirstName,
-          band: '', // You can modify this based on your requirements
+      this.userService.getUserById(managerFirstName).subscribe(
+        (data) => {
+          console.log("got data!!!");
+          console.log(data);
+          const managerNode: TreeNode = {
+            expanded: true,
+            type: 'person',
+            data: {
+              name: data.firstName,
+              band: data.band,
+              userId: data.userId, // You can modify this based on your requirements
+            },
+            children: this.mapToTreeNodes(directReportFirstNames),
+          };
+      
+          mappedTreeNodes.push(managerNode);
         },
-        children: this.mapToTreeNodes(directReportFirstNames),
-      };
-  
-      mappedTreeNodes.push(managerNode);
+        (error) => {
+          console.error('Error fetching team members:', error);
+        }
+      );
     });
     console.log(mappedTreeNodes);
     return mappedTreeNodes;
@@ -176,31 +228,71 @@ mapToTreeNodes(userReportingChainMap: { [key: string]: string[] }): TreeNode[] {
     Object.keys(userReportingChainMap).forEach((managerFirstName) => {
       const directReportFirstNames = userReportingChainMap[managerFirstName];
 
-      const managerNode: TreeNode = {
-        expanded: true,
-        type: 'person',
-        data: {
-          name: managerFirstName,
-          band: '', // You can modify this based on your requirements
+      this.userService.getUserById(managerFirstName).subscribe(
+        (data) => {
+          console.log("got data!!!");
+          console.log(data);
+          const managerNode: TreeNode = {
+            expanded: true,
+            type: 'person',
+            data: {
+              name: data.firstName,
+              band: data.band,
+              userId: data.userId, // You can modify this based on your requirements
+            },
+            children: this.mapToTreeNodesRecursive(directReportFirstNames),
+          };
+      
+          mappedTreeNodes.push(managerNode);
         },
-        children: this.mapToTreeNodesRecursive(directReportFirstNames),
-      };
-  
-      mappedTreeNodes.push(managerNode);
+        (error) => {
+          console.error('Error fetching team members:', error);
+        }
+      );
     });
     console.log(mappedTreeNodes);
     return mappedTreeNodes;
   }
   
-  mapToTreeNodesRecursive(firstNames: string[]): TreeNode[] {
-    return firstNames.map((firstName) => ({
-      expanded: true,
-      type: 'person',
-      data: {
-        name: firstName,
-        band: '', // You can modify this based on your requirements
-      },
-      children: [], // Assuming there are no children for direct reports
-    }));
+  mapToTreeNodesRecursive(userIds: string[]): TreeNode[] {
+    const mappedTreeNodes: TreeNode[] = [];
+
+    // Use the userService to fetch user details for each userId
+    userIds.forEach((userId) => {
+      this.userService.getUserById(userId).subscribe(
+        (data) => {
+          console.log('got data!!!');
+          console.log(data);
+          const userNode: TreeNode = {
+            expanded: true,
+            type: 'person',
+            data: {
+              name: data.firstName,
+              band: data.band,
+              userId: data.userId, // You can modify this based on your requirements
+            },
+            children: [], // Assuming there are no children for direct reports
+          };
+  
+          mappedTreeNodes.push(userNode);
+        },
+        (error) => {
+          console.error('Error fetching user details:', error);
+        }
+      );
+    });
+  
+    console.log(mappedTreeNodes);
+    return mappedTreeNodes;
+  }
+
+  viewDetails(userId: any): void {
+    this.sharedDataService.changeUserId(userId);
+    if(userId !== null && userId !== undefined && userId !== ""){
+      console.log("Hitting profile");
+      this.router.navigate(['/profile']);
+    } else {
+      console.log("Empty user id");
+    }
   }
 }

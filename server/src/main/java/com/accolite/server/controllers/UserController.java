@@ -153,33 +153,46 @@ public class UserController {
 
 
     @GetMapping("/reporting-chain/{userId}")
-    public Map<String, Map<String, List<String>>> getUsersAndReportingChain(@PathVariable Long userId) {
+    public Map<Long, Map<Long, Map<Long, List<Long>>>> getUsersAndReportingChain(@PathVariable Long userId) {
         // Fetch users based on reportingManagerId
-        List<User> directReports = userRepository.findByReportingManagerId(userId);
+        List<User> levelOneReports = userRepository.findByReportingManagerId(userId);
 
-        // Fetch users for whom the direct reports are reporting managers
-        List<Long> directReportIds = directReports.stream()
+        // Fetch users for whom the level one reports are reporting managers
+        List<Long> levelOneReportIds = levelOneReports.stream()
                 .map(User::getUserId)
                 .collect(Collectors.toList());
 
-        List<User> indirectReports = userRepository.findByReportingManagerIdIn(directReportIds);
+        List<User> levelTwoReports = userRepository.findByReportingManagerIdIn(levelOneReportIds);
 
-        // Create a Map<String, List<String>> where each direct report's first name is mapped to a list of indirect reports' first names
-        Map<String, Map<String, List<String>>> finalMap = new HashMap<>();
+        // Fetch users for whom the level two reports are reporting managers
+        List<Long> levelTwoReportIds = levelTwoReports.stream()
+                .map(User::getUserId)
+                .collect(Collectors.toList());
+
+        List<User> levelThreeReports = userRepository.findByReportingManagerIdIn(levelTwoReportIds);
+
+        // Create a Map<Long, Map<Long, List<Long>>> where each level one report's ID is mapped to a map of level two reports' IDs
+        Map<Long, Map<Long, Map<Long, List<Long>>>> finalMap = new HashMap<>();
         User user = userRepository.findByUserId(userId);
 
-        Map<String, List<String>> directReportMap = new HashMap<>();
-        for (User directReport : directReports) {
-            List<String> indirectReportFirstNames = indirectReports.stream()
-                    .filter(indirectReport -> indirectReport.getReportingManagerId().equals(directReport.getUserId()))
-                    .map(User::getFirstName)
-                    .collect(Collectors.toList());
-            directReportMap.put(directReport.getFirstName(), indirectReportFirstNames);
+        Map<Long, Map<Long, List<Long>>> levelOneReportMap = new HashMap<>();
+        for (User levelOneReport : levelOneReports) {
+            Map<Long, List<Long>> levelTwoReportMap = new HashMap<>();
+            for (User levelTwoReport : levelTwoReports.stream()
+                    .filter(levelTwoReport -> levelTwoReport.getReportingManagerId().equals(levelOneReport.getUserId()))
+                    .collect(Collectors.toList())) {
+                List<Long> levelThreeReportIds = levelThreeReports.stream()
+                        .filter(levelThreeReport -> levelThreeReport.getReportingManagerId().equals(levelTwoReport.getUserId()))
+                        .map(User::getUserId)
+                        .collect(Collectors.toList());
+                levelTwoReportMap.put(levelTwoReport.getUserId(), levelThreeReportIds);
+            }
+            levelOneReportMap.put(levelOneReport.getUserId(), levelTwoReportMap);
         }
-        finalMap.put(user.getFirstName(), directReportMap);
+        finalMap.put(user.getUserId(), levelOneReportMap);
 
         return finalMap;
-    }// Assuming you have a UserService
+    }
 
 //    @GetMapping("/searchUsersByName/{searchName}")
 //    public ResponseEntity<User > searchUsersByName(@PathVariable String searchName) {

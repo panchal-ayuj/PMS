@@ -5,14 +5,15 @@
     [(selection)]="selectedNodes"
   >
     <ng-template let-node pTemplate="person">
-      <div class="node">
+      <div class="p-2 text-center" (click)="viewDetails(node.data.userId)">
         <img [src]="node.data.image" class="mb-3 w-3rem h-3rem" />
         <div class="font-bold">{{ node.data.name }}</div>
         <div>{{ node.data.band }}</div>
       </div>
+      <!-- <ng-template pTemplate="connection" let-connection> -->
+        <div class="custom-connection-line"></div>
+      <!-- </ng-template> -->
     </ng-template>
-    <ng-template pTemplate="connection" let-connection>
-      <div class="custom-connection-line"></div>
-    </ng-template>
+
   </p-organizationChart>
 </div>
