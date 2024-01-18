@@ -5,6 +5,7 @@ import com.accolite.server.models.User;
 import com.accolite.server.models.Task;
 import com.accolite.server.readers.ReviewCycleExcelReader;
 import com.accolite.server.repository.ReviewCycleRepository;
+import com.accolite.server.service.ReminderService;
 import com.accolite.server.service.ReviewCycleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -29,6 +30,8 @@ public class ReviewCycleController {
 
     @Autowired
     private ReviewCycleRepository reviewCycleRepository;
+    @Autowired
+    private ReminderService reminderService;
 
     @PostMapping("")
     public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
@@ -108,6 +111,12 @@ public class ReviewCycleController {
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
+    }
+
+    @PostMapping("/send-reminder")
+    public ResponseEntity<String> sendReminderEmailsManually() {
+        reminderService.sendReminderEmailsForPendingReviews();
+        return ResponseEntity.ok("Reminder emails sent successfully.");
     }
 }
 
