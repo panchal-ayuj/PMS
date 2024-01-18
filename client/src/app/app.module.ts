@@ -48,7 +48,6 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { TeamPageComponent } from './team-page/team-page.component';
 import { EmployeeService } from './employee.service';
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -77,7 +76,7 @@ import { EmployeeService } from './employee.service';
     ProfilePageComponent,
     BodyComponent,
     NavbarComponent,
-    TeamPageComponent
+    TeamPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -100,9 +99,9 @@ import { EmployeeService } from './employee.service';
     MatDialogModule,
     MatToolbarModule,
     MatSidenavModule,
-    MatListModule
+    MatListModule,
   ],
   providers: [ExportService, EmployeeService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}
