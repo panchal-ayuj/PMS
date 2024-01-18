@@ -27,7 +27,6 @@ export class TeamPageComponent implements OnInit {
 
   viewDetails(userId: any): void {
     this.sharedDataService.changeUserId(userId);
-    console.log(userId);
     if(userId !== null && userId !== undefined && userId !== ""){
       console.log("Hitting profile");
       this.router.navigate(['/profile']);

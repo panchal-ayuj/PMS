@@ -10,11 +10,6 @@ export const navbarData = [
         label: 'Task'
     },
     {
-        routeLink: 'review',
-        icon: 'rate_review',
-        label: 'Review'
-    },
-    {
         routeLink: 'hierarchy',
         icon: 'tags',
         label: 'Hierarchy'

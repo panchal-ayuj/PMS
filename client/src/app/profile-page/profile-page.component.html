@@ -35,26 +35,26 @@
   </div>
 
   <div class="actions-container">
-    <div class="manager-actions">
+    <div class="manager-actions" *ngIf="showButton">
       <div class="manager-section">
         <h3>Manager Actions</h3>
-        <button class="btn btn-primary">Edit Task</button>
-        <button class="btn btn-primary">Give Review</button>
-        <button class="btn btn-primary">Give Feedback</button>
+        <!-- <button class="btn btn-primary">Edit Task</button> -->
+        <button class="btn btn-primary" (click)="viewDetails(employee.userId)">Give Review</button>
+        <!-- <button class="btn btn-primary">Give Feedback</button> -->
       </div>
     </div>
   </div>
 
-  <div class="d-flex align-items-center">
+  <!-- <div class="d-flex align-items-center">
     <hr class="flex-grow-1 mx-4" />
-  </div>
+  </div> -->
 
-  <div class="actions-container">
+  <!-- <div class="actions-container">
     <div class="senior-manager-actions">
       <div class="senior-manager-section">
         <h3>Senior Manager Actions</h3>
         <button class="btn btn-primary">Give Feedback</button>
       </div>
     </div>
-  </div>
+  </div> -->
 </div>

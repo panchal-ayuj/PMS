@@ -3,6 +3,7 @@ import { AuthService } from '../auth.service';
 import { HttpClient } from '@angular/common/http';
 import { SharedDataService } from '../shared-data.service';
 import { UserInfoService } from '../user-info.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile-page',
@@ -22,14 +23,25 @@ export class ProfilePageComponent implements OnInit {
     reportingManagerId: '',
   };
 
-  constructor(private service: AuthService, private http:HttpClient, private sharedDataService: SharedDataService, private userInfoService: UserInfoService) {}
+  userId: any;
+  showButton: boolean = false;
+
+  constructor(private router: Router,private service: AuthService, private http:HttpClient, private sharedDataService: SharedDataService, private userInfoService: UserInfoService) {}
 
   ngOnInit(): void {
 
     this.sharedDataService.currentUserId.subscribe(userId => {
       if (userId) {
-        this.getUserById(userId);
+        this.handleAsyncResponse2()
+        .then(() => {
+          this.getUserById(userId);
+        })
+        .catch((error) => {
+          console.error('Error handling async response:', error);
+        });
+        // this.getUserById(userId);
       } else {
+        this.showButton = false;
         this.handleAsyncResponse();
       }
     });
@@ -51,6 +63,20 @@ export class ProfilePageComponent implements OnInit {
     }
   }
 
+  async handleAsyncResponse2() {
+    try {
+      // Assume this is an asynchronous method that returns a Promise
+      const user = await this.service
+        .getUser(localStorage.getItem('token'))
+        .toPromise();
+      console.log(user);
+
+      this.userId = user.userId;
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+  }
+
   getUserById(userId: any): void {
     console.log('User ID:', userId);
     if (!userId) {
@@ -62,6 +88,11 @@ export class ProfilePageComponent implements OnInit {
     this.http.get<any>(url).subscribe(
       (user) => {
         this.employee = user;
+        if(this.employee.reportingManagerId === this.userId){
+          this.showButton = true;
+        } else {
+          this.showButton = false;
+        }
         console.log('User Details:', this.employee);
       },
       (error) => {
@@ -69,4 +100,16 @@ export class ProfilePageComponent implements OnInit {
       }
     );
   }
+
+  viewDetails(userId: any): void {
+    this.sharedDataService.changeUserId(userId);
+    console.log(userId);
+    if(userId !== null && userId !== undefined && userId !== ""){
+      console.log("Hitting keyresult");
+      this.router.navigate(['/keyresult']);
+    } else {
+      console.log("Empty user id");
+    }
+  }
+
 }

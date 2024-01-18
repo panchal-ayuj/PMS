@@ -29,6 +29,7 @@ import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthService } from '../auth.service';
 import { UserInfoService } from '../user-info.service';
+import { SharedDataService } from '../shared-data.service';
 
 @Component({
   selector: 'app-logout',
@@ -38,7 +39,7 @@ import { UserInfoService } from '../user-info.service';
 export class LogoutComponent implements OnInit {
   admin: boolean = false;
 
-  constructor(private cookieService: CookieService, private router: Router, private service: AuthService, private _ngZone: NgZone, private userInfoService: UserInfoService) {}
+  constructor(private cookieService: CookieService, private router: Router, private service: AuthService, private _ngZone: NgZone, private userInfoService: UserInfoService, private sharedDataService : SharedDataService) {}
 
   ngOnInit(): void {
     this.handleResponseAsync();
@@ -77,6 +78,14 @@ export class LogoutComponent implements OnInit {
     } catch (error) {
       console.error('Error fetching user data:', error);
     }
+  }
+
+  viewDetails(): void {
+    this.sharedDataService.changeUserId(null);
+    // if(userId !== null && userId !== undefined && userId !== ""){
+      // console.log("Hitting profile");
+      this.router.navigate(['/keyresult']);
+    // } 
   }
 
 }
