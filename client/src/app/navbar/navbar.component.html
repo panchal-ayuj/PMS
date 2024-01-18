@@ -1,26 +1,44 @@
 <nav class="navbar">
-    <div class="navbar-logo">
-        
-    </div>
-    <ul class="navbar-links">
-        <li>
-            <form class="d-flex" role="search">
-                <input
-                  class="form-control me-2"
-                  type="number"
-                  placeholder="User Id"
-                  aria-label="Search"
-                  id="userId"
-                  #userIdInput
-                />
-                <button class="btn btn-outline-success" type="submit" (click)="getUserById(userIdInput.value)">Search</button>
-              </form>
-        </li>
-    
-    </ul>
-    <div class="navbar-actions">
-        <span class="profile-username">{{ userName }}</span>
-        <mat-icon class="mat-icon-size" (click)="getProfile()">account_circle</mat-icon>
-        <!-- Add login/logout buttons or user-related actions here -->
-    </div>
+  <div class="navbar-logo"></div>
+  <ul class="navbar-links">
+    <li>
+      <form class="d-flex" role="search">
+        <input
+          class="form-control me-2"
+          type="number"
+          placeholder="Search by User ID"
+          aria-label="Search"
+          id="userId"
+          #userIdInput
+        />
+        <button
+          class="btn btn-outline-success"
+          type="submit"
+          (click)="getUserById(userIdInput.value)"
+        >
+          Search
+        </button>
+      </form>
+    </li>
+
+    <li>
+      <form class="d-flex" role="search">
+        <input class="form-control" type="text" placeholder="Search by name" #userNameInput/>
+        <button
+          class="btn btn-outline-success"
+          type="submit"
+          (click)="searchUsersByName(userNameInput.value)"
+        >
+          Search
+        </button>
+      </form>
+    </li>
+  </ul>
+  <div class="navbar-actions">
+    <span class="profile-username">{{ userName }}</span>
+    <mat-icon class="mat-icon-size" (click)="getProfile()"
+      >account_circle</mat-icon
+    >
+    <!-- Add login/logout buttons or user-related actions here -->
+  </div>
 </nav>

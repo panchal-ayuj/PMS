@@ -75,6 +75,7 @@ public class UserController {
         List<User> users = userRepository.findAll();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
+
     @GetMapping("/export")
     public ResponseEntity<Object> exportEmployeesToExcel() {
         List<User> users = userRepository.findAll();
@@ -111,7 +112,7 @@ public class UserController {
         Optional<User> emailExists = userRepository.findByEmail(googleTokenPayload.getEmail());
         System.out.println(googleTokenPayload.getEmail());
         boolean exists = false;
-        if(emailExists.isPresent()){
+        if (emailExists.isPresent()) {
             exists = true;
         }
         return ResponseEntity.ok(exists);
@@ -178,5 +179,13 @@ public class UserController {
         finalMap.put(user.getFirstName(), directReportMap);
 
         return finalMap;
+    }// Assuming you have a UserService
+
+    @GetMapping("/searchUsersByName/{searchName}")
+    public ResponseEntity<User > searchUsersByName(@PathVariable String searchName) {
+        // Validate searchName if needed
+
+        User user = userService.getUserByName(searchName);
+        return ResponseEntity.ok(user);
     }
 }

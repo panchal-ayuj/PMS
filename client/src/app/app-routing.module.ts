@@ -27,15 +27,15 @@ const routes: Routes = [
   { path: 'hierarchy', component: HierarchyComponent},
   { path: '', component: LoginComponent },
   { path: 'logout', component: LogoutComponent,canActivate: [UserGuard] },
+  { path: 'navbar', component: NavbarComponent,canActivate: [UserGuard] },
   { path: 'keyresult', component: KeyresultPageComponent,canActivate: [UserGuard] },
+  { path: 'profile',component:ProfilePageComponent,canActivate: [UserGuard] },
   { path: 'admin', component: AdminPageComponent,canActivate: [AdminGuard]},
   { path: 'admin/user', component: ParentUserComponent,canActivate: [AdminGuard]},
   { path: 'admin/goalplan', component: ParentGoalplanComponent,canActivate: [AdminGuard]},
   { path: 'admin/keyresult', component: ParentKeyresultComponent,canActivate: [AdminGuard]},
   { path: 'admin/reviewcycle', component: ParentReviewcycleComponent,canActivate: [AdminGuard]},
   { path: 'admin/task', component:ParentTaskComponent},
-  { path: 'profile',component:ProfilePageComponent },
-  { path: 'navbar', component: NavbarComponent},
   { path: 'team', component: TeamPageComponent }
 ];
 
