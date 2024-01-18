@@ -48,18 +48,6 @@ export class NavbarComponent implements OnInit {
     this.authService.searchUsersByName(name).subscribe(
       (results) => {
         this.searchResults = results;
-        console.log(results);
-        this.sharedDataService.changeUserId(this.searchResults.userId);
-        if (
-          this.searchResults.userId !== null &&
-          this.searchResults.userId !== undefined &&
-          this.searchResults.userId !== ''
-        ) {
-          console.log('Hitting profile');
-          this.router.navigate(['/profile']);
-        } else {
-          console.log('Empty user id');
-        }
       },
       (error) => {
         console.error('Error searching users:', error);
@@ -67,21 +55,26 @@ export class NavbarComponent implements OnInit {
     );
   }
 
-  onSearchInputChange(event: any) {
-    const searchQuery = event.target.value;
-    //console.log(searchQuery);
-
-    if (searchQuery.trim() !== '') {
-      this.searchUsersByName(searchQuery);
-    } else {
-      this.searchResults = [];
-    }
-  }
-
   selectUserProfile(user: any) {
     this.sharedDataService.changeUserId(user.userId);
     this.router.navigate(['/profile']);
   }
+
+  // onSearchInputChange(event: any) {
+  //   const searchQuery = event.target.value;
+  //   //console.log(searchQuery);
+
+  //   if (searchQuery.trim() !== '') {
+  //     this.searchUsersByName(searchQuery);
+  //   } else {
+  //     this.searchResults = [];
+  //   }
+  // }
+
+  // selectUserProfile(user: any) {
+  //   this.sharedDataService.changeUserId(user.userId);
+  //   this.router.navigate(['/profile']);
+  // }
 
   ngOnInit(): void {
     // Subscribe to changes in user information

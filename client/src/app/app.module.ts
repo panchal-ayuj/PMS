@@ -47,6 +47,9 @@ import { BodyComponent } from './body/body.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { TeamPageComponent } from './team-page/team-page.component';
 import { EmployeeService } from './employee.service';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatMenuModule } from '@angular/material/menu';
+
 
 @NgModule({
   declarations: [
@@ -100,6 +103,8 @@ import { EmployeeService } from './employee.service';
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
+    MatAutocompleteModule,
+    MatMenuModule,
   ],
   providers: [ExportService, EmployeeService],
   bootstrap: [AppComponent],

@@ -181,11 +181,20 @@ public class UserController {
         return finalMap;
     }// Assuming you have a UserService
 
+//    @GetMapping("/searchUsersByName/{searchName}")
+//    public ResponseEntity<User > searchUsersByName(@PathVariable String searchName) {
+//        // Validate searchName if needed
+//
+//        User user = userService.getUserByName(searchName);
+//        return ResponseEntity.ok(user);
+//    }
+
     @GetMapping("/searchUsersByName/{searchName}")
-    public ResponseEntity<User > searchUsersByName(@PathVariable String searchName) {
+    public ResponseEntity<List<User>> searchUsersByName(@PathVariable String searchName) {
         // Validate searchName if needed
 
-        User user = userService.getUserByName(searchName);
-        return ResponseEntity.ok(user);
+        List<User> matchedUsers = userService.getUsersByPartialName(searchName);
+        return ResponseEntity.ok(matchedUsers);
     }
+
 }
