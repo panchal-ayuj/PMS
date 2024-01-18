@@ -18,8 +18,12 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/api/users")
@@ -138,5 +142,41 @@ public class UserController {
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
+    }
+
+    @GetMapping("/team-members/{reportingManagerId}")
+    public ResponseEntity<List<User>> getTeamMembers(@PathVariable Long reportingManagerId) {
+        List<User> teamMembers = userService.getUsersByReportingManagerId(reportingManagerId);
+        return new ResponseEntity<>(teamMembers, HttpStatus.OK);
+    }
+
+
+    @GetMapping("/reporting-chain/{userId}")
+    public Map<String, Map<String, List<String>>> getUsersAndReportingChain(@PathVariable Long userId) {
+        // Fetch users based on reportingManagerId
+        List<User> directReports = userRepository.findByReportingManagerId(userId);
+
+        // Fetch users for whom the direct reports are reporting managers
+        List<Long> directReportIds = directReports.stream()
+                .map(User::getUserId)
+                .collect(Collectors.toList());
+
+        List<User> indirectReports = userRepository.findByReportingManagerIdIn(directReportIds);
+
+        // Create a Map<String, List<String>> where each direct report's first name is mapped to a list of indirect reports' first names
+        Map<String, Map<String, List<String>>> finalMap = new HashMap<>();
+        User user = userRepository.findByUserId(userId);
+
+        Map<String, List<String>> directReportMap = new HashMap<>();
+        for (User directReport : directReports) {
+            List<String> indirectReportFirstNames = indirectReports.stream()
+                    .filter(indirectReport -> indirectReport.getReportingManagerId().equals(directReport.getUserId()))
+                    .map(User::getFirstName)
+                    .collect(Collectors.toList());
+            directReportMap.put(directReport.getFirstName(), indirectReportFirstNames);
+        }
+        finalMap.put(user.getFirstName(), directReportMap);
+
+        return finalMap;
     }
 }

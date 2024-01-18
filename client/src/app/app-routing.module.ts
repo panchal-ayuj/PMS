@@ -21,6 +21,7 @@ import { ParentTaskComponent } from './parent-task/parent-task.component';
 import { KeyresultPageComponent } from './keyresult-page/keyresult-page.component';
 import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { TeamPageComponent } from './team-page/team-page.component';
 
 const routes: Routes = [
   { path: 'hierarchy', component: HierarchyComponent},
@@ -34,7 +35,8 @@ const routes: Routes = [
   { path: 'admin/reviewcycle', component: ParentReviewcycleComponent,canActivate: [AdminGuard]},
   { path: 'admin/task', component:ParentTaskComponent},
   { path: 'profile',component:ProfilePageComponent },
-  { path: 'navbar', component: NavbarComponent}
+  { path: 'navbar', component: NavbarComponent},
+  { path: 'team', component: TeamPageComponent }
 ];
 
 @NgModule({

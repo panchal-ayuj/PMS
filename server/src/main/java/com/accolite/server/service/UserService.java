@@ -71,4 +71,8 @@ public class UserService {
     public User getUserById(Long userId) {
         return userRepository.findByUserId(userId);
     }
+
+    public List<User> getUsersByReportingManagerId(Long reportingManagerId) {
+        return userRepository.findByReportingManagerId(reportingManagerId);
+    }
 }
