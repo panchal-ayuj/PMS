@@ -23,15 +23,20 @@
 
     <li>
       <form class="d-flex" role="search">
-        <input class="form-control" type="text" placeholder="Search by name" #userNameInput/>
-        <button
-          class="btn btn-outline-success"
-          type="submit"
-          (click)="searchUsersByName(userNameInput.value)"
-        >
-          Search
-        </button>
+        <input matInput type="text" placeholder="Search by name" (input)="searchUsersByName(userNameInput.value)" [matMenuTriggerFor]="userMenu" #userNameInput />
       </form>
+      
+      <mat-menu #userMenu="matMenu">
+        <div class="user-dropdown">
+          <ul>
+            <li *ngFor="let user of searchResults" (click)="selectUserProfile(user)">
+              {{ user.firstName }} {{ user.lastName }}
+            </li>
+          </ul>
+        </div>
+      </mat-menu>
+      
+      
     </li>
   </ul>
   <div class="navbar-actions">
