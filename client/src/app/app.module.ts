@@ -45,6 +45,8 @@ import { DiaglogoverviewComponent } from './diaglogoverview/diaglogoverview.comp
 import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { BodyComponent } from './body/body.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { TeamPageComponent } from './team-page/team-page.component';
+import { EmployeeService } from './employee.service';
 
 
 @NgModule({
@@ -74,7 +76,8 @@ import { NavbarComponent } from './navbar/navbar.component';
     DiaglogoverviewComponent,
     ProfilePageComponent,
     BodyComponent,
-    NavbarComponent
+    NavbarComponent,
+    TeamPageComponent
   ],
   imports: [
     BrowserModule,
@@ -99,7 +102,7 @@ import { NavbarComponent } from './navbar/navbar.component';
     MatSidenavModule,
     MatListModule
   ],
-  providers: [ExportService],
+  providers: [ExportService, EmployeeService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

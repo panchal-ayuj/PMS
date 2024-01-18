@@ -20,7 +20,7 @@ export const navbarData = [
         label: 'Hierarchy'
     },
     {
-        routeLink: 'review-team',
+        routeLink: 'team',
         icon: 'people',
         label: 'Review Team'
     },

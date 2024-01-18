@@ -18,4 +18,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     List<User> findByReportingManagerId(Long reportingManagerId);
 
+    List<User> findByReportingManagerIdIn(List<Long> reportingManagerIds);
 }
