@@ -47,6 +47,8 @@ import { BodyComponent } from './body/body.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { TeamPageComponent } from './team-page/team-page.component';
 import { EmployeeService } from './employee.service';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatMenuModule } from '@angular/material/menu';
 
 
 @NgModule({
@@ -77,7 +79,7 @@ import { EmployeeService } from './employee.service';
     ProfilePageComponent,
     BodyComponent,
     NavbarComponent,
-    TeamPageComponent
+    TeamPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -100,9 +102,11 @@ import { EmployeeService } from './employee.service';
     MatDialogModule,
     MatToolbarModule,
     MatSidenavModule,
-    MatListModule
+    MatListModule,
+    MatAutocompleteModule,
+    MatMenuModule,
   ],
   providers: [ExportService, EmployeeService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

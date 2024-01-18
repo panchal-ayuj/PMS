@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -74,5 +75,21 @@ public class UserService {
 
     public List<User> getUsersByReportingManagerId(Long reportingManagerId) {
         return userRepository.findByReportingManagerId(reportingManagerId);
+    }
+
+    public User getUserByName(String name) {
+        return userRepository.findByFirstName(name);
+    }
+
+    public List<User> getUsersByPartialName(String partialName) {
+        List<User> allUsers = userRepository.findAll();
+
+        // Filter users whose first names contain the provided partialName
+        List<User> matchedUsers = allUsers.stream()
+                .filter(user -> user.getFirstName().toLowerCase().contains(partialName.toLowerCase()))
+                .limit(4)  // Limit the results to 4 users
+                .collect(Collectors.toList());
+
+        return matchedUsers;
     }
 }
