@@ -8,7 +8,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Table(name = "user")
@@ -152,6 +154,21 @@ public class User implements UserDetails {
                 ", roles=" + roles +
                 ", teams=" + teams +
                 '}';
+    }
+    public Map<String, Object> toMap() {
+        Map<String, Object> userMap = new HashMap<>();
+        userMap.put("userId", userId);
+        userMap.put("firstName", firstName);
+        userMap.put("lastName", lastName);
+        userMap.put("email", email);
+        userMap.put("status", status);
+        userMap.put("joiningDate", joiningDate);
+        userMap.put("hrId", hrId);
+        userMap.put("band", band);
+        userMap.put("reportingManagerId", reportingManagerId);
+        userMap.put("roles", roles);
+        userMap.put("teams", teams);
+        return userMap;
     }
 
     @Override

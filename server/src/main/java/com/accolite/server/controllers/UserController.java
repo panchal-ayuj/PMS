@@ -7,15 +7,23 @@ import com.accolite.server.readers.UserExcelReader;
 import com.accolite.server.repository.UserRepository;
 import com.accolite.server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/api/users")
@@ -68,12 +76,43 @@ public class UserController {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
+    @GetMapping("/export")
+    public ResponseEntity<Object> exportEmployeesToExcel() {
+        List<User> users = userRepository.findAll();
+        String filePath = "employee_data_export.xlsx";
+
+        try {
+            userService.generateEmployeeExcelFile(users, filePath);
+
+            // Read the file content
+            byte[] fileContent = Files.readAllBytes(Paths.get(filePath));
+
+            // Create a ByteArrayResource from the file content
+            ByteArrayResource resource = new ByteArrayResource(fileContent);
+
+            // Set the Content-Disposition header to prompt the user for download
+            HttpHeaders headers = new HttpHeaders();
+            headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=employee_data_export.xlsx");
+
+            // Return the ResponseEntity with the ByteArrayResource and headers
+            return ResponseEntity.ok()
+                    .headers(headers)
+                    .contentLength(fileContent.length)
+                    .contentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
+                    .body(resource);
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Handle the exception and return an error response if needed
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
     @PostMapping("/checkEmail")
     public ResponseEntity<Boolean> checkEmailExists(@RequestBody GoogleTokenPayload googleTokenPayload) {
         Optional<User> emailExists = userRepository.findByEmail(googleTokenPayload.getEmail());
         System.out.println(googleTokenPayload.getEmail());
         boolean exists = false;
-        if(emailExists.isPresent()){
+        if (emailExists.isPresent()) {
             exists = true;
         }
         return ResponseEntity.ok(exists);
@@ -105,4 +144,57 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
+
+    @GetMapping("/team-members/{reportingManagerId}")
+    public ResponseEntity<List<User>> getTeamMembers(@PathVariable Long reportingManagerId) {
+        List<User> teamMembers = userService.getUsersByReportingManagerId(reportingManagerId);
+        return new ResponseEntity<>(teamMembers, HttpStatus.OK);
+    }
+
+
+    @GetMapping("/reporting-chain/{userId}")
+    public Map<String, Map<String, List<String>>> getUsersAndReportingChain(@PathVariable Long userId) {
+        // Fetch users based on reportingManagerId
+        List<User> directReports = userRepository.findByReportingManagerId(userId);
+
+        // Fetch users for whom the direct reports are reporting managers
+        List<Long> directReportIds = directReports.stream()
+                .map(User::getUserId)
+                .collect(Collectors.toList());
+
+        List<User> indirectReports = userRepository.findByReportingManagerIdIn(directReportIds);
+
+        // Create a Map<String, List<String>> where each direct report's first name is mapped to a list of indirect reports' first names
+        Map<String, Map<String, List<String>>> finalMap = new HashMap<>();
+        User user = userRepository.findByUserId(userId);
+
+        Map<String, List<String>> directReportMap = new HashMap<>();
+        for (User directReport : directReports) {
+            List<String> indirectReportFirstNames = indirectReports.stream()
+                    .filter(indirectReport -> indirectReport.getReportingManagerId().equals(directReport.getUserId()))
+                    .map(User::getFirstName)
+                    .collect(Collectors.toList());
+            directReportMap.put(directReport.getFirstName(), indirectReportFirstNames);
+        }
+        finalMap.put(user.getFirstName(), directReportMap);
+
+        return finalMap;
+    }// Assuming you have a UserService
+
+//    @GetMapping("/searchUsersByName/{searchName}")
+//    public ResponseEntity<User > searchUsersByName(@PathVariable String searchName) {
+//        // Validate searchName if needed
+//
+//        User user = userService.getUserByName(searchName);
+//        return ResponseEntity.ok(user);
+//    }
+
+    @GetMapping("/searchUsersByName/{searchName}")
+    public ResponseEntity<List<User>> searchUsersByName(@PathVariable String searchName) {
+        // Validate searchName if needed
+
+        List<User> matchedUsers = userService.getUsersByPartialName(searchName);
+        return ResponseEntity.ok(matchedUsers);
+    }
+
 }

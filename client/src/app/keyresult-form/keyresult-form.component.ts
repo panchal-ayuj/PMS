@@ -81,6 +81,28 @@ export class KeyresultFormComponent {
     );
   }
 
+  exportKeyResults() {
+    const apiUrl = 'http://localhost:8080/keyResult/export';
+
+    // Make a GET request to the export endpoint
+    this.http.get(apiUrl, { responseType: 'blob' }).subscribe(
+      (data: Blob) => {
+        // Create a blob URL and trigger a download
+        const blobUrl = window.URL.createObjectURL(data);
+        const link = document.createElement('a');
+        link.href = blobUrl;
+        link.download = 'key_result_data_export.xlsx';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      },
+      (error) => {
+        console.error('Error exporting key results:', error);
+        // Handle the error, you can display a user-friendly message
+      }
+    );
+  }
+
   searchKeyResult(keyResultId: number | undefined) {
     if (keyResultId) {
       this.searchKeyResultId = keyResultId;

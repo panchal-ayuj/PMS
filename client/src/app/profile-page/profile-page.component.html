@@ -1,50 +1,3 @@
-<!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <span class="navbar-brand app-title">Performance Management System</span>
-  
-  <div class="search-container">
-    <div class="input-group search-bar">
-      <input type="text" class="form-control" placeholder="Search">
-      <div class="input-group-append">
-        <button class="btn btn-outline-secondary" type="button">
-          <span class="fa fa-search"></span>
-        </button>
-      </div>
-    </div>
-  </div>
-  
-  <div class="spacer"></div>
-  
-  <div class="profile-header">
-    <span class="profile-username">John Doe</span>
-    <img class="nav-profile-image" src="../../assets/images/profile.png" alt="User Profile">
-  </div>
-</nav> -->
-
-<nav class="navbar" style="background-color: #bfdef4">
-  <div class="container-fluid">
-    <a class="navbar-brand">User Profile Page</a>
-    <form class="d-flex" role="search">
-      <input
-        class="form-control me-2"
-        type="number"
-        placeholder="User Id"
-        aria-label="Search"
-        id="userId"
-        #userIdInput
-      />
-      <button class="btn btn-outline-success" type="submit" (click)="getUserById(userIdInput.value)">Search</button>
-    </form>
-    <div class="profile-header">
-      <span class="profile-username">{{ employee.firstName }} {{ employee.lastName }}</span>
-      <img
-        class="nav-profile-image"
-        src="../../assets/images/profile.png"
-        alt="User Profile"
-      />
-    </div>
-  </div>
-</nav>
-
 <div class="container profile-container">
   <div class="row">
     <div class="col col-left">
@@ -82,26 +35,26 @@
   </div>
 
   <div class="actions-container">
-    <div class="manager-actions">
+    <div class="manager-actions" *ngIf="showButton">
       <div class="manager-section">
         <h3>Manager Actions</h3>
-        <button class="btn btn-primary" >Edit Task</button>
-        <button class="btn btn-primary">Give Review</button>
-        <button class="btn btn-primary">Give Feedback</button>
+        <!-- <button class="btn btn-primary">Edit Task</button> -->
+        <button class="btn btn-primary" (click)="viewDetails(employee.userId)">Give Review</button>
+        <!-- <button class="btn btn-primary">Give Feedback</button> -->
       </div>
     </div>
   </div>
 
-  <div class="d-flex align-items-center">
+  <!-- <div class="d-flex align-items-center">
     <hr class="flex-grow-1 mx-4" />
-  </div>
+  </div> -->
 
-  <div class="actions-container">
+  <!-- <div class="actions-container">
     <div class="senior-manager-actions">
       <div class="senior-manager-section">
         <h3>Senior Manager Actions</h3>
         <button class="btn btn-primary">Give Feedback</button>
       </div>
     </div>
-  </div>
+  </div> -->
 </div>

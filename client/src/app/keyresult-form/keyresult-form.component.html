@@ -61,6 +61,15 @@
         />
       </mat-form-field>
 
+      <button
+        mat-raised-button
+        color="primary"
+        type="export"
+        (click)="exportKeyResults()"
+      >
+        Export Key Results
+      </button>
+
       <button mat-raised-button color="primary" type="submit">
         {{ searchKeyResultId ? "Update Key Result" : "Register Key Result" }}
       </button>
@@ -71,9 +80,18 @@
     <div class="search-form">
       <mat-form-field appearance="fill">
         <mat-label>Search Key Result by ID:</mat-label>
-        <input matInput type="number" id="keyResultId" [(ngModel)]="keyResultId" />
+        <input
+          matInput
+          type="number"
+          id="keyResultId"
+          [(ngModel)]="keyResultId"
+        />
       </mat-form-field>
-      <button mat-raised-button color="primary" (click)="searchKeyResult(keyResultId)">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="searchKeyResult(keyResultId)"
+      >
         Search
       </button>
       <!-- Reset Form Button -->
@@ -86,7 +104,6 @@
       <app-keyresult-upload></app-keyresult-upload>
     </div>
   </div>
-
   <!-- KeyResult List -->
   <!-- <div class="key-result-list">
     <div class="key-result-card" *ngFor="let keyresult of keyresults">

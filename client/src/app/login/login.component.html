@@ -1,13 +1,31 @@
-<!-- login.component.html -->
-
 <div class="center-container">
   <mat-card class="login-card">
+    <mat-card-title>
+      <img
+        class="company-logo"
+        src="../../assets/images/accolite-logo.png"
+        alt="Company Logo"
+      />
+    </mat-card-title>
     <mat-card-header class="login-header">
       <mat-card-title>Login below with Google</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <button mat-raised-button color="primary" (click)="onSignIn()">
-        Sign in with Google
+      <!-- Button with Google logo image -->
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="onSignIn()"
+        style="background-color: white; color: black; padding: 20px"
+      >
+        <span style="display: flex; align-items: center">
+          <img
+            src="../../assets/images/google-logo.png"
+            alt="Google Logo"
+            style="width: 24px; height: 24px; margin-right: 8px"
+          />
+          <span>Sign in with Google</span>
+        </span>
       </button>
     </mat-card-content>
   </mat-card>

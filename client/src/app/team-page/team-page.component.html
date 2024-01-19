@@ -1,0 +1,36 @@
+<div class="team-page-container">
+  <h2>Team Members</h2>
+
+  <mat-table [dataSource]="teamMembers" class="mat-elevation-z8">
+    <ng-container matColumnDef="firstName">
+      <mat-header-cell *matHeaderCellDef> First Name </mat-header-cell>
+      <mat-cell *matCellDef="let member"> {{ member.firstName }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="lastName">
+      <mat-header-cell *matHeaderCellDef> Last Name </mat-header-cell>
+      <mat-cell *matCellDef="let member"> {{ member.lastName }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+      <mat-cell *matCellDef="let member"> {{ member.email }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="viewDetails">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let member">
+        <button mat-button color="primary" (click)="viewDetails(member.userId)" style="margin-left: 40px;" class="view-details-button">View Details</button>
+      </mat-cell>
+    </ng-container>
+
+    <!-- Add more columns as needed -->
+
+    <mat-header-row
+      *matHeaderRowDef="['firstName', 'lastName', 'email', 'viewDetails']"
+    ></mat-header-row>
+    <mat-row
+      *matRowDef="let row; columns: ['firstName', 'lastName', 'email', 'viewDetails']"
+    ></mat-row>
+  </mat-table>
+</div>

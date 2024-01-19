@@ -66,6 +66,24 @@ export class AuthService {
       console.error('Authentication token is missing');
       // Handle the case where the authentication token is missing
     }
-    return new Observable<any>;
+    return new Observable<any>();
+  }
+
+  searchUsersByName(name: string): Observable<any> {
+    const authToken = localStorage.getItem('authToken');
+    if (authToken) {
+      const header = new HttpHeaders()
+        .set('Content-Type', 'application/json')
+        .set('Authorization', 'Bearer ' + authToken);
+
+      const searchQuery = name; // Adjust the API request payload as needed
+
+      return this.httpClient.get<any>(
+        `${this.path}api/users/searchUsersByName/${searchQuery}`
+      );
+    } else {
+      console.error('Authentication token is missing');
+      return new Observable<any>();
+    }
   }
 }

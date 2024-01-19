@@ -1,0 +1,58 @@
+.team-page-container {
+  padding: 20px;
+
+  h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  mat-table {
+    width: 100%;
+    overflow-x: auto;
+    margin-top: 20px;
+
+    mat-header-cell,
+    mat-cell {
+      padding: 10px;
+      text-align: left;
+    }
+
+    mat-header-cell {
+      font-weight: bold;
+    }
+
+    mat-row,
+    mat-header-row {
+      display: flex;
+      width: 100%;
+      box-sizing: border-box;
+      border-bottom: 1px solid #ddd;
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+
+    mat-cell {
+      flex: 1;
+      max-width: 33.33%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+}
+
+button.view-details-button {
+  background-color: #2196F3; // Replace with your preferred shade of blue
+  color: #fff; // White text for better contrast
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // Add your preferred box-shadow values
+
+  &:hover {
+    background-color: #1565C0; // Darker shade for hover effect
+  }
+
+  &:active {
+    background-color: #0D47A1; // Even darker shade for active/pressed effect
+  }
+}

@@ -53,6 +53,16 @@
         <input matInput formControlName="teams" />
       </mat-form-field>
 
+      <div>
+        <button
+          type="export"
+          mat-raised-button
+          color="primary"
+          (click)="exportData()"
+        >
+          Export
+        </button>
+      </div>
       <button type="submit" mat-raised-button color="primary">
         {{ searchUserId ? "Update User" : "Register User" }}
       </button>

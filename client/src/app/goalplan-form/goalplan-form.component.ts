@@ -61,7 +61,7 @@ export class GoalplanFormComponent {
 
 
   loadGoalPlans() {
-    const apiUrl = 'http://localhost:8080/goalPlan';
+    const apiUrl = 'http://localhost:8080/goalPlan'; //need to update the link
     this.http.get(apiUrl).subscribe(
       (data: any) => {
         if (Array.isArray(data)) {
@@ -72,6 +72,28 @@ export class GoalplanFormComponent {
       },
       (error) => {
         console.error('Error loading users:', error);
+      }
+    );
+  }
+
+  exportGoalPlans() {
+    const apiUrl = 'http://localhost:8080/goalPlan/export';
+
+    // Make a GET request to the export endpoint
+    this.http.get(apiUrl, { responseType: 'blob' }).subscribe(
+      (data: Blob) => {
+        // Create a blob URL and trigger a download
+        const blobUrl = window.URL.createObjectURL(data);
+        const link = document.createElement('a');
+        link.href = blobUrl;
+        link.download = 'goal_plan_data_export.xlsx';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      },
+      (error) => {
+        console.error('Error exporting goal plans:', error);
+        // Handle the error, you can display a user-friendly message
       }
     );
   }

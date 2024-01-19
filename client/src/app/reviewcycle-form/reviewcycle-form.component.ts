@@ -78,6 +78,30 @@ export class ReviewcycleFormComponent {
     );
   }
 
+  exportReviewCycles() {
+    const apiUrl = 'http://localhost:8080/reviewCycle/export';
+
+    // Make a GET request to the export endpoint
+    this.http.get(apiUrl, { responseType: 'blob' }).subscribe(
+      (data: Blob) => {
+        // Create a blob URL and trigger a download
+        const blobUrl = window.URL.createObjectURL(data);
+        const link = document.createElement('a');
+        link.href = blobUrl;
+        link.download = 'review_cycle_data_export.xlsx';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      },
+      (error) => {
+        console.error('Error exporting review cycles:', error);
+        // Handle the error as needed
+      }
+    );
+  }
+
+
+  
   searchReviewCycle(reviewCycleId: number | undefined) {
     if (reviewCycleId) {
       this.searchReviewCycleId = reviewCycleId;

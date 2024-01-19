@@ -3,6 +3,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { ExportService } from '../export.service';
 
 @Component({
   selector: 'app-user',
@@ -16,7 +17,7 @@ export class UserManagementComponent implements OnInit {
 
   searchUserId: number | undefined;
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient) { }
+  constructor(private formBuilder: FormBuilder, private http: HttpClient,private exportService: ExportService) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -66,7 +67,7 @@ export class UserManagementComponent implements OnInit {
     if (typeof user.teams === 'string'){
       user.teams = user.teams.split(',').map((team: string) => team.trim());
     }
-
+  
     const apiUrl = 'http://localhost:8080/api/users/';
 
     // Check if ID is present for update
@@ -112,6 +113,25 @@ export class UserManagementComponent implements OnInit {
     );
   }
 
+  exportData() {
+    this.exportService.exportData().subscribe(
+      (data: Blob) => {
+        console.log(data);
+        // Create a blob URL and trigger a download
+        const blobUrl = window.URL.createObjectURL(data);
+        const link = document.createElement('a');
+        link.href = blobUrl;
+        link.download = 'employee_data_export.xlsx';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      },
+      (error) => {
+        console.error('Error exporting data:', error);
+        // Handle the error as needed
+      }
+    );
+  }
   searchUser(userId: number | undefined) {
     if (userId) {
       this.searchUserId = userId;

@@ -2,6 +2,7 @@
   "name": "client",
   "version": "0.0.0",
   "scripts": {
+    
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
@@ -15,16 +16,20 @@
     "@angular/common": "^17.0.0",
     "@angular/compiler": "^17.0.0",
     "@angular/core": "^17.0.0",
+    "@angular/flex-layout": "^15.0.0-beta.42",
     "@angular/forms": "^17.0.0",
     "@angular/material": "^17.0.4",
     "@angular/platform-browser": "^17.0.0",
     "@angular/platform-browser-dynamic": "^17.0.0",
     "@angular/router": "^17.0.0",
+    "@syncfusion/ej2-angular-diagrams": "^24.1.45",
     "@types/google-one-tap": "^1.2.6",
     "bootstrap": "^5.3.2",
     "bootstrap-icons": "^1.11.3",
     "google-one-tap": "^1.0.6",
     "ngx-cookie-service": "^17.0.1",
+    "primeicons": "^6.0.1",
+    "primeng": "^17.3.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.2"

@@ -7,6 +7,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   templateUrl: './task.component.html',
   styleUrl: './task.component.scss'
 })
+
 export class TaskComponent implements OnInit {
   taskForm!: FormGroup;
   tasks: any[] = [];
@@ -106,6 +107,28 @@ export class TaskComponent implements OnInit {
   resetForm() {
     this.taskForm.reset();
     this.searchTaskId = undefined;
+  }
+
+  exportTasks() {
+    const apiUrl = 'http://localhost:8080/api/tasks/export';
+
+    // Make a GET request to the export endpoint
+    this.http.get(apiUrl, { responseType: 'blob' }).subscribe(
+      (data: Blob) => {
+        // Create a blob URL and trigger a download
+        const blobUrl = window.URL.createObjectURL(data);
+        const link = document.createElement('a');
+        link.href = blobUrl;
+        link.download = 'task_data_export.xlsx';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      },
+      (error) => {
+        console.error('Error exporting tasks:', error);
+        // Handle the error as needed
+      }
+    );
   }
 
   // Other methods for updating, deleting, or managing tasks as needed

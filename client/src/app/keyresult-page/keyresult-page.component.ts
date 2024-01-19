@@ -3,6 +3,7 @@ import { KeyResultService } from '../key-result.service';
 import { AuthService } from '../auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DiaglogoverviewComponent } from '../diaglogoverview/diaglogoverview.component';
+import { SharedDataService } from '../shared-data.service';
 
 @Component({
   selector: 'app-keyresult-page',
@@ -17,17 +18,41 @@ export class KeyresultPageComponent implements OnInit{
 
   keyResults: any[] = [];
 
-  constructor(private keyResultService: KeyResultService, private service: AuthService, private dialog: MatDialog) {
+  constructor(private sharedDataService: SharedDataService,private keyResultService: KeyResultService, private service: AuthService, private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
-    this.handleResponseAsync()
-      .then(() => {
-        this.loadKeyResults();
-      })
-      .catch((error) => {
-        console.error('Error handling async response:', error);
-      });
+    this.sharedDataService.currentUserId.subscribe(userId => {
+      if (userId) {
+        this.handleResponseAsync2(userId)
+        .then(() => {
+          this.loadKeyResults();
+          // this.sharedDataService.changeUserId(null);
+        }).then(() => {
+          this.handleResponseAsync();
+        })
+        .catch((error) => {
+          console.error('Error handling async response:', error);
+        });
+        // this.getUserById(userId);
+      } else {
+        this.handleResponseAsync()
+          .then(() => {
+            this.loadKeyResults();
+          })
+          .catch((error) => {
+            console.error('Error handling async response:', error);
+          });
+      }
+    });
+
+    // this.handleResponseAsync()
+    //   .then(() => {
+    //     this.loadKeyResults();
+    //   })
+    //   .catch((error) => {
+    //     console.error('Error handling async response:', error);
+    //   });
   }
 
   loadKeyResults() {
@@ -36,6 +61,7 @@ export class KeyresultPageComponent implements OnInit{
       .subscribe((data) => {
         this.keyResults = data;
       });
+
   }
 
   async handleResponseAsync() {
@@ -44,6 +70,16 @@ export class KeyresultPageComponent implements OnInit{
       const user = await this.service.getUser(localStorage.getItem('token')).toPromise();
       console.log(user);
       this.userId = user.userId;
+      // this.sharedDataService.changeUserId(null);
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+  }
+
+  async handleResponseAsync2(userId: any) {
+    try {
+
+      this.userId = userId;
 
     } catch (error) {
       console.error('Error fetching user data:', error);
