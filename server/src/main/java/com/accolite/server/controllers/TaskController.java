@@ -120,5 +120,14 @@ public class TaskController {
         List<Task> tasks = taskService.getTasksByKeyResultId(keyResultId);
         return new ResponseEntity<>(tasks, HttpStatus.OK);
     }
+    @PostMapping("/saveChanges")
+    public ResponseEntity<String> saveChanges(@RequestBody List<Task> updatedTasks) {
+        try {
+            taskService.saveAll(updatedTasks);
+            return ResponseEntity.status(HttpStatus.OK).body("Changes saved successfully.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error saving changes: " + e.getMessage());
+        }
+    }
     // You can add other methods as needed
 }

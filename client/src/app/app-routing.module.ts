@@ -22,6 +22,7 @@ import { KeyresultPageComponent } from './keyresult-page/keyresult-page.componen
 import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { TeamPageComponent } from './team-page/team-page.component';
+import { FeedbackComponent } from './feedback/feedback.component';
 
 const routes: Routes = [
   { path: 'hierarchy', component: HierarchyComponent},
@@ -36,7 +37,9 @@ const routes: Routes = [
   { path: 'admin/keyresult', component: ParentKeyresultComponent,canActivate: [AdminGuard]},
   { path: 'admin/reviewcycle', component: ParentReviewcycleComponent,canActivate: [AdminGuard]},
   { path: 'admin/task', component:ParentTaskComponent},
-  { path: 'team', component: TeamPageComponent }
+  { path: 'team', component: TeamPageComponent },
+  { path: 'profile',component:ProfilePageComponent },
+  {path:'feedback',component:FeedbackComponent}
 ];
 
 @NgModule({
