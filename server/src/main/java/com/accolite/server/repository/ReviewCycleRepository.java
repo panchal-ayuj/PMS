@@ -12,6 +12,6 @@ public interface ReviewCycleRepository extends JpaRepository<ReviewCycle, Long> 
     ReviewCycle findByWindowId(Long windowId);
 
     List<ReviewCycle> findByReviewStatusAndEndDateGreaterThan(String reviewStatus, Date currentDate);
+  
     ReviewCycle findByuserId(Long userId);
-
 }

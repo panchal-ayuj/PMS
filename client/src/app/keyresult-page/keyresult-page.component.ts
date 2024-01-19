@@ -83,6 +83,7 @@ export class KeyresultPageComponent implements OnInit {
           this.reviewCycleId = data[0].windowId; // Accessing windowId of the first KeyResult
         }
       });
+
   }
 
   async handleResponseAsync() {
