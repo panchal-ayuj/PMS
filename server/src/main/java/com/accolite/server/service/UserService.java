@@ -92,4 +92,20 @@ public class UserService {
 
         return matchedUsers;
     }
+    public String getUserFullName(Long userId){
+        User user = userRepository.findByUserId(userId);
+        return user.getFirstName()+" "+user.getLastName();
+    }
+        // add exceptions
+    public long getReportingManagerId(long userId){
+        User user = userRepository.findByUserId(userId);
+        return user.getReportingManagerId();
+    }
+    public String getUserEmailById(long userId){
+        if(userRepository.existsById(userId)){
+            User user = userRepository.findByUserId(userId);
+            return user.getEmail();
+        }
+        return "User Not Found";
+    }
 }

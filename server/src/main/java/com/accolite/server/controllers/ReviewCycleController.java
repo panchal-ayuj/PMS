@@ -5,6 +5,7 @@ import com.accolite.server.models.User;
 import com.accolite.server.models.Task;
 import com.accolite.server.readers.ReviewCycleExcelReader;
 import com.accolite.server.repository.ReviewCycleRepository;
+import com.accolite.server.service.ReminderService;
 import com.accolite.server.service.ReviewCycleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -29,6 +30,8 @@ public class ReviewCycleController {
 
     @Autowired
     private ReviewCycleRepository reviewCycleRepository;
+    @Autowired
+    private ReminderService reminderService;
 
     @PostMapping("")
     public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
@@ -107,6 +110,53 @@ public class ReviewCycleController {
             return ResponseEntity.ok(updatedReviewCycle);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
+    @PostMapping("/send-reminder")
+    public ResponseEntity<String> sendReminderEmailsManually() {
+        reminderService.sendReminderEmailsForPendingReviews();
+        return ResponseEntity.ok("Reminder emails sent successfully.");
+    }
+
+    @PostMapping("/addFeedback/{reviewCycleId}")
+    public ResponseEntity<String> addFeedbackToReviewCycle(@PathVariable Long reviewCycleId, @RequestBody String feedback) {
+        try {
+            // Retrieve the review cycle by ID
+            ReviewCycle reviewCycle = reviewCycleService.getReviewCycleById(reviewCycleId);
+
+            if (reviewCycle != null) {
+                // Add the feedback to the review cycle
+                reviewCycle.setFeedback(feedback);
+
+                // You may need to handle other feedback-related logic
+
+                // Save the updated review cycle
+                ReviewCycle savedReviewCycle = reviewCycleRepository.save(reviewCycle);
+
+                return ResponseEntity.status(HttpStatus.OK).body("Feedback added successfully.");
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Review cycle not found.");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error adding feedback: " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/feedbackAndRating/{userId}")
+    public ResponseEntity<ReviewCycle> getFeedbackAndRating(@PathVariable Long userId) {
+        try {
+            // Retrieve the review cycle by ID
+            ReviewCycle reviewCycle = reviewCycleService.getFeedbackbyuserId(userId);
+
+            if (reviewCycle != null) {
+                // Assuming you have fields 'feedback' and 'rating' in ReviewCycle
+                return ResponseEntity.ok(reviewCycle);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
 }
