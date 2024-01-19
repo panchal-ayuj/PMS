@@ -49,7 +49,8 @@ import { TeamPageComponent } from './team-page/team-page.component';
 import { EmployeeService } from './employee.service';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatMenuModule } from '@angular/material/menu';
-
+import { RatingDialogComponent } from './rating-dialog/rating-dialog.component';
+import { FeedbackComponent } from './feedback/feedback.component';
 
 @NgModule({
   declarations: [
@@ -80,6 +81,8 @@ import { MatMenuModule } from '@angular/material/menu';
     BodyComponent,
     NavbarComponent,
     TeamPageComponent,
+    RatingDialogComponent,
+    FeedbackComponent,
   ],
   imports: [
     BrowserModule,
