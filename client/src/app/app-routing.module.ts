@@ -12,6 +12,7 @@ import { UserGuard } from './user.guard'; // Import the AdminGuard
 import { ParentTaskComponent } from './parent-task/parent-task.component';
 import { KeyresultPageComponent } from './keyresult-page/keyresult-page.component';
 import { ProfilePageComponent } from './profile-page/profile-page.component';
+import { FeedbackComponent } from './feedback/feedback.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -23,7 +24,8 @@ const routes: Routes = [
   { path: 'admin/keyresult', component: ParentKeyresultComponent,canActivate: [AdminGuard]},
   { path: 'admin/reviewcycle', component: ParentReviewcycleComponent,canActivate: [AdminGuard]},
   { path: 'admin/task', component:ParentTaskComponent},
-  { path: 'profile',component:ProfilePageComponent }
+  { path: 'profile',component:ProfilePageComponent },
+  {path:'feedback',component:FeedbackComponent}
 ];
 
 @NgModule({

@@ -36,6 +36,8 @@ import { DiaglogoverviewComponent } from './diaglogoverview/diaglogoverview.comp
 import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
+import { RatingDialogComponent } from './rating-dialog/rating-dialog.component';
+import { FeedbackComponent } from './feedback/feedback.component';
 
 
 @NgModule({
@@ -61,7 +63,9 @@ import { MatIconModule } from '@angular/material/icon';
     ParentTaskComponent,
     KeyresultPageComponent,
     DiaglogoverviewComponent,
-    ProfilePageComponent
+    ProfilePageComponent,
+    RatingDialogComponent,
+    FeedbackComponent
   ],
   imports: [
     BrowserModule,

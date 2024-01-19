@@ -39,3 +39,38 @@
     }
   }
 }
+/* Add this to your component's styles or stylesheet */
+
+
+
+
+
+/* Add this to your component's styles or stylesheet */
+
+/* Add this to your component's styles or stylesheet */
+
+/* Add this to your component's styles or stylesheet */
+
+.table.mat-table {
+  width: 100%;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f5f5f5; /* Light Grey on Hover */
+}
+
+.btn-view-task {
+  background-color: #07bbf1;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #10a9ea;
+}

@@ -1,5 +1,11 @@
 
-<!-- Update your HTML file with Angular Material components -->
+
+
+
+<!-- diaglogoverview.component.html -->
+
+<h2>Tasks Overview</h2>
+
 <mat-table [dataSource]="data.tasks" class="mat-elevation-z8">
   <ng-container matColumnDef="description">
     <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
@@ -18,9 +24,29 @@
 
   <ng-container matColumnDef="rating">
     <mat-header-cell *matHeaderCellDef>Rating</mat-header-cell>
-    <mat-cell *matCellDef="let task">{{ task.rating }}</mat-cell>
+    <mat-cell *matCellDef="let task">
+      <!-- Add input field for rating -->
+      <mat-form-field>
+        <input matInput placeholder="Enter Rating" [(ngModel)]="task.rating" (change)="updateRating(task)">
+      </mat-form-field>
+    </mat-cell>
   </ng-container>
 
-  <mat-header-row *matHeaderRowDef="['description', 'weight', 'rating', 'completionStatus']"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: ['description', 'weight', 'rating', 'completionStatus'];"></mat-row>
+  <ng-container matColumnDef="feedback">
+    <mat-header-cell *matHeaderCellDef>Feedback</mat-header-cell>
+    <mat-cell *matCellDef="let task">
+      <!-- Add input field for feedback -->
+      <mat-form-field>
+        <textarea matInput placeholder="Enter Feedback" [(ngModel)]="task.feedback" (change)="updateFeedback(task)"></textarea>
+      </mat-form-field>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="['description', 'weight', 'rating','feedback' ,'completionStatus']"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: ['description', 'weight', 'rating', 'feedback','completionStatus'];"></mat-row>
 </mat-table>
+
+<div class="actions">
+  <button mat-raised-button color="primary" (click)="saveChanges()">Save Changes</button>
+  <button mat-raised-button color="warn" (click)="closeDialog()">Close</button>
+</div>

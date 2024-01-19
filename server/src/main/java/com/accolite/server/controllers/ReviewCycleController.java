@@ -74,5 +74,55 @@ public class ReviewCycleController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
+
+    @PostMapping("/addFeedback/{reviewCycleId}")
+    public ResponseEntity<String> addFeedbackToReviewCycle(@PathVariable Long reviewCycleId, @RequestBody String feedback) {
+        try {
+            // Retrieve the review cycle by ID
+            ReviewCycle reviewCycle = reviewCycleService.getReviewCycleById(reviewCycleId);
+
+            if (reviewCycle != null) {
+                // Add the feedback to the review cycle
+                reviewCycle.setFeedback(feedback);
+
+                // You may need to handle other feedback-related logic
+
+                // Save the updated review cycle
+                ReviewCycle savedReviewCycle = reviewCycleRepository.save(reviewCycle);
+
+                return ResponseEntity.status(HttpStatus.OK).body("Feedback added successfully.");
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Review cycle not found.");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error adding feedback: " + e.getMessage());
+        }
+    }
+
+
+
+        @GetMapping("/feedbackAndRating/{userId}")
+        public ResponseEntity<ReviewCycle> getFeedbackAndRating(@PathVariable Long userId) {
+            try {
+                // Retrieve the review cycle by ID
+                ReviewCycle reviewCycle = reviewCycleService.getFeedbackbyuserId(userId);
+
+                if (reviewCycle != null) {
+                    // Assuming you have fields 'feedback' and 'rating' in ReviewCycle
+                    return ResponseEntity.ok(reviewCycle);
+                } else {
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+                }
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            }
+        }
+
+
+
+
+
+
+
 }
 
