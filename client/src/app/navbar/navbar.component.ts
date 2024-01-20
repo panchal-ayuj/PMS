@@ -20,12 +20,24 @@ export class NavbarComponent implements OnInit {
     private authService: AuthService
   ) {}
 
-  search() {
+  search(event: Event) {
+    event.preventDefault(); // Prevent the form from submitting
     // Get the search query from the input field (you may use ngModel or form control)
-    const searchQuery = 'your-search-query'; // Replace with your actual search query
+    const searchQuery = (event.target as HTMLFormElement).querySelector(
+      '#searchInput'
+    ) as HTMLInputElement; // Replace with your actual search query
+    const inputValue = searchQuery.value;
 
-    // Navigate to the search route, assuming you have a route for searching
-    this.router.navigate(['/search'], { queryParams: { q: searchQuery } });
+    // Determine if the input is numeric or a string
+    if (!isNaN(Number(inputValue))) {
+      // If the input is numeric, perform search by User ID
+      this.getUserById(inputValue);
+      console.log(inputValue);
+    } else {
+      // If the input is a string, perform search by name
+      this.searchUsersByName(inputValue);
+      console.log(inputValue);
+    }
   }
 
   getUserById(userId: any): void {
@@ -55,26 +67,19 @@ export class NavbarComponent implements OnInit {
     );
   }
 
+  onSearchInputChange(searchQuery: string) {
+    if (searchQuery.trim() !== '') {
+      // Perform real-time search as the user types
+      this.searchUsersByName(searchQuery);
+    } else {
+      this.searchResults = [];
+    }
+  }
+
   selectUserProfile(user: any) {
     this.sharedDataService.changeUserId(user.userId);
     this.router.navigate(['/profile']);
   }
-
-  // onSearchInputChange(event: any) {
-  //   const searchQuery = event.target.value;
-  //   //console.log(searchQuery);
-
-  //   if (searchQuery.trim() !== '') {
-  //     this.searchUsersByName(searchQuery);
-  //   } else {
-  //     this.searchResults = [];
-  //   }
-  // }
-
-  // selectUserProfile(user: any) {
-  //   this.sharedDataService.changeUserId(user.userId);
-  //   this.router.navigate(['/profile']);
-  // }
 
   ngOnInit(): void {
     // Subscribe to changes in user information

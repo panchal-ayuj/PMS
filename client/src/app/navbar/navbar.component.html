@@ -2,48 +2,39 @@
   <div class="navbar-logo"></div>
   <ul class="navbar-links">
     <li>
-      <form class="d-flex" role="search">
+      <form class="d-flex" role="search" (submit)="search($event)">
         <input
           class="form-control me-2"
-          type="number"
-          placeholder="Search by User ID"
+          type="text"
+          placeholder="Search by User ID or Name"
           aria-label="Search"
-          id="userId"
-          #userIdInput
+          id="searchInput"
+          #searchInput
+          (input)="onSearchInputChange(searchInput.value)"
+          [matMenuTriggerFor]="userMenu"
         />
-        <button
-          class="btn btn-outline-success"
-          type="submit"
-          (click)="getUserById(userIdInput.value)"
-        >
-          Search
-        </button>
+        <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
-    </li>
 
-    <li>
-      <form class="d-flex" role="search">
-        <input matInput type="text" placeholder="Search by name" (input)="searchUsersByName(userNameInput.value)" [matMenuTriggerFor]="userMenu" #userNameInput />
-      </form>
-      
       <mat-menu #userMenu="matMenu">
         <div class="user-dropdown">
           <ul>
-            <li *ngFor="let user of searchResults" (click)="selectUserProfile(user)">
-              {{ user.firstName }} {{ user.lastName }}
+            <li
+              *ngFor="let user of searchResults"
+              (click)="selectUserProfile(user)"
+            >
+              {{ user.firstName }} {{ user.lastName }} {{" - "}} {{user.userId}}
             </li>
           </ul>
         </div>
       </mat-menu>
-      
-      
     </li>
   </ul>
+
   <div class="navbar-actions">
     <span class="profile-username">{{ userName }}</span>
     <mat-icon class="mat-icon-size" (click)="getProfile()"
       >account_circle</mat-icon
     >
-    <!-- Add login/logout buttons or user-related actions here -->
   </div>
 </nav>
