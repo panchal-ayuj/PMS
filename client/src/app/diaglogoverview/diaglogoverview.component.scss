@@ -34,3 +34,22 @@ body {
 .mat-elevation-z8 {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
+.actions{
+  margin: 1%;
+
+  button{
+    margin: 1%;
+  }
+}
+
+.mat-elevation-z8{
+  // margin: 1%;
+  max-width: 100%;
+}
+
+/* Your component-specific style file or global style file */
+.feedback-column {
+  width: 700px; /* Set your desired width */
+  margin-top: 10px;
+}

@@ -119,15 +119,24 @@ public class ReviewCycleController {
         return ResponseEntity.ok("Reminder emails sent successfully.");
     }
 
-    @PostMapping("/addFeedback/{reviewCycleId}")
-    public ResponseEntity<String> addFeedbackToReviewCycle(@PathVariable Long reviewCycleId, @RequestBody String feedback) {
+    @PostMapping("/addFeedback/{useApi}/{reviewCycleId}/{managerId}")
+    public ResponseEntity<String> addFeedbackToReviewCycle(@PathVariable Long useApi,@PathVariable Long reviewCycleId, @PathVariable Long managerId,@RequestBody String feedback) {
         try {
             // Retrieve the review cycle by ID
             ReviewCycle reviewCycle = reviewCycleService.getReviewCycleById(reviewCycleId);
 
             if (reviewCycle != null) {
                 // Add the feedback to the review cycle
-                reviewCycle.setFeedback(feedback);
+                if(useApi == 0) {
+                    reviewCycle.setFeedback(feedback);
+                    reviewCycle.setReviewerId(managerId);
+                } else if(useApi == 1){
+                    reviewCycle.setSeniorRMfeedback(feedback);
+                    reviewCycle.setSeniorRMId(managerId);
+                } else if(useApi == 2){
+                    reviewCycle.setSuperSeniorRMfeedback(feedback);
+                    reviewCycle.setSuperSeniorRMId(managerId);
+                }
 
                 // You may need to handle other feedback-related logic
 
