@@ -1,5 +1,8 @@
 <div class="key-results-container">
-  <h2>Key Results</h2>
+  <h2 *ngIf="userName !== undefined">{{userName}}'s Key Results</h2>
+  <h2 *ngIf="userName === undefined">My Key Results</h2>
+  <!-- <h2>{{startDate}}</h2> -->
+  <!-- <h2>{{endDate}}</h2> -->
 
   <div class="filter-section">
     <mat-form-field appearance="fill">

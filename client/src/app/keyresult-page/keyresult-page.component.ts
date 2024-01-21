@@ -27,6 +27,9 @@ export class KeyresultPageComponent implements OnInit {
   showButton: boolean = false;
   useApi!: number;
   managerId: any;
+  userName!: any;
+  startDate: any;
+  endDate: any;
 
   keyResults: any[] = [];
 
@@ -88,6 +91,27 @@ export class KeyresultPageComponent implements OnInit {
         console.log('data', data);
         if (data.length > 0 && 'windowId' in data[0]) {
           this.reviewCycleId = data[0].windowId; // Accessing windowId of the first KeyResult
+
+          this.http
+            .get<any>(
+              `http://localhost:8080/reviewCycle/reviewCycleById/${this.reviewCycleId}`
+            )
+            .subscribe(
+              (reviewCycle) => {
+                if (reviewCycle) {
+                  // Log the updated reviewCycle
+                  this.startDate = reviewCycle.startDate;
+                  this.endDate = reviewCycle.endDate;
+                  console.log(reviewCycle);
+                } else {
+                  console.error('ReviewCycle not found');
+                }
+              },
+              (error) => {
+                console.error('Error fetching ReviewCycle:', error);
+              }
+            );
+          console.log(data[0]);
         }
       });
   }
@@ -116,30 +140,45 @@ export class KeyresultPageComponent implements OnInit {
       const url = `http://localhost:8080/api/users/list/${this.userId}`;
       this.http.get<any>(url).subscribe(
         (empList) => {
-          if (empList[0].reportingManagerId === user.userId) {
-            this.showButton = true;
-            this.useApi = 0;
-            this.managerId = empList[0].reportingManagerId;
-            console.log(empList[0].firstName);
-            console.log('Is reporting manager');
-          }
-          else if (empList[1].reportingManagerId === user.userId) {
-            this.showButton = true;
-            this.useApi = 1;
-            this.managerId = empList[1].reportingManagerId;
-            console.log(empList[1].firstName);
-            console.log('Is reporting manager');
-          }
-          else if (empList[2].reportingManagerId === user.userId) {
-            this.showButton = true;
-            this.useApi = 2;
-            this.managerId = empList[2].reportingManagerId;
-            console.log(empList[2].firstName);
-            console.log('Is reporting manager');
+          this.userName = empList[0].firstName;
+          this.startDate = new Date(this.startDate);
+          this.endDate = new Date(this.endDate);
+          const currentDate = new Date();
+
+          // Check if the current date is between startDate and endDate
+          const isDateInRange =
+            currentDate >= this.startDate && currentDate <= this.endDate;
+
+          if (isDateInRange) {
+            if (empList[0].reportingManagerId === user.userId) {
+              this.showButton = true;
+              this.useApi = 0;
+              this.managerId = empList[0].reportingManagerId;
+              console.log(empList[0].firstName);
+              console.log('Is reporting manager');
+            } else if (empList[1].reportingManagerId === user.userId) {
+              this.showButton = true;
+              this.useApi = 1;
+              this.managerId = empList[1].reportingManagerId;
+              console.log(empList[1].firstName);
+              console.log('Is reporting manager');
+            } else if (empList[2].reportingManagerId === user.userId) {
+              this.showButton = true;
+              this.useApi = 2;
+              this.managerId = empList[2].reportingManagerId;
+              console.log(empList[2].firstName);
+              console.log('Is reporting manager');
+            } else {
+              console.log(empList[0].firstName);
+              this.showButton = false;
+              console.log('Not a reporting manager');
+            }
           } else {
-            console.log(empList[0].firstName);
+            // Set showButton to false if the current date is not within the range
             this.showButton = false;
-            console.log('Not a reporting manager');
+            console.log(currentDate);
+            console.log(this.endDate);
+            console.log('Not within date range');
           }
         },
         (error) => {
@@ -165,7 +204,8 @@ export class KeyresultPageComponent implements OnInit {
   openDialog(keyResult: any) {
     // Retrieve tasks based on keyResultId
     console.log(this.showButton.toString());
-    let panelClass = this.showButton.toString();
+    let updatedShowButton = this.showButton && this.useApi === 0;
+    let panelClass = updatedShowButton.toString();
     console.log(keyResult);
     this.keyResultService
       .getTasksByKeyResultId(keyResult) // Replace 'keyResult.id' with your actual property
