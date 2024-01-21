@@ -1,11 +1,13 @@
 package com.accolite.server.controllers;
 
+import com.accolite.server.models.GoalPlan;
 import com.accolite.server.models.KeyResult;
 import com.accolite.server.models.ReviewCycle;
 import com.accolite.server.models.User;
 import com.accolite.server.readers.KeyResultExcelReader;
 import com.accolite.server.repository.GoalPlanRepository;
 import com.accolite.server.repository.KeyResultRepository;
+import com.accolite.server.repository.UserRepository;
 import com.accolite.server.service.KeyResultService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -36,11 +38,40 @@ public class KeyResultController {
     @Autowired
     private GoalPlanRepository goalPlanRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @PostMapping("")
     public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
         try {
             List<KeyResult> keyResults = KeyResultExcelReader.readKeyResultsFromExcel(file);
             keyResultService.saveAll(keyResults);
+            return ResponseEntity.status(HttpStatus.OK).body("File uploaded successfully.");
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error uploading file: " + e.getMessage());
+        }
+    }
+
+    @PostMapping("/{band}/{role}")
+    public ResponseEntity<String> handleFileUploadSpecific(@RequestParam("file") MultipartFile file, @PathVariable String band, @PathVariable String role) {
+        try {
+            List<User> users = userRepository.findByBandAndRolesContains(band, role);
+            List<KeyResult> keyResults = KeyResultExcelReader.readKeyResultsFromExcel(file);
+            for(int i = 0; i < keyResults.size()-1 && keyResults.get(i).getKeyResultName() != ""; i++){
+                KeyResult keyResult = keyResults.get(i);
+                for (User user: users) {
+                    KeyResult keyResult1 = new KeyResult();
+                    keyResult1.setKeyResultName(keyResult.getKeyResultName());
+                    keyResult1.setUserId(user.getUserId());
+                    keyResult1.setDescription(keyResult.getDescription());
+                    keyResult1.setWeight(keyResult.getWeight());
+                    keyResult1.setPeriod(keyResult.getPeriod());
+                    keyResult1.setWindowId(keyResult.getWindowId());
+                    List<GoalPlan> goalPlanList = goalPlanRepository.findByUserId(user.getUserId());
+                    keyResult1.setGoalPlanId(goalPlanList.get(goalPlanList.size()-1).getGoalPlanId());
+                    keyResultRepository.save(keyResult1);
+                }
+            }
             return ResponseEntity.status(HttpStatus.OK).body("File uploaded successfully.");
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error uploading file: " + e.getMessage());
