@@ -7,6 +7,7 @@ import com.accolite.server.models.User;
 import com.accolite.server.readers.KeyResultExcelReader;
 import com.accolite.server.repository.GoalPlanRepository;
 import com.accolite.server.repository.KeyResultRepository;
+import com.accolite.server.repository.ReviewCycleRepository;
 import com.accolite.server.repository.UserRepository;
 import com.accolite.server.service.KeyResultService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,9 @@ public class KeyResultController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private ReviewCycleRepository reviewCycleRepository;
+
     @PostMapping("")
     public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
         try {
@@ -66,9 +70,10 @@ public class KeyResultController {
                     keyResult1.setDescription(keyResult.getDescription());
                     keyResult1.setWeight(keyResult.getWeight());
                     keyResult1.setPeriod(keyResult.getPeriod());
-                    keyResult1.setWindowId(keyResult.getWindowId());
                     List<GoalPlan> goalPlanList = goalPlanRepository.findByUserId(user.getUserId());
                     keyResult1.setGoalPlanId(goalPlanList.get(goalPlanList.size()-1).getGoalPlanId());
+                    List<ReviewCycle> reviewCycleList = reviewCycleRepository.findByUserId(user.getUserId());
+                    keyResult1.setWindowId(reviewCycleList.get(reviewCycleList.size()-1).getWindowId());
                     keyResultRepository.save(keyResult1);
                 }
             }
