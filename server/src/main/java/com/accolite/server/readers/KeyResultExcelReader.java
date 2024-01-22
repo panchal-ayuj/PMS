@@ -33,7 +33,7 @@ public class KeyResultExcelReader {
                 keyResult.setWeight((int) (row.getCell(5).getNumericCellValue()));
                 keyResult.setPeriod(row.getCell(6).getStringCellValue());
                 keyResult.setWindowId(row.getCell(7) != null && row.getCell(7).getCellType() == CellType.NUMERIC ? (long) row.getCell(7).getNumericCellValue() : null);
-                keyResult.setRating(row.getCell(8) != null && row.getCell(8).getCellType() == CellType.NUMERIC ? (int) row.getCell(8).getNumericCellValue() : null);
+                keyResult.setRating(row.getCell(8) != null && row.getCell(8).getCellType() == CellType.NUMERIC ? (double) row.getCell(8).getNumericCellValue() : null);
                 keyResults.add(keyResult);
             }
         }

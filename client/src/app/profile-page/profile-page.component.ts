@@ -21,6 +21,7 @@ export class ProfilePageComponent implements OnInit {
     joiningDate: '',
     hrId: '',
     reportingManagerId: '',
+    band: '',
   };
 
   userId: any;

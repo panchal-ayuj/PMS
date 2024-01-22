@@ -7,6 +7,7 @@ import com.accolite.server.readers.TaskExcelReader;
 import com.accolite.server.repository.KeyResultRepository;
 import com.accolite.server.repository.TaskRepository;
 import com.accolite.server.repository.UserRepository;
+import com.accolite.server.service.KeyResultService;
 import com.accolite.server.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -42,6 +43,9 @@ public class TaskController {
 
     @Autowired
     KeyResultRepository keyResultRepository;
+
+    @Autowired
+    KeyResultService keyResultService;
 
     @PostMapping
     public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
@@ -162,6 +166,16 @@ public class TaskController {
     @PostMapping("/saveChanges")
     public ResponseEntity<String> saveChanges(@RequestBody List<Task> updatedTasks) {
         try {
+            Double rating = 0.0;
+            Integer totalWeight = 0;
+            for(Task task: updatedTasks){
+                rating += task.getRating() * task.getWeight();
+                totalWeight += task.getWeight();
+            }
+            rating = rating/totalWeight;
+            KeyResult updatedKeyResult = keyResultService.getKeyResultById(updatedTasks.get(0).getKeyResultId());
+            updatedKeyResult.setRating(rating);
+            keyResultService.registerKeyResult(updatedKeyResult);
             taskService.saveAll(updatedTasks);
             return ResponseEntity.status(HttpStatus.OK).body("Changes saved successfully.");
         } catch (Exception e) {

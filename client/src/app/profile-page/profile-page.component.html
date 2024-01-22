@@ -1,60 +1,40 @@
 <div class="container profile-container">
-  <div class="row">
-    <div class="col col-left">
+  <div class="profile">
+    <div class="profile-card">
       <div class="profile-header">
         <img
           class="profile-image"
           src="../../assets/images/profile.png"
           alt="User Profile"
         />
-      </div>
-      <div class="user-info">
-        <div class="left-section">
+        <div class="user-info">
           <h2>{{ employee.firstName }} {{ employee.lastName }}</h2>
           <p><strong>Role:</strong> {{ employee.roles }}</p>
           <p><strong>Email:</strong> {{ employee.email }}</p>
         </div>
       </div>
-    </div>
-    <div class="col col-right">
-      <div class="user-info">
-        <div class="right-section">
-          <p><strong>Employee ID:</strong> {{ employee.userId }}</p>
-          <p>
-            <strong>Joining Date:</strong> {{ employee.joiningDate | date }}
-          </p>
-          <p><strong>HR ID:</strong> {{ employee.hrId }}</p>
-          <p><strong>RM ID:</strong> {{ employee.reportingManagerId }}</p>
+      <div class="details">
+        <div class="detail">
+          <strong>Employee ID:</strong> {{ employee.userId }}
+        </div>
+        <div class="detail">
+          <strong>Joining Date:</strong> {{ employee.joiningDate | date }}
+        </div>
+        <div class="detail"><strong>HR ID:</strong> {{ employee.hrId }}</div>
+        <div class="detail">
+          <strong>RM ID:</strong> {{ employee.reportingManagerId }}
+        </div>
+        <div class="detail">
+          <strong>Band:</strong> {{ employee.band }}
         </div>
       </div>
-    </div>
-  </div>
-
-  <div class="d-flex align-items-center">
-    <hr class="flex-grow-1 mx-4" />
-  </div>
-
-  <div class="actions-container">
-    <div class="manager-actions" *ngIf="showButton">
-      <div class="manager-section">
+      <div class="divider"></div>
+      <div class="manager-actions" *ngIf="showButton">
         <h3>Manager Actions</h3>
-        <!-- <button class="btn btn-primary">Edit Task</button> -->
-        <button class="btn btn-primary" (click)="viewDetails(employee.userId)">Give Review</button>
-        <!-- <button class="btn btn-primary">Give Feedback</button> -->
+        <button class="custom-button" (click)="viewDetails(employee.userId)">
+          Give Review
+        </button>
       </div>
     </div>
   </div>
-
-  <!-- <div class="d-flex align-items-center">
-    <hr class="flex-grow-1 mx-4" />
-  </div> -->
-
-  <!-- <div class="actions-container">
-    <div class="senior-manager-actions">
-      <div class="senior-manager-section">
-        <h3>Senior Manager Actions</h3>
-        <button class="btn btn-primary">Give Feedback</button>
-      </div>
-    </div>
-  </div> -->
 </div>
