@@ -213,7 +213,7 @@ public class UserController {
 
         List<User> matchedUsers = userService.getUsersByPartialId(searchId);
         return ResponseEntity.ok(matchedUsers);
-      
+    }
     @GetMapping("/list/{userId}")
     public ResponseEntity<List<User>> getUserList(@PathVariable Long userId) {
         List<User> userList = new ArrayList<>();
