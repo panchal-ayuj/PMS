@@ -19,12 +19,12 @@ public class KeyResult {
     private Integer weight;
     private String period;
     private Long windowId;
-    private Integer rating;
+    private Double rating;
 
     public KeyResult() {
     }
 
-    public KeyResult(Long keyResultId, Long userId, Long goalPlanId, String keyResultName, String description, int weight, String period, Long windowId, int rating) {
+    public KeyResult(Long keyResultId, Long userId, Long goalPlanId, String keyResultName, String description, int weight, String period, Long windowId, Double rating) {
         this.keyResultId = keyResultId;
         this.userId = userId;
         this.goalPlanId = goalPlanId;
@@ -100,11 +100,11 @@ public class KeyResult {
         this.windowId = windowId;
     }
 
-    public Integer getRating() {
+    public Double getRating() {
         return rating;
     }
 
-    public void setRating(Integer rating) {
+    public void setRating(Double rating) {
         this.rating = rating;
     }
 

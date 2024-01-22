@@ -1,10 +1,8 @@
 package com.accolite.server.controllers;
 
-import com.accolite.server.models.GoalPlan;
-import com.accolite.server.models.ReviewCycle;
-import com.accolite.server.models.User;
-import com.accolite.server.models.Task;
+import com.accolite.server.models.*;
 import com.accolite.server.readers.ReviewCycleExcelReader;
+import com.accolite.server.repository.KeyResultRepository;
 import com.accolite.server.repository.ReviewCycleRepository;
 import com.accolite.server.repository.UserRepository;
 import com.accolite.server.service.ReminderService;
@@ -36,6 +34,9 @@ public class ReviewCycleController {
     private ReminderService reminderService;
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private KeyResultRepository keyResultRepository;
 
     @PostMapping("")
     public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
@@ -156,6 +157,15 @@ public class ReviewCycleController {
                 if(useApi == 0) {
                     reviewCycle.setFeedback(feedback);
                     reviewCycle.setReviewerId(managerId);
+                    List<KeyResult> keyResultList = keyResultRepository.findByWindowId(reviewCycleId);
+                    Double rating = 0.0;
+                    Integer totalWeight = 0;
+                    for(KeyResult keyResult: keyResultList){
+                        rating += keyResult.getRating() * keyResult.getWeight();
+                        totalWeight += keyResult.getWeight();
+                    }
+                    rating = rating/totalWeight;
+                    reviewCycle.setOverallRating(rating.toString());
                 } else if(useApi == 1){
                     reviewCycle.setSeniorRMfeedback(feedback);
                     reviewCycle.setSeniorRMId(managerId);
