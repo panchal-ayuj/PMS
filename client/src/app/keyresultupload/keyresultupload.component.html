@@ -1,6 +1,31 @@
-<div class="file-upload-container">
+<!-- <div class="file-upload-container">
   <input type="file" (change)="onFileSelected($event)" />
   <button mat-raised-button color="primary" (click)="onUpload()">
-    Upload KeyResult File
+    Upload Key Result File
+  </button>
+</div> -->
+<div class="file-upload-container">
+  <mat-form-field style="width: 200px;">
+    <mat-label>Band</mat-label>
+    <mat-select [(value)]="selectedBand">
+      <mat-option *ngFor="let band of bands" [value]="band">{{
+        band
+      }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field style="width: 200px; margin-left: 20px;">
+    <mat-label>Role</mat-label>
+    <mat-select [(value)]="selectedRole">
+      <mat-option *ngFor="let role of roles" [value]="role">{{
+        role
+      }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div class="file-upload-container">
+  <input type="file" (change)="onFileSelected($event)" />
+  <button mat-raised-button color="primary" (click)="onUpload2()">
+    Upload Key Result File
   </button>
 </div>

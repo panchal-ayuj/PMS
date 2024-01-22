@@ -1,4 +1,36 @@
 <div class="user-management-container">
+  <div class="edit-container">
+    <div class="search-form">
+      <mat-form-field appearance="fill">
+        <mat-label>Search User by ID:</mat-label>
+        <input matInput type="number" id="userId" [(ngModel)]="userId" />
+      </mat-form-field>
+      <button mat-raised-button color="primary" (click)="searchUser(userId)">
+        Search
+      </button>
+      <!-- Reset Form Button -->
+      <div class="reset-button">
+        <button mat-raised-button (click)="resetForm()">Reset</button>
+      </div>
+    </div>
+
+    <div class="file-upload-container">
+      <app-user-upload></app-user-upload>
+    </div>
+
+    <div>
+      <button
+        type="export"
+        mat-raised-button
+        color="primary"
+        (click)="exportData()"
+        style="margin-top: 8%;"
+      >
+        Export User Details
+      </button>
+    </div>
+  </div>
+
   <div class="form-container">
     <h2>User Registration</h2>
 
@@ -53,41 +85,14 @@
         <input matInput formControlName="teams" />
       </mat-form-field>
 
-      <div>
-        <button
-          type="export"
-          mat-raised-button
-          color="primary"
-          (click)="exportData()"
-        >
-          Export
-        </button>
-      </div>
+
       <button type="submit" mat-raised-button color="primary">
         {{ searchUserId ? "Update User" : "Register User" }}
       </button>
     </form>
   </div>
 
-  <div class="edit-container">
-    <div class="search-form">
-      <mat-form-field appearance="fill">
-        <mat-label>Search User by ID:</mat-label>
-        <input matInput type="number" id="userId" [(ngModel)]="userId" />
-      </mat-form-field>
-      <button mat-raised-button color="primary" (click)="searchUser(userId)">
-        Search
-      </button>
-      <!-- Reset Form Button -->
-      <div class="reset-button">
-        <button mat-raised-button (click)="resetForm()">Reset</button>
-      </div>
-    </div>
 
-    <div class="file-upload-container">
-      <app-user-upload></app-user-upload>
-    </div>
-  </div>
 
   <!-- User List -->
   <!-- <div class="user-list" *ngFor="let user of users">

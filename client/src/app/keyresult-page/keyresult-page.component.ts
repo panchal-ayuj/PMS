@@ -24,6 +24,12 @@ export class KeyresultPageComponent implements OnInit {
   period: string = 'q1'; // Replace with the desired period (e.g., 'Q1', 'Q2', etc.)
   year: number = 2023; // Replace with the desired year
   status: boolean = false;
+  showButton: boolean = false;
+  useApi!: number;
+  managerId: any;
+  userName!: any;
+  startDate: any;
+  endDate: any;
 
   keyResults: any[] = [];
 
@@ -48,12 +54,16 @@ export class KeyresultPageComponent implements OnInit {
       if (userId) {
         this.handleResponseAsync2(userId)
           .then(() => {
-            this.loadKeyResults();
+            this.handleResponseAsync3();
             // this.sharedDataService.changeUserId(null);
           })
           .then(() => {
-            this.handleResponseAsync();
+            this.loadKeyResults();
+            // this.sharedDataService.changeUserId(null);
           })
+          // .then(() => {
+          //   this.handleResponseAsync();
+          // })
           .catch((error) => {
             console.error('Error handling async response:', error);
           });
@@ -81,9 +91,29 @@ export class KeyresultPageComponent implements OnInit {
         console.log('data', data);
         if (data.length > 0 && 'windowId' in data[0]) {
           this.reviewCycleId = data[0].windowId; // Accessing windowId of the first KeyResult
+
+          this.http
+            .get<any>(
+              `http://localhost:8080/reviewCycle/reviewCycleById/${this.reviewCycleId}`
+            )
+            .subscribe(
+              (reviewCycle) => {
+                if (reviewCycle) {
+                  // Log the updated reviewCycle
+                  this.startDate = reviewCycle.startDate;
+                  this.endDate = reviewCycle.endDate;
+                  console.log(reviewCycle);
+                } else {
+                  console.error('ReviewCycle not found');
+                }
+              },
+              (error) => {
+                console.error('Error fetching ReviewCycle:', error);
+              }
+            );
+          console.log(data[0]);
         }
       });
-
   }
 
   async handleResponseAsync() {
@@ -94,6 +124,68 @@ export class KeyresultPageComponent implements OnInit {
         .toPromise();
       console.log(user);
       this.userId = user.userId;
+      // this.sharedDataService.changeUserId(null);
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+  }
+
+  async handleResponseAsync3() {
+    try {
+      // Assume this is an asynchronous method that returns a Promise
+      const user = await this.service
+        .getUser(localStorage.getItem('token'))
+        .toPromise();
+      console.log(user);
+      const url = `http://localhost:8080/api/users/list/${this.userId}`;
+      this.http.get<any>(url).subscribe(
+        (empList) => {
+          this.userName = empList[0].firstName;
+          this.startDate = new Date(this.startDate);
+          this.endDate = new Date(this.endDate);
+          const currentDate = new Date();
+
+          // Check if the current date is between startDate and endDate
+          const isDateInRange =
+            currentDate >= this.startDate && currentDate <= this.endDate;
+
+          if (isDateInRange) {
+            if (empList[0].reportingManagerId === user.userId) {
+              this.showButton = true;
+              this.useApi = 0;
+              this.managerId = empList[0].reportingManagerId;
+              console.log(empList[0].firstName);
+              console.log('Is reporting manager');
+            } else if (empList[1].reportingManagerId === user.userId) {
+              this.showButton = true;
+              this.useApi = 1;
+              this.managerId = empList[1].reportingManagerId;
+              console.log(empList[1].firstName);
+              console.log('Is reporting manager');
+            } else if (empList[2].reportingManagerId === user.userId) {
+              this.showButton = true;
+              this.useApi = 2;
+              this.managerId = empList[2].reportingManagerId;
+              console.log(empList[2].firstName);
+              console.log('Is reporting manager');
+            } else {
+              console.log(empList[0].firstName);
+              this.showButton = false;
+              console.log('Not a reporting manager');
+            }
+          } else {
+            // Set showButton to false if the current date is not within the range
+            this.showButton = false;
+            console.log(currentDate);
+            console.log(this.endDate);
+            console.log('Not within date range');
+          }
+        },
+        (error) => {
+          console.error('Error fetching user details:', error);
+        }
+      );
+
       // this.sharedDataService.changeUserId(null);
     } catch (error) {
       console.error('Error fetching user data:', error);
@@ -111,14 +203,16 @@ export class KeyresultPageComponent implements OnInit {
 
   openDialog(keyResult: any) {
     // Retrieve tasks based on keyResultId
-
+    console.log(this.showButton.toString());
+    let updatedShowButton = this.showButton && this.useApi === 0;
+    let panelClass = updatedShowButton.toString();
     console.log(keyResult);
     this.keyResultService
       .getTasksByKeyResultId(keyResult) // Replace 'keyResult.id' with your actual property
       .subscribe((tasks) => {
         // Open the dialog with tasks data
         this.dialog.open(DiaglogoverviewComponent, {
-          data: { tasks },
+          data: { tasks, panelClass },
         });
       });
   }
@@ -138,7 +232,7 @@ export class KeyresultPageComponent implements OnInit {
         this.reviewCycleId
       ); //reviewCycleId is windowid
 
-      const feedbackEndpoint = `http://localhost:8080/reviewCycle/addFeedback/${this.reviewCycleId}`;
+      const feedbackEndpoint = `http://localhost:8080/reviewCycle/addFeedback/${this.useApi}/${this.reviewCycleId}/${this.managerId}`;
       this.http.post(feedbackEndpoint, feedbackData.feedback).subscribe(
         (response: any) => {
           console.log('Feedback submitted successfully', response);

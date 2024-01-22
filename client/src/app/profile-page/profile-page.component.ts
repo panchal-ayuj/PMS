@@ -84,11 +84,12 @@ export class ProfilePageComponent implements OnInit {
       return;
     }
 
-    const url = `http://localhost:8080/api/users/${userId}`;
+    const url = `http://localhost:8080/api/users/list/${userId}`;
     this.http.get<any>(url).subscribe(
-      (user) => {
-        this.employee = user;
-        if(this.employee.reportingManagerId === this.userId){
+      (userList) => {
+        
+        this.employee = userList[0];
+        if(this.employee.reportingManagerId === this.userId || userList[1].reportingManagerId === this.userId || userList[2].reportingManagerId === this.userId ){
           this.showButton = true;
         } else {
           this.showButton = false;

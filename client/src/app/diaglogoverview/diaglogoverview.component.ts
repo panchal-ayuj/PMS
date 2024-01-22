@@ -1,17 +1,25 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-diaglogoverview',
   templateUrl: './diaglogoverview.component.html',
   styleUrl: './diaglogoverview.component.scss'
 })
-export class DiaglogoverviewComponent {
+export class DiaglogoverviewComponent implements OnInit {
+  showButton: boolean = false;
+  userId: any;
+
   constructor(
-    public dialogRef: MatDialogRef<DiaglogoverviewComponent>,private http: HttpClient,
-    @Inject(MAT_DIALOG_DATA) public data: { tasks: any }
+    public dialogRef: MatDialogRef<DiaglogoverviewComponent>,private http: HttpClient,private service: AuthService,
+    @Inject(MAT_DIALOG_DATA) public data: { tasks: any, panelClass: any }
   ) {}
+
+  ngOnInit(): void {
+    this.handleResponseAsync();
+  }
 
   updateRating(task: any) {
     // Implement logic to handle rating update
@@ -25,6 +33,22 @@ export class DiaglogoverviewComponent {
     // You can send an HTTP request to update the feedback on the server if needed
   }
   
+  async handleResponseAsync() {
+    try {
+      // Assume this is an asynchronous method that returns a Promise
+      const user = await this.service
+        .getUser(localStorage.getItem('token'))
+        .toPromise();
+      console.log(user);
+      this.userId = user.userId;
+      console.log(this.data.panelClass);
+      
+      // this.sharedDataService.changeUserId(null);
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+  }
+
 
   saveChanges() {
     // Implement logic to save changes

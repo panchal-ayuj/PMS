@@ -1,14 +1,17 @@
 <div class="key-results-container">
-  <h2>Key Results</h2>
-  
+  <h2 *ngIf="userName !== undefined">{{userName}}'s Key Results</h2>
+  <h2 *ngIf="userName === undefined">My Key Results</h2>
+  <!-- <h2>{{startDate}}</h2> -->
+  <!-- <h2>{{endDate}}</h2> -->
 
   <div class="filter-section">
-    
-      
-    
     <mat-form-field appearance="fill">
       <mat-label>Period:</mat-label>
-      <mat-select [(ngModel)]="period" id="period" (ngModelChange)="loadKeyResults()">
+      <mat-select
+        [(ngModel)]="period"
+        id="period"
+        (ngModelChange)="loadKeyResults()"
+      >
         <mat-option value="q1">Q1</mat-option>
         <mat-option value="q2">Q2</mat-option>
         <mat-option value="q3">Q3</mat-option>
@@ -18,7 +21,11 @@
 
     <mat-form-field appearance="fill">
       <mat-label>Year:</mat-label>
-      <mat-select [(ngModel)]="year" id="year" (ngModelChange)="loadKeyResults()">
+      <mat-select
+        [(ngModel)]="year"
+        id="year"
+        (ngModelChange)="loadKeyResults()"
+      >
         <mat-option value="2020">2020</mat-option>
         <mat-option value="2021">2021</mat-option>
         <mat-option value="2022">2022</mat-option>
@@ -29,18 +36,27 @@
 
     <mat-form-field appearance="fill">
       <mat-label>Status:</mat-label>
-      <mat-select [(ngModel)]="status" id="status" (ngModelChange)="loadKeyResults()">
+      <mat-select
+        [(ngModel)]="status"
+        id="status"
+        (ngModelChange)="loadKeyResults()"
+      >
         <mat-option value="true">Reviewed</mat-option>
         <mat-option value="false">Pending</mat-option>
       </mat-select>
     </mat-form-field>
-   
 
     <!-- <button mat-raised-button color="primary" (click)="loadKeyResults()">
       Apply Filters
     </button> -->
   </div>
-  <button type="button" class="btn btn-primary" (click)="openOverallFeedbackModal()">
+  <button
+    type="button"
+    class="btn btn-primary"
+    id="over-feedback"
+    (click)="openOverallFeedbackModal()"
+    *ngIf="showButton"
+  >
     Overall Feedback
   </button>
 
@@ -88,7 +104,6 @@
   </mat-table>
 </div> -->
 
-
   <mat-table [dataSource]="keyResults" class="table mat-table table-hover">
     <ng-container matColumnDef="areaName">
       <mat-header-cell *matHeaderCellDef> Area Name </mat-header-cell>
@@ -110,27 +125,64 @@
     <ng-container matColumnDef="viewTask">
       <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
       <mat-cell *matCellDef="let keyResult">
-        <button mat-raised-button color="primary" class="btn btn-view-task" (click)="openDialog(keyResult.keyResultId)">
+        <button
+          mat-raised-button
+          color="primary"
+          class="btn btn-view-task"
+          (click)="openDialog(keyResult.keyResultId)"
+          style="
+            background-color: #2196f3;
+            color: #fff;
+            border: none;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+          "
+          onmouseover="this.style.backgroundColor='#1565C0'; this.style.color='#ffffff';"
+          onmouseout="this.style.backgroundColor='#2196F3'; this.style.color='#fff';"
+        >
           View Task
         </button>
       </mat-cell>
     </ng-container>
 
-    <mat-header-row *matHeaderRowDef="['areaName', 'weight', 'rating', 'viewTask']"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: ['areaName', 'weight', 'rating', 'viewTask']"></mat-row>
+    <mat-header-row
+      *matHeaderRowDef="['areaName', 'weight', 'rating', 'viewTask']"
+    ></mat-header-row>
+    <mat-row
+      *matRowDef="
+        let row;
+        columns: ['areaName', 'weight', 'rating', 'viewTask']
+      "
+    ></mat-row>
   </mat-table>
-
-
 </div>
 
-
-<div class="modal fade" #overallFeedbackModal tabindex="-1" role="dialog" aria-labelledby="overallFeedbackModalLabel" aria-hidden="true">
+<div
+  class="modal fade"
+  #overallFeedbackModal
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="overallFeedbackModalLabel"
+  aria-hidden="true"
+>
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="overallFeedbackModalLabel">Overall Feedback Form</h5>
-        
-        <button type="button" class="close" (click)="closeOverallFeedbackModal()" aria-label="Close">
+        <h5 class="modal-title" id="overallFeedbackModalLabel">
+          Overall Feedback Form
+        </h5>
+
+        <button
+          type="button"
+          class="close"
+          (click)="closeOverallFeedbackModal()"
+          aria-label="Close"
+        >
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -138,15 +190,24 @@
         <!-- Overall Feedback Form Content -->
         <form [formGroup]="feedbackForm">
           <label for="feedback">Overall Feedback:</label>
-          <textarea class="form-control" id="feedback" rows="4" formControlName="feedback"></textarea>
+          <textarea
+            class="form-control"
+            id="feedback"
+            rows="4"
+            formControlName="feedback"
+          ></textarea>
         </form>
       </div>
       <div class="modal-footer">
         <!-- <button type="button" class="btn btn-secondary" (click)="closeOverallFeedbackModal()">Close</button> -->
-        <button type="button" class="btn btn-primary" (click)="submitOverallFeedback()">Submit Feedback</button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="submitOverallFeedback()"
+        >
+          Submit Feedback
+        </button>
       </div>
     </div>
   </div>
 </div>
-
-
