@@ -210,4 +210,11 @@ public class UserController {
         return ResponseEntity.ok(matchedUsers);
     }
 
+    @GetMapping("/searchUsersById/{searchId}")
+    public ResponseEntity<List<User>> searchUsersById(@PathVariable Long searchId) {
+        // Validate searchId if needed
+
+        List<User> matchedUsers = userService.getUsersByPartialId(searchId);
+        return ResponseEntity.ok(matchedUsers);
+    }
 }

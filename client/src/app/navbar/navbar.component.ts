@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { SharedDataService } from '../shared-data.service';
 import { UserInfoService } from '../user-info.service';
 import { AuthService } from '../auth.service';
+import { Observable, Subject, catchError, debounceTime, distinctUntilChanged, of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -10,6 +11,7 @@ import { AuthService } from '../auth.service';
   styleUrl: './navbar.component.scss',
 })
 export class NavbarComponent implements OnInit {
+  private searchUserIdsSubject = new Subject<string>();
   userName: any = '';
   searchResults: any;
 
@@ -20,35 +22,35 @@ export class NavbarComponent implements OnInit {
     private authService: AuthService
   ) {}
 
-  search(event: Event) {
-    event.preventDefault(); // Prevent the form from submitting
-    // Get the search query from the input field (you may use ngModel or form control)
-    const searchQuery = (event.target as HTMLFormElement).querySelector(
-      '#searchInput'
-    ) as HTMLInputElement; // Replace with your actual search query
-    const inputValue = searchQuery.value;
+  search(name: string) {
+    const inputValue = name.trim(); // Trim to remove leading and trailing whitespaces
 
     // Determine if the input is numeric or a string
     if (!isNaN(Number(inputValue))) {
       // If the input is numeric, perform search by User ID
       this.getUserById(inputValue);
-      console.log(inputValue);
+      console.log("number" + inputValue);
     } else {
       // If the input is a string, perform search by name
       this.searchUsersByName(inputValue);
-      console.log(inputValue);
+      console.log("String" + inputValue);
     }
   }
 
   getUserById(userId: any): void {
-    this.sharedDataService.changeUserId(userId);
-    console.log(userId);
-    if (userId !== null && userId !== undefined && userId !== '') {
-      console.log('Hitting profile');
-      this.router.navigate(['/profile']);
-    } else {
-      console.log('Empty user id');
-    }
+    console.log("GetUserById");
+    // this.sharedDataService.changeUserId(userId);
+    // console.log(userId);
+    this.authService.searchUserIds(userId).subscribe(
+      (results) => {
+        this.searchResults = results;
+        console.log(results);
+        
+      },
+      (error) => {
+        console.error('Error searching user IDs:', error);
+      }
+    );
   }
 
   getProfile(): void {
@@ -57,6 +59,7 @@ export class NavbarComponent implements OnInit {
   }
 
   searchUsersByName(name: string) {
+    console.log("SearchUsersByName");
     this.authService.searchUsersByName(name).subscribe(
       (results) => {
         this.searchResults = results;
@@ -69,10 +72,8 @@ export class NavbarComponent implements OnInit {
 
   onSearchInputChange(searchQuery: string) {
     if (searchQuery.trim() !== '') {
-      // Perform real-time search as the user types
-      this.searchUsersByName(searchQuery);
-    } else {
-      this.searchResults = [];
+      this.search(searchQuery);
+      this.searchUserIdsSubject.next(searchQuery);
     }
   }
 
@@ -88,5 +89,25 @@ export class NavbarComponent implements OnInit {
         this.userName = `${userInfo.firstName} ${userInfo.lastName}`;
       }
     });
+    // this.searchUserIdsSubject
+    // .pipe(
+    //   debounceTime(300), // wait for 300ms pause in events
+    //   distinctUntilChanged(), // only proceed if the value has changed
+    //   switchMap((userId) => {
+    //     if (!isNaN(Number(userId))) {
+    //       return this.searchUserIds(userId);
+    //     } else {
+    //       return of([]); // Return an empty observable for non-numeric values
+    //     }
+    //   }),
+    //   catchError(() => of([])) // handle errors and emit an empty array
+    // )
+    // .subscribe((results) => {
+    //   this.searchResults = results;
+    // });
+    
+  }
+  searchUserIds(userId: string): Observable<any> {
+    return this.authService.searchUserIds(userId);
   }
 }
