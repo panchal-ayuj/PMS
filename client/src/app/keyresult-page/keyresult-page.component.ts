@@ -85,6 +85,9 @@ export class KeyresultPageComponent implements OnInit {
 
   loadKeyResults() {
     this.keyResults = []; // Reset keyResults
+    if(this.useApi!==undefined){
+      this.showButton = true;
+    }
     this.keyResultService
       .getKeyResults(this.userId, this.period, this.year, this.status)
       .subscribe((data) => {
@@ -150,7 +153,6 @@ export class KeyresultPageComponent implements OnInit {
           const isDateInRange =
             currentDate >= this.startDate && currentDate <= this.endDate;
 
-          if (isDateInRange) {
             if (empList[0].reportingManagerId === user.userId) {
               this.showButton = true;
               this.useApi = 0;
@@ -174,7 +176,9 @@ export class KeyresultPageComponent implements OnInit {
               this.showButton = false;
               console.log('Not a reporting manager');
             }
-          } else {
+          if (isDateInRange) {
+          } 
+          else {
             // Set showButton to false if the current date is not within the range
             this.showButton = false;
             console.log(currentDate);
