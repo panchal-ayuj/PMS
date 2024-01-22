@@ -1,5 +1,5 @@
 import { Token } from '@angular/compiler';
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 
 interface SideNavToggle {
@@ -12,10 +12,15 @@ interface SideNavToggle {
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+  ngOnInit(): void {
+    this.hideBar();
+    
+  }
   // displaySidebar = false;
 
   hideBar(): boolean {
+    console.log(localStorage.getItem("token"))
     return localStorage.getItem("token") !== null;
   }
   // constructor(private router: Router) {

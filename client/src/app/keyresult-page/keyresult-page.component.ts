@@ -13,6 +13,7 @@ import { DiaglogoverviewComponent } from '../diaglogoverview/diaglogoverview.com
 import { SharedDataService } from '../shared-data.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-keyresult-page',
@@ -20,7 +21,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrl: './keyresult-page.component.scss',
 })
 export class KeyresultPageComponent implements OnInit {
-   userId!: number; // ReplAace with the actual user ID
+  userId!: number; // ReplAace with the actual user ID
   period: string = 'q1'; // Replace with the desired period (e.g., 'Q1', 'Q2', etc.)
   year: number = 2023; // Replace with the desired year
   status: boolean = false;
@@ -216,6 +217,8 @@ export class KeyresultPageComponent implements OnInit {
       .subscribe((tasks) => {
         // Open the dialog with tasks data
         this.dialog.open(DiaglogoverviewComponent, {
+          width: '600px', // Set the desired width
+          height: '400px', // Set the desired height
           data: { tasks, panelClass },
         });
       });
@@ -229,8 +232,7 @@ export class KeyresultPageComponent implements OnInit {
   submitOverallFeedback() {
     if (this.feedbackForm.valid) {
       const feedbackData = this.feedbackForm.value;
-      if(feedbackData.feedback.length>0)
-      { 
+      if (feedbackData.feedback.length > 0) {
         this.feedbackSubmitted = true;
       }
       // You can handle the feedback data as needed, for example, log it
@@ -284,5 +286,12 @@ export class KeyresultPageComponent implements OnInit {
     );
     document.body.classList.remove('modal-open');
     this.feedbackSubmitted = false;
+  }
+  calculateNormalizedWeight(weight: number): number {
+    // Calculate the sum of all weights
+    const totalWeight = this.keyResults.reduce((sum, keyResult) => sum + keyResult.weight, 0);
+
+    // Return the normalized weight
+    return Math.round((weight / totalWeight) * 100);
   }
 }
