@@ -1,12 +1,15 @@
 package com.accolite.server.models;
 
-import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-
-@Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class GoalPlan {
 
     @Id
@@ -15,45 +18,6 @@ public class GoalPlan {
     private Long userId;
     private Integer financialYear;
 
-    public GoalPlan() {
-    }
+    private String goalPlanName;
 
-    public GoalPlan(Long goalPlanId, Long userId, int financialYear) {
-        this.goalPlanId = goalPlanId;
-        this.userId = userId;
-        this.financialYear = financialYear;
-    }
-
-    public Long getGoalPlanId() {
-        return goalPlanId;
-    }
-
-    public void setGoalPlanId(Long goalPlanId) {
-        this.goalPlanId = goalPlanId;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public Integer getFinancialYear() {
-        return financialYear;
-    }
-
-    public void setFinancialYear(Integer financialYear) {
-        this.financialYear = financialYear;
-    }
-
-    @Override
-    public String toString() {
-        return "GoalPlan{" +
-                "goalPlanId=" + goalPlanId +
-                ", userId=" + userId +
-                ", financialYear=" + financialYear +
-                '}';
-    }
 }

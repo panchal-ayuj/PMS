@@ -15,6 +15,7 @@ interface SideNavToggle {
 export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.hideBar();
+    
   }
   // displaySidebar = false;
 

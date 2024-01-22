@@ -8,7 +8,7 @@
 
   <ng-container matColumnDef="weight">
     <mat-header-cell *matHeaderCellDef>Weight</mat-header-cell>
-    <mat-cell *matCellDef="let task">{{ task.weight }}</mat-cell>
+    <mat-cell *matCellDef="let task">{{getWeight(task.weight)}}</mat-cell>
   </ng-container>
   
   <ng-container matColumnDef="completionStatus">

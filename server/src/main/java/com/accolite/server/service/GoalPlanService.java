@@ -27,6 +27,11 @@ public class GoalPlanService {
     }
 
     public GoalPlan getGoalPlanById(Long goalPlanId) {
+
         return goalPlanRepository.findByGoalPlanId(goalPlanId);
+    }
+
+    public GoalPlan getGoalPlanByName(String goalPlanName){
+        return goalPlanRepository.findByGoalPlanName(goalPlanName);
     }
 }

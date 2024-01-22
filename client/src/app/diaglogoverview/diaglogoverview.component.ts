@@ -11,4 +11,9 @@ export class DiaglogoverviewComponent {
     public dialogRef: MatDialogRef<DiaglogoverviewComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { tasks: any }
   ) {}
+
+  getWeight(taskWeight:number): number {
+    return Math.round(taskWeight/(this.data.tasks.reduce((sum: any, task: { weight: any; }) => sum + task.weight, 0))*100);
+  }
+  
 }

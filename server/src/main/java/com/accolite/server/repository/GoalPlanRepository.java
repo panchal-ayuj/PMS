@@ -10,5 +10,8 @@ import java.util.List;
 public interface GoalPlanRepository extends JpaRepository<GoalPlan, Long> {
 
     GoalPlan findByGoalPlanId(Long goalPlanId);
+
+    GoalPlan findByGoalPlanName(String goalPlanName);
+
     List<GoalPlan> findByUserId(Long userId);
 }

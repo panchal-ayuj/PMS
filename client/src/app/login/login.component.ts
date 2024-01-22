@@ -76,7 +76,6 @@ import { AuthService } from '../auth.service';
 })
 export class LoginComponent implements AfterViewInit {
   constructor(
-    private cookieService: CookieService,
     private router: Router,
     private service: AuthService,
     private ngZone: NgZone // Inject NgZone
@@ -170,7 +169,8 @@ export class LoginComponent implements AfterViewInit {
           }
           // console.log(response.credential);
           this.ngZone.run(() => {
-            this.router.navigate(['/logout']);
+            this.router.navigate(['/logout'],{ replaceUrl: true });
+            // this.router.navigate(['/dashboard'], { replaceUrl: true });
           });
         },
         (error: any) => {

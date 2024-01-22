@@ -40,6 +40,8 @@ import { DiaglogoverviewComponent } from './diaglogoverview/diaglogoverview.comp
 import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { BodyComponent } from './body/body.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { SublevelMenuComponent } from './sidebar/sublevel-menu.component';
+
 
 
 @NgModule({
@@ -68,7 +70,8 @@ import { NavbarComponent } from './navbar/navbar.component';
     DiaglogoverviewComponent,
     ProfilePageComponent,
     BodyComponent,
-    NavbarComponent
+    NavbarComponent,
+    SublevelMenuComponent
   ],
   imports: [
     BrowserModule,

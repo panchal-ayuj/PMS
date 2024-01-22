@@ -63,6 +63,8 @@ export class KeyresultPageComponent implements OnInit {
       .subscribe((tasks) => {
         // Open the dialog with tasks data
         this.dialog.open(DiaglogoverviewComponent, {
+          width: '600px', // Set the desired width
+          height: '400px', // Set the desired height
           data: { tasks },
         });
       });
