@@ -1,10 +1,10 @@
 package com.accolite.server.controllers;
 
-import com.accolite.server.models.ReviewCycle;
-import com.accolite.server.models.User;
-import com.accolite.server.models.Task;
+import com.accolite.server.models.*;
 import com.accolite.server.readers.ReviewCycleExcelReader;
+import com.accolite.server.repository.KeyResultRepository;
 import com.accolite.server.repository.ReviewCycleRepository;
+import com.accolite.server.repository.UserRepository;
 import com.accolite.server.service.ReminderService;
 import com.accolite.server.service.ReviewCycleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,12 +32,39 @@ public class ReviewCycleController {
     private ReviewCycleRepository reviewCycleRepository;
     @Autowired
     private ReminderService reminderService;
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private KeyResultRepository keyResultRepository;
 
     @PostMapping("")
     public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
         try {
             List<ReviewCycle> reviewCycles = ReviewCycleExcelReader.readReviewCyclesFromExcel(file);
             reviewCycleService.saveAll(reviewCycles);
+            return ResponseEntity.status(HttpStatus.OK).body("File uploaded successfully.");
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error uploading file: " + e.getMessage());
+        }
+    }
+
+    @PostMapping("/{band}")
+    public ResponseEntity<String> handleFileUploadSpecific(@RequestParam("file") MultipartFile file, @PathVariable String band) {
+        try {
+            List<User> users = userRepository.findByBand(band);
+            List<ReviewCycle> reviewCycles = ReviewCycleExcelReader.readReviewCyclesFromExcel(file);
+            ReviewCycle reviewCycle = reviewCycles.get(0);
+            System.out.println(reviewCycle);
+            for (User user: users) {
+                ReviewCycle reviewCycle1 = new ReviewCycle();
+                reviewCycle1.setUserId(user.getUserId());
+                reviewCycle1.setStartDate(reviewCycle.getStartDate());
+                reviewCycle1.setEndDate(reviewCycle.getEndDate());
+                reviewCycle1.setPeriod(reviewCycle.getPeriod());
+                reviewCycle1.setReviewStatus(reviewCycle.getReviewStatus());
+                reviewCycleRepository.save(reviewCycle1);
+            }
             return ResponseEntity.status(HttpStatus.OK).body("File uploaded successfully.");
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error uploading file: " + e.getMessage());
@@ -119,15 +146,33 @@ public class ReviewCycleController {
         return ResponseEntity.ok("Reminder emails sent successfully.");
     }
 
-    @PostMapping("/addFeedback/{reviewCycleId}")
-    public ResponseEntity<String> addFeedbackToReviewCycle(@PathVariable Long reviewCycleId, @RequestBody String feedback) {
+    @PostMapping("/addFeedback/{useApi}/{reviewCycleId}/{managerId}")
+    public ResponseEntity<String> addFeedbackToReviewCycle(@PathVariable Long useApi,@PathVariable Long reviewCycleId, @PathVariable Long managerId,@RequestBody String feedback) {
         try {
             // Retrieve the review cycle by ID
             ReviewCycle reviewCycle = reviewCycleService.getReviewCycleById(reviewCycleId);
 
             if (reviewCycle != null) {
                 // Add the feedback to the review cycle
-                reviewCycle.setFeedback(feedback);
+                if(useApi == 0) {
+                    reviewCycle.setFeedback(feedback);
+                    reviewCycle.setReviewerId(managerId);
+                    List<KeyResult> keyResultList = keyResultRepository.findByWindowId(reviewCycleId);
+                    Double rating = 0.0;
+                    Integer totalWeight = 0;
+                    for(KeyResult keyResult: keyResultList){
+                        rating += keyResult.getRating() * keyResult.getWeight();
+                        totalWeight += keyResult.getWeight();
+                    }
+                    rating = rating/totalWeight;
+                    reviewCycle.setOverallRating(rating.toString());
+                } else if(useApi == 1){
+                    reviewCycle.setSeniorRMfeedback(feedback);
+                    reviewCycle.setSeniorRMId(managerId);
+                } else if(useApi == 2){
+                    reviewCycle.setSuperSeniorRMfeedback(feedback);
+                    reviewCycle.setSuperSeniorRMId(managerId);
+                }
 
                 // You may need to handle other feedback-related logic
 

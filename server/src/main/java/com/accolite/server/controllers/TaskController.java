@@ -1,9 +1,13 @@
 package com.accolite.server.controllers;
 
-import com.accolite.server.models.Task;
-import com.accolite.server.models.User;
+import com.accolite.server.models.*;
+import com.accolite.server.readers.KeyResultExcelReader;
+import com.accolite.server.readers.TaskDTOExcelReader;
 import com.accolite.server.readers.TaskExcelReader;
+import com.accolite.server.repository.KeyResultRepository;
 import com.accolite.server.repository.TaskRepository;
+import com.accolite.server.repository.UserRepository;
+import com.accolite.server.service.KeyResultService;
 import com.accolite.server.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -34,11 +38,50 @@ public class TaskController {
     @Autowired
     TaskRepository taskRepository;
 
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
+    KeyResultRepository keyResultRepository;
+
+    @Autowired
+    KeyResultService keyResultService;
+
     @PostMapping
     public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
         try {
             List<Task> tasks = TaskExcelReader.readUsersFromExcel(file);
             taskService.saveAll(tasks);
+            return ResponseEntity.status(HttpStatus.OK).body("File uploaded successfully.");
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error uploading file: " + e.getMessage());
+        }
+    }
+
+    @PostMapping("/{band}/{role}")
+    public ResponseEntity<String> handleFileUploadSpecific(@RequestParam("file") MultipartFile file, @PathVariable String band, @PathVariable String role) {
+        try {
+            List<User> users = userRepository.findByBandAndRolesContains(band, role);
+            List<TaskDTO> taskDTOS = TaskDTOExcelReader.readTasksFromExcel(file);
+            for(int i = 0; i < taskDTOS.size()-1 && taskDTOS.get(i).getKeyResultName() != ""; i++){
+                TaskDTO taskDTO = taskDTOS.get(i);
+                for (User user: users) {
+                    Task task1 = new Task();
+                    List<KeyResult> keyResultList = keyResultRepository.findByKeyResultNameAndUserId(taskDTO.getKeyResultName(), user.getUserId());
+                    KeyResult keyResult = keyResultList.get(keyResultList.size()-1);
+                    task1.setKeyResultId(keyResult.getKeyResultId());
+                    task1.setDescription(taskDTO.getDescription());
+                    task1.setCreationDate(taskDTO.getCreationDate());
+                    task1.setDeadline(taskDTO.getDeadline());
+                    task1.setWeight(taskDTO.getWeight());
+                    task1.setCompletionStatus(taskDTO.getCompletionStatus());
+                    task1.setUserId(user.getUserId());
+                    task1.setRating(taskDTO.getRating());
+                    task1.setFeedback(taskDTO.getFeedback());
+                    task1.setPeriod(taskDTO.getPeriod());
+                    taskRepository.save(task1);
+                }
+            }
             return ResponseEntity.status(HttpStatus.OK).body("File uploaded successfully.");
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error uploading file: " + e.getMessage());
@@ -123,6 +166,16 @@ public class TaskController {
     @PostMapping("/saveChanges")
     public ResponseEntity<String> saveChanges(@RequestBody List<Task> updatedTasks) {
         try {
+            Double rating = 0.0;
+            Integer totalWeight = 0;
+            for(Task task: updatedTasks){
+                rating += task.getRating() * task.getWeight();
+                totalWeight += task.getWeight();
+            }
+            rating = rating/totalWeight;
+            KeyResult updatedKeyResult = keyResultService.getKeyResultById(updatedTasks.get(0).getKeyResultId());
+            updatedKeyResult.setRating(rating);
+            keyResultService.registerKeyResult(updatedKeyResult);
             taskService.saveAll(updatedTasks);
             return ResponseEntity.status(HttpStatus.OK).body("Changes saved successfully.");
         } catch (Exception e) {

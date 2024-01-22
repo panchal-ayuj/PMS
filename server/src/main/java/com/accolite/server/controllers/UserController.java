@@ -18,10 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -216,5 +213,22 @@ public class UserController {
 
         List<User> matchedUsers = userService.getUsersByPartialId(searchId);
         return ResponseEntity.ok(matchedUsers);
+      
+    @GetMapping("/list/{userId}")
+    public ResponseEntity<List<User>> getUserList(@PathVariable Long userId) {
+        List<User> userList = new ArrayList<>();
+        User user = userService.getUserDetails(userId);
+        userList.add(user);
+        User user2 = new User();
+        User user3 = new User();
+        if(user != null){
+            user2 = userService.getUserDetails(user.getReportingManagerId());
+            userList.add(user2);
+        }
+        if(user2 != null){
+            user3 = userService.getUserDetails(user2.getReportingManagerId());
+            userList.add(user3);
+        }
+        return new ResponseEntity<>(userList, HttpStatus.OK);
     }
 }

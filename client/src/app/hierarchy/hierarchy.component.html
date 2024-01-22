@@ -5,13 +5,13 @@
     [(selection)]="selectedNodes"
   >
     <ng-template let-node pTemplate="person">
-      <div class="p-2 text-center" (click)="viewDetails(node.data.userId)">
-        <img [src]="node.data.image" class="mb-3 w-3rem h-3rem" />
-        <div class="font-bold">{{ node.data.name }}</div>
-        <div>{{ node.data.band }}</div>
+      <div class="p-2 text-center" (click)="viewDetails(node.data.userId)" style="background-color: #eeb354; margin: -18px; padding: 15px; padding-top: 0px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); cursor: pointer; transition: background-color 0.3s; height: 80px; width: 100px;">
+        <img [src]="node.data.image" class="mb-3 w-3rem h-3rem" style="border-radius: 50%; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); object-fit: cover;">
+        <div class="font-bold" style="color: #333; font-size: 1.2rem; margin-bottom: 4px;">{{ node.data.name }}</div>
+        <div style="color: #555; font-size: 1rem; margin-bottom: 2px;">{{ node.data.band }}</div>
       </div>
+      
       <!-- <ng-template pTemplate="connection" let-connection> -->
-        <div class="custom-connection-line"></div>
       <!-- </ng-template> -->
     </ng-template>
 

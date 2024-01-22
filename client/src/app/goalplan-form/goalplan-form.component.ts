@@ -77,7 +77,7 @@ export class GoalplanFormComponent {
   }
 
   exportGoalPlans() {
-    const apiUrl = 'http://localhost:8080/goalPlan/export';
+    const apiUrl = 'http://localhost:8080/export';
 
     // Make a GET request to the export endpoint
     this.http.get(apiUrl, { responseType: 'blob' }).subscribe(

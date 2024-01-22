@@ -8,6 +8,9 @@ import { HttpClient } from '@angular/common/http';
 })
 export class UploadComponent {
   selectedFile!: File;
+  selectedBand!: string;
+  bands: string[] = ['B7', 'B6', 'B5', 'B4', 'B3', 'B2', 'B1'];
+
 
   constructor(private http: HttpClient) {}
 
@@ -21,6 +24,26 @@ export class UploadComponent {
       formData.append('file', this.selectedFile);
 
       this.http.post<any>('http://localhost:8080/goalPlan', formData).subscribe(
+        response => {
+          console.log(response);
+          // Handle success (e.g., display a success message)
+        },
+        error => {
+          console.error(error);
+          // Handle error (e.g., display an error message)
+        }
+      );
+    } else {
+      // Handle case where no file is selected
+    }
+  }
+
+  onUpload2(): void {
+    if (this.selectedFile) {
+      const formData = new FormData();
+      formData.append('file', this.selectedFile);
+
+      this.http.post<any>(`http://localhost:8080/goalPlan/${this.selectedBand}`, formData).subscribe(
         response => {
           console.log(response);
           // Handle success (e.g., display a success message)
