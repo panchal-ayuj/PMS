@@ -21,8 +21,6 @@ public class GoalPlan {
     private Long userId;
     private Integer financialYear;
 
-    private String goalPlanName;
-
     public GoalPlan() {
     }
 
