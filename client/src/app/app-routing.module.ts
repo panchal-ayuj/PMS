@@ -39,7 +39,7 @@ const routes: Routes = [
   { path: 'admin/task', component:ParentTaskComponent},
   { path: 'team', component: TeamPageComponent },
   { path: 'profile',component:ProfilePageComponent },
-  {path:'feedback',component:FeedbackComponent}
+  { path: 'feedback',component:FeedbackComponent},
 ];
 
 @NgModule({
