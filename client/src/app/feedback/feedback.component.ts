@@ -4,10 +4,15 @@ import { FeedbackService } from '../feedback.service';
 @Component({
   selector: 'app-feedback',
   templateUrl: './feedback.component.html',
-  styleUrl: './feedback.component.scss'
+  styleUrl: './feedback.component.scss',
+  
 })
 export class FeedbackComponent {
-  managerFeedback: string = 'This is manager feedback.';
+  managerFeedback: string = '';
+  seniorManagerFeedback:string="";
+  superSeniorManagerFeedback:string="";
+
+
   
   overallRating:number=10;
   userId!:number;
@@ -26,7 +31,11 @@ export class FeedbackComponent {
 
       // Update component properties with feedback and rating
       this.managerFeedback = feedbackData.feedback; // Assuming your backend returns 'feedback'
-      this.overallRating = feedbackData.rating;
+      this.overallRating = feedbackData.overallRating;
+      this.seniorManagerFeedback=feedbackData.seniorRMfeedback;
+      this.superSeniorManagerFeedback=feedbackData.superSeniorRMfeedback;
+     console.log(feedbackData);
+
     } catch (error) {
       console.error('Error fetching user ID:', error);
     }

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-keyresult-form',
@@ -14,7 +15,7 @@ export class KeyresultFormComponent {
 
   searchKeyResultId: number | undefined;
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient) { }
+  constructor(private formBuilder: FormBuilder, private http: HttpClient,private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -39,9 +40,13 @@ export class KeyresultFormComponent {
     const apiUrl = 'http://localhost:8080/keyResult/';
 
     // Check if ID is present for update
-    if (this.searchKeyResultId) {
+    if (this.searchKeyResultId) { 
+      this.showSuccessSnackBar('Key Result updated successfully');
+
+
       this.http.put(`${apiUrl}keyResultById/${this.searchKeyResultId}`, keyresult).subscribe(
         (response) => {
+          
           console.log('Key Result updated successfully:', response);
           this.loadKeyResults();
           this.resetForm();
@@ -51,6 +56,7 @@ export class KeyresultFormComponent {
         }
       );
     } else {
+      this.showSuccessSnackBar('Key Result registered successfully');
       this.http.post('http://localhost:8080/keyResult/register', keyresult).subscribe(
         (response) => {
           console.log('Key Result registered successfully:', response);
@@ -121,5 +127,11 @@ export class KeyresultFormComponent {
   resetForm() {
     this.keyResultForm.reset();
     this.searchKeyResultId = undefined;
+  }
+  private showSuccessSnackBar(message: string): void {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000, // Duration in milliseconds
+      panelClass: ['snackbar-success'] // Add custom styles if needed
+    });
   }
 }

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-task',
@@ -15,7 +16,7 @@ export class TaskComponent implements OnInit {
 
   searchTaskId: number | undefined;
 
-  constructor(private fb: FormBuilder, private http: HttpClient) { }
+  constructor(private fb: FormBuilder, private http: HttpClient,private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -68,6 +69,8 @@ export class TaskComponent implements OnInit {
       this.http.put(`${apiUrl}taskById/${this.searchTaskId}`, task).subscribe(
         (response) => {
           console.log('Task updated successfully:', response);
+          this.showSuccessSnackBar('Task updated successfully');
+
           this.loadTasks();
           this.resetForm();
         },
@@ -79,6 +82,8 @@ export class TaskComponent implements OnInit {
       this.http.post('http://localhost:8080/api/tasks/create', task).subscribe(
         (response) => {
           console.log('Task registered successfully:', response);
+          this.showSuccessSnackBar('Task registered successfully');
+
           this.loadTasks();
           this.resetForm();
         },
@@ -107,6 +112,7 @@ export class TaskComponent implements OnInit {
   resetForm() {
     this.taskForm.reset();
     this.searchTaskId = undefined;
+    console.log("reset form");
   }
 
   exportTasks() {
@@ -129,6 +135,12 @@ export class TaskComponent implements OnInit {
         // Handle the error as needed
       }
     );
+  }
+  private showSuccessSnackBar(message: string): void {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000, // Duration in milliseconds
+      panelClass: ['snackbar-success'] // Add custom styles if needed
+    });
   }
 
   // Other methods for updating, deleting, or managing tasks as needed

@@ -1,5 +1,4 @@
 <div class="goal-plan-management-container">
-
   <div class="edit-container">
     <div class="search-form">
       <mat-form-field appearance="fill">
@@ -64,6 +63,14 @@
         />
       </mat-form-field>
 
+      <button
+        mat-raised-button
+        color="primary"
+        type="button"
+        (click)="exportGoalPlans()"
+      >
+        Export Goal Plans
+      </button>
       <button mat-raised-button color="primary" type="submit">
         {{ searchGoalPlanId ? "Update Goal Plan" : "Register Goal Plan" }}
       </button>

@@ -52,6 +52,9 @@ import { MatMenuModule } from '@angular/material/menu';
 import { RatingDialogComponent } from './rating-dialog/rating-dialog.component';
 import { FeedbackComponent } from './feedback/feedback.component';
 import { ParentViewFeedbackComponent } from './parent-view-feedback/parent-view-feedback.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { IdCardComponent } from './id-card/id-card.component';
 
 @NgModule({
   declarations: [
@@ -85,6 +88,7 @@ import { ParentViewFeedbackComponent } from './parent-view-feedback/parent-view-
     RatingDialogComponent,
     FeedbackComponent,
     ParentViewFeedbackComponent,
+    IdCardComponent,
   ],
   imports: [
     BrowserModule,
@@ -110,6 +114,9 @@ import { ParentViewFeedbackComponent } from './parent-view-feedback/parent-view-
     MatListModule,
     MatAutocompleteModule,
     MatMenuModule,
+    MatSnackBarModule,
+    MatGridListModule
+    
   ],
   providers: [ExportService, EmployeeService],
   bootstrap: [AppComponent],

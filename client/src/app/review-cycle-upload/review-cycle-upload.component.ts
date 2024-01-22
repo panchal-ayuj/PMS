@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-review-cycle-upload',
@@ -11,7 +12,7 @@ export class ReviewCycleUploadComponent {
   selectedBand!: string;
   bands: string[] = ['B7', 'B6', 'B5', 'B4', 'B3', 'B2', 'B1'];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private snackBar: MatSnackBar) {}
 
   onFileSelected(event: any): void {
     this.selectedFile = event.target.files[0];
@@ -22,16 +23,25 @@ export class ReviewCycleUploadComponent {
       const formData: FormData = new FormData();
       formData.append('file', this.selectedFile);
 
-      this.http.post<any>('http://localhost:8080/reviewCycle', formData).subscribe(
-        response => {
-          console.log(response);
-          // Handle success (e.g., display a success message)
-        },
-        error => {
-          console.error(error);
-          // Handle error (e.g., display an error message)
-        }
-      );
+      this.http
+        .post<any>('http://localhost:8080/reviewCycle', formData)
+        .subscribe(
+          (response) => {
+            // console.log(response);
+            this.showSuccessSnackBar('File uploaded successfully');
+            // Handle success (e.g., display a success message)
+          },
+          (error) => {
+            console.error(error);
+            if (error.status != 200) {
+              this.showSuccessSnackBar('File not uploaded');
+            }
+            if (error.status == 200)
+              this.showSuccessSnackBar('File uploaded successfully');
+
+            // Handle error (e.g., display an error message)
+          }
+        );
     } else {
       // Handle case where no file is selected
     }
@@ -42,18 +52,29 @@ export class ReviewCycleUploadComponent {
       const formData: FormData = new FormData();
       formData.append('file', this.selectedFile);
 
-      this.http.post<any>(`http://localhost:8080/reviewCycle/${this.selectedBand}`, formData).subscribe(
-        response => {
-          console.log(response);
-          // Handle success (e.g., display a success message)
-        },
-        error => {
-          console.error(error);
-          // Handle error (e.g., display an error message)
-        }
-      );
+      this.http
+        .post<any>(
+          `http://localhost:8080/reviewCycle/${this.selectedBand}`,
+          formData
+        )
+        .subscribe(
+          (response) => {
+            console.log(response);
+            // Handle success (e.g., display a success message)
+          },
+          (error) => {
+            console.error(error);
+            // Handle error (e.g., display an error message)
+          }
+        );
     } else {
       // Handle case where no file is selected
     }
+  }
+  private showSuccessSnackBar(message: string): void {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000, // Duration in milliseconds
+      panelClass: ['snackbar-success'], // Add custom styles if needed
+    });
   }
 }
