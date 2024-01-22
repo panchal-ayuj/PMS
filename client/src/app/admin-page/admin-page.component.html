@@ -1,10 +1,8 @@
 <div class="options-container">
-  <mat-card class="center-card">
+  <mat-card class="center-card" *ngFor="let data of adminData">
     <mat-card-header class="login-header">
-      <mat-card-title
-        >User<br />
-        Management</mat-card-title
-      >
+      <mat-card-title>User<br />
+        Management</mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <button mat-raised-button color="primary" routerLink="/admin/user">
@@ -37,10 +35,8 @@
 
   <mat-card class="center-card">
     <mat-card-header class="login-header">
-      <mat-card-title
-        >Task<br />
-        Management</mat-card-title
-      >
+      <mat-card-title>Task<br />
+        Management</mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <button mat-raised-button color="primary" routerLink="/admin/task">

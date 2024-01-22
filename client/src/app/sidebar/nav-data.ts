@@ -1,4 +1,6 @@
-export const navbarData = [
+import { INavbarData } from "./helper";
+
+export const navbarData: INavbarData[] = [
     {
         routeLink: 'logout',
         icon: 'home',
@@ -27,6 +29,32 @@ export const navbarData = [
     {
         routeLink: 'admin',
         icon: 'supervised_user_circle',
-        label: 'Admin'
-    },
+        label: 'Admin',
+        items: [
+            {
+                routeLink: '/admin/user',
+                label: 'User Regestration',
+            },
+            {
+                routeLink: '/admin/goalplan',
+                label: 'Goalplan Management',
+            },
+            {
+                routeLink: '/admin/keyresult',
+                label: 'Keyresult Management',
+            },
+            {
+                routeLink: '/admin/task',
+                label: 'Task Management',
+            },
+            {
+                routeLink: 'admin/reviewcycle',
+                label: 'Review Cycle Management',
+            },
+            {
+                routeLink: 'admin/feedback',
+                label: 'View User Feedback',
+            }
+        ]
+        }
 ];

@@ -63,4 +63,9 @@ export class DiaglogoverviewComponent implements OnInit {
   closeDialog() {
     this.dialogRef.close();
   }
+  
+  getWeight(taskWeight:number): number {
+    return Math.round(taskWeight/(this.data.tasks.reduce((sum: any, task: { weight: any; }) => sum + task.weight, 0))*100);
+  }
+
 }

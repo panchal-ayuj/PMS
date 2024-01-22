@@ -5,17 +5,9 @@
   <ul class="navbar-links">
     <li>
       <form class="d-flex">
-        <input
-          class="form-control me-2"
-          type="text"
-          placeholder="Search by User ID or Name"
-          aria-label="Search"
-          id="searchInput"
-          #searchInput
-          (input)="onSearchInputChange(searchInput.value)"
-          [matAutocomplete]="auto"
-        />
-    
+        <input class="form-control me-2" type="text" placeholder="Search by User ID or Name" aria-label="Search"
+          id="searchInput" #searchInput (input)="onSearchInputChange(searchInput.value)" [matAutocomplete]="auto" />
+
         <mat-autocomplete #auto="matAutocomplete">
           <mat-option *ngFor="let user of searchResults" (click)="selectUserProfile(user)">
             {{ user.firstName }} {{ user.lastName }} - {{ user.userId }}
@@ -27,8 +19,6 @@
 
   <div class="navbar-actions">
     <span class="profile-username">{{ userName }}</span>
-    <mat-icon class="mat-icon-size" (click)="getProfile()"
-      >account_circle</mat-icon
-    >
+    <mat-icon class="mat-icon-size" (click)="getProfile()">account_circle</mat-icon>
   </div>
 </nav>

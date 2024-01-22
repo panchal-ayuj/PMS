@@ -4,6 +4,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,6 +20,8 @@ public class GoalPlan {
     private Long goalPlanId;
     private Long userId;
     private Integer financialYear;
+
+    private String goalPlanName;
 
     public GoalPlan() {
     }
@@ -66,6 +71,4 @@ public class GoalPlan {
         map.put("financialYear", financialYear);
         return map;
     }
-
-
 }

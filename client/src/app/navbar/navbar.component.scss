@@ -28,6 +28,7 @@ $navbar-text-color: #ecf0f1;
       max-width: 120px; // Adjust the max-width of your logo
       height: auto;
       background-color: white;
+      margin-bottom: 20px;
     }
   }
 
@@ -54,32 +55,27 @@ $navbar-text-color: #ecf0f1;
   }
 
   .navbar-actions {
-    // Add styles for login/logout buttons or user-related actions
     position: relative;
     top:10px;
-    
   }
 }
 
-
-
-.mat-icon-size{
+.mat-icon-size {
   font-size: 40px;
   height: 60px;
   width: 50px;
 }
 
-
-.input{
+.input {
   height: 20px;
-  width: 400px;
+  width: 100%; /* Full width on smaller screens */
+  max-width: 400px; /* Limited width on larger screens */
 }
 
 .profile-username {
   position: relative;
   bottom: 35px;
   margin-right: 10px;
-
 }
 
 // Add these styles to your existing SCSS file
