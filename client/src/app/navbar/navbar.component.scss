@@ -25,8 +25,9 @@ $navbar-text-color: #ecf0f1;
 
   .navbar-logo {
     img {
-      max-width: 100px; // Adjust the max-width of your logo
+      max-width: 120px; // Adjust the max-width of your logo
       height: auto;
+      background-color: white;
     }
   }
 
@@ -55,7 +56,7 @@ $navbar-text-color: #ecf0f1;
   .navbar-actions {
     // Add styles for login/logout buttons or user-related actions
     position: relative;
-    top:5px;
+    top:10px;
     
   }
 }

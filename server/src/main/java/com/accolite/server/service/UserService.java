@@ -108,4 +108,14 @@ public class UserService {
         }
         return "User Not Found";
     }
+    public List<User> getUsersByPartialId(Long userId) {
+        List<User> allUsers = userRepository.findAll();
+
+        // Filter users whose first names contain the provided partialName
+        List<User> matchedUserIds = allUsers.stream()
+                .filter(user -> user.getUserId().toString().contains(userId.toString()))
+                .limit(4)  // Limit the results to 4 users
+                .collect(Collectors.toList());
+        return matchedUserIds;
+    }
 }

@@ -1,6 +1,6 @@
 import { HttpClient, HttpHandler, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -84,6 +84,24 @@ export class AuthService {
     } else {
       console.error('Authentication token is missing');
       return new Observable<any>();
+    }
+  }
+
+  searchUserIds(userId: any): Observable<any> {
+    const authToken = localStorage.getItem('authToken');
+    if (authToken) {
+      const header = new HttpHeaders()
+        .set('Content-Type', 'application/json')
+        .set('Authorization', 'Bearer ' + authToken);
+  
+      const searchQuery = userId; // Adjust the API request payload as needed
+  
+      return this.httpClient.get<any>(
+        `${this.path}api/users/searchUsersById/${searchQuery}`
+      );
+    } else {
+      console.error('Authentication token is missing');
+      return throwError('Authentication token is missing'); // Update this line
     }
   }
 }
