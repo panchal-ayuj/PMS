@@ -51,6 +51,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatMenuModule } from '@angular/material/menu';
 import { RatingDialogComponent } from './rating-dialog/rating-dialog.component';
 import { FeedbackComponent } from './feedback/feedback.component';
+import { ParentViewFeedbackComponent } from './parent-view-feedback/parent-view-feedback.component';
 
 @NgModule({
   declarations: [
@@ -83,6 +84,7 @@ import { FeedbackComponent } from './feedback/feedback.component';
     TeamPageComponent,
     RatingDialogComponent,
     FeedbackComponent,
+    ParentViewFeedbackComponent,
   ],
   imports: [
     BrowserModule,
