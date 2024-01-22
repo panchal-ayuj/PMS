@@ -30,13 +30,14 @@
         <div class="detail">
           <strong>RM ID:</strong> {{ employee.reportingManagerId }}
         </div>
-        <div class="detail"><strong>Band:</strong> {{ employee.band }}</div>
+        <div class="detail" style="margin-bottom: -30px;"><strong>Band:</strong> {{ employee.band }}</div>
+        <div id="idCard">
+          <button class="custom-button-download" (click)="generateIdCardPDF()">
+            Download User Details
+          </button>
+        </div>
       </div>
-      <div id="idCard">
-        <button class="custom-button" (click)="generateIdCardPDF()">
-          Download ID Card
-        </button>
-      </div>
+
       <div class="divider"></div>
       <div class="manager-actions" *ngIf="showButton">
         <h3>Manager Actions</h3>
