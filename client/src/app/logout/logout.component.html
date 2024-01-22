@@ -1,75 +1,90 @@
 <div class="center-container">
-  <div class="options-container">
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>View Tasks</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <button mat-raised-button color="primary" (click)="viewDetails()">Click</button>
-      </mat-card-content>
-    </mat-card>
+  <div class="options-row">
+    <div class="options-container">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>View Tasks</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <button mat-raised-button color="primary" (click)="viewDetails()">
+            Click
+          </button>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div *ngIf="admin" class="options-container">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Admin Option</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <button mat-raised-button color="primary" routerLink="/admin">
+            Admin
+          </button>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="options-container">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>View Team</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <button mat-raised-button color="primary" routerLink="/team">
+            View
+          </button>
+        </mat-card-content>
+      </mat-card>
+    </div>
   </div>
 
-  <div *ngIf="admin" class="options-container">
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>Admin Option</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <button mat-raised-button color="primary" routerLink="/admin">Admin</button>
-      </mat-card-content>
-    </mat-card>
+  <div class="options-row">
+    <div class="options-container">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>View Feedback</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <button mat-raised-button color="primary" routerLink="/feedback">
+            View
+          </button>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="options-container">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>View Hierarchy</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <button mat-raised-button color="primary" routerLink="/hierarchy">
+            View
+          </button>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="options-container">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Logout Option</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <button mat-raised-button color="warn" (click)="onSignOut()">
+            Sign out
+          </button>
+        </mat-card-content>
+      </mat-card>
+    </div>
   </div>
 
-  <div class="options-container">
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>View Team</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <button mat-raised-button color="primary" routerLink="/team">View</button>
-      </mat-card-content>
-    </mat-card>
-  </div>
-
-  <div class="options-container">
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>View Feedback</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <button mat-raised-button color="primary" routerLink="/feedback">View</button>
-      </mat-card-content>
-    </mat-card>
-  </div>
-
-  <div class="options-container">
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>View Hierarchy</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <button mat-raised-button color="primary" routerLink="/hierarchy">View</button>
-      </mat-card-content>
-    </mat-card>
-  </div>
-  
-  <div class="options-container">
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>Logout Option</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <button mat-raised-button color="warn" (click)="onSignOut()">Sign out</button>
-      </mat-card-content>
-    </mat-card>
-  </div>
-
-  <!-- Add the profile icon on the top right
+  <!-- Add the profile icon on the top right -->
   <div class="profile-icon-container">
     <mat-icon class="profile-icon" routerLink="/profile">person</mat-icon>
-  </div> -->
-
+  </div>
 </div>
 
 <router-outlet></router-outlet>
