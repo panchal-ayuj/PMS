@@ -51,6 +51,10 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatMenuModule } from '@angular/material/menu';
 import { RatingDialogComponent } from './rating-dialog/rating-dialog.component';
 import { FeedbackComponent } from './feedback/feedback.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { IdCardComponent } from './id-card/id-card.component';
+
 
 @NgModule({
   declarations: [
@@ -83,6 +87,7 @@ import { FeedbackComponent } from './feedback/feedback.component';
     TeamPageComponent,
     RatingDialogComponent,
     FeedbackComponent,
+    IdCardComponent,
   ],
   imports: [
     BrowserModule,
@@ -108,6 +113,9 @@ import { FeedbackComponent } from './feedback/feedback.component';
     MatListModule,
     MatAutocompleteModule,
     MatMenuModule,
+    MatSnackBarModule,
+    MatGridListModule
+    
   ],
   providers: [ExportService, EmployeeService],
   bootstrap: [AppComponent],

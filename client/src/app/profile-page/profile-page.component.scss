@@ -38,23 +38,9 @@
     align-items: center;
   }
 
-  .profile-image {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    margin-right: 20px;
-  }
+  
 
-  .user-info {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-
-    .left-section, .right-section {
-      width: 48%;
-    }
-  }
-
+ 
   .actions-container {
     margin-top: 20px;
     display: flex;
@@ -88,5 +74,132 @@
 }
 
 .col-left{
-  border: solid black 1px;
+  //background: linear-gradient(to bottom right, rgb(235, 100, 21), #ffffff);
+  //border: solid blanchedalmond 1px;
+  
+
+ 
+  box-shadow: 2px 2px 2px black;
+  background: linear-gradient(to bottom left,black, #ffffff);
+  margin-right: 50px;
+ 
+  
+}
+.col-right
+{
+ // background: linear-gradient(to bottom left, rgb(245, 229, 248), #ffffff);
+  //box-shadow:  4px 4px 8px black;
+ 
+  //background: linear-gradient(to bottom left, rgb(245, 229, 248), #ffffff);
+ // box-shadow: 2px 2px 2px black;
+  
+
+  
+}
+
+/* profile-page.component.scss */
+
+/* profile-page.component.scss */
+
+/* profile-page.component.scss */
+
+.container {
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(28, 9, 235, 0.1);
+  
+  animation: fadeIn 1s ease;
+  margin-top: 40px;
+}
+
+.profile-container {
+  background-color: #fff;
+  border-radius: 15px;
+  padding: 20px;
+  //box-shadow: 0 1px 1px rgb(2, 0, 0);
+  
+  margin-bottom: 20px;
+  animation: scaleIn 0.5s ease;
+  
+}
+
+.profile-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.profile-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.4);
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+// .user-info {
+//   display: flex;
+//   justify-content: space-between;
+//   margin-top: 20px;
+// }
+.user-info {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+
+  .left-section {
+    
+   
+  }
+  .right-section
+  { 
+   
+    
+  }
+}
+
+
+// .left-section, .right-section {
+//   width: 48%;
+// }
+
+.hr {
+  margin: 20px 0;
+  border: 1px solid #ddd;
+}
+
+.manager-actions {
+  margin-top: 20px;
+}
+
+.btn-primary {
+  background-color: #3498db;
+  color: #fff;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #2980b9;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.8);
+  }
+  to {
+    transform: scale(1);
+  }
 }

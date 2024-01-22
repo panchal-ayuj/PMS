@@ -1,0 +1,42 @@
+.feedback-card {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .feedback-card:hover {
+    transform: scale(1.09);
+  }
+  .mat-grid-tile {
+    padding: 10px;
+  }
+  // feedback-page.component.scss
+
+.feedback-container {
+    width: 350px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out; // Adding a smooth transition effect
+  
+    &:hover {
+      transform: scale(1.05); // Increase the scale on hover for a zoom-in effect
+    }
+  
+    h5 {
+      margin: 0;
+      font-size: 20px;
+      border-radius: 0.40rem;
+      padding: 10px;
+      box-shadow: 0 8px 8px rgba(0, 0, 0, 0.1);
+    }
+  
+    p {
+      margin: 15px 0;
+      font-size: 18px;
+    }
+  }
+  
+  
+
+  
+  

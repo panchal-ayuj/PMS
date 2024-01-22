@@ -139,7 +139,9 @@
         <form [formGroup]="feedbackForm">
           <label for="feedback">Overall Feedback:</label>
           <textarea class="form-control" id="feedback" rows="4" formControlName="feedback"></textarea>
+          <div *ngIf="feedbackSubmitted" class="text-success fade-in mt-2">Feedback submitted successfully!</div>
         </form>
+        
       </div>
       <div class="modal-footer">
         <!-- <button type="button" class="btn btn-secondary" (click)="closeOverallFeedbackModal()">Close</button> -->

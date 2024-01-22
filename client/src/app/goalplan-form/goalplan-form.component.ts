@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-goalplan-form',
@@ -14,7 +15,7 @@ export class GoalplanFormComponent {
 
   searchGoalPlanId: number | undefined;
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient) { }
+  constructor(private formBuilder: FormBuilder, private http: HttpClient,private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -34,10 +35,14 @@ export class GoalplanFormComponent {
     const apiUrl = 'http://localhost:8080/';
 
     // Check if ID is present for update
-    if (this.searchGoalPlanId) {
+    if (this.searchGoalPlanId) { 
+     
+
+
       this.http.put(`${apiUrl}goalPlanById/${this.searchGoalPlanId}`, goalplan).subscribe(
         (response) => {
           console.log('GoalPlan updated successfully:', response);
+          this.showSuccessSnackBar('GoalPlan updated successfully');
           this.loadGoalPlans();
           this.resetForm();
         },
@@ -46,9 +51,11 @@ export class GoalplanFormComponent {
         }
       );
     } else {
+      
       this.http.post('http://localhost:8080/goalPlan/register', goalplan).subscribe(
         (response) => {
           console.log('GoalPlan registered successfully:', response);
+          this.showSuccessSnackBar('GoalPlan registered successfully');
           this.loadGoalPlans();
           this.resetForm();
         },
@@ -77,7 +84,7 @@ export class GoalplanFormComponent {
   }
 
   exportGoalPlans() {
-    const apiUrl = 'http://localhost:8080/goalPlan/export';
+    const apiUrl = 'http://localhost:8080/export';
 
     // Make a GET request to the export endpoint
     this.http.get(apiUrl, { responseType: 'blob' }).subscribe(
@@ -116,6 +123,12 @@ export class GoalplanFormComponent {
   resetForm() {
     this.goalPlanForm.reset();
     this.searchGoalPlanId = undefined;
+  }
+  private showSuccessSnackBar(message: string): void {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000, // Duration in milliseconds
+      panelClass: ['snackbar-success'] // Add custom styles if needed
+    });
   }
 
 }
