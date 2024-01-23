@@ -2,17 +2,49 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh; /* Set height to 100% of viewport height */
+  flex-direction: column; /* Align items in a column */
+  height: 100vh;
+}
+
+.options-row {
+  display: flex;
+  margin-bottom: 20px;
 }
 
 .options-container {
   margin: 10px;
   text-align: center;
+
+  mat-card {
+    width: 270px; /* Adjust the width of the card as needed */
+    height: 160px; /* Adjust the height of the card as needed */
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 mat-card {
-  max-width: 400px; /* Adjust the maximum width of the card as needed */
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+mat-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+mat-card-title {
+  font-size: 1.5rem; /* Adjust the font size of the title as needed */
+  text-align: center;
+}
+
+mat-card-content {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .profile-icon-container {
@@ -23,6 +55,6 @@ mat-card {
 
 .profile-icon {
   cursor: pointer;
-  font-size: 28px; /* Adjust the font size of the icon */
-  color: #333; /* Adjust the color of the icon */
+  font-size: 28px;
+  color: #333;
 }

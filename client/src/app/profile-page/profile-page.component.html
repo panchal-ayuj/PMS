@@ -1,3 +1,5 @@
+<!-- profile-page.component.html -->
+
 <div class="container profile-container">
   <div class="profile">
     <div class="profile-card">
@@ -9,8 +11,12 @@
         />
         <div class="user-info">
           <h2>{{ employee.firstName }} {{ employee.lastName }}</h2>
-          <p><strong>Role:</strong> {{ employee.roles }}</p>
-          <p><strong>Email:</strong> {{ employee.email }}</p>
+          <p style="font-size: 18px">
+            <strong>Role:</strong> {{ employee.roles }}
+          </p>
+          <p style="font-size: 18px">
+            <strong>Email:</strong> {{ employee.email }}
+          </p>
         </div>
       </div>
       <div class="details">
@@ -24,16 +30,21 @@
         <div class="detail">
           <strong>RM ID:</strong> {{ employee.reportingManagerId }}
         </div>
-        <div class="detail">
-          <strong>Band:</strong> {{ employee.band }}
+        <div class="detail" style="margin-bottom: -30px;"><strong>Band:</strong> {{ employee.band }}</div>
+        <div id="idCard">
+          <button class="custom-button-download" (click)="generateIdCardPDF()">
+            Download User Details
+          </button>
         </div>
       </div>
+
       <div class="divider"></div>
       <div class="manager-actions" *ngIf="showButton">
         <h3>Manager Actions</h3>
         <button class="custom-button" (click)="viewDetails(employee.userId)">
           Give Review
         </button>
+
       </div>
     </div>
   </div>

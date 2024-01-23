@@ -18,7 +18,6 @@
             [matAutocomplete]="auto"
           />
         </div>
-    
         <mat-autocomplete #auto="matAutocomplete">
           <mat-option *ngFor="let user of searchResults" (click)="selectUserProfile(user)">
             {{ user.firstName }} {{ user.lastName }} - {{ user.userId }}

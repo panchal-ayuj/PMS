@@ -1,4 +1,4 @@
-package com.accolite.server.Exceptions;
+package com.accolite.server.exceptions;
 
 public class ReviewNotFoundException extends RuntimeException{
     public ReviewNotFoundException() {

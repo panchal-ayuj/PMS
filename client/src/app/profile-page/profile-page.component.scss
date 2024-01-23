@@ -45,14 +45,14 @@ $background-color: #ecf0f1; // Light background color
       margin-right: 20px;
       background-color: #fff; // Background color for the profile image
     }
-  
+
     .user-info {
       h2 {
         font-size: 2rem;
         margin-bottom: 5px;
         color: #fff; // Text color for the name
       }
-  
+
       p {
         font-size: 1.2rem;
         margin: 15px 0;
@@ -60,7 +60,7 @@ $background-color: #ecf0f1; // Light background color
       }
     }
   }
-  
+
   .details {
     padding: 20px;
 
@@ -105,4 +105,21 @@ $background-color: #ecf0f1; // Light background color
       }
     }
   }
+}
+
+.custom-button-download {
+  background-color: #3498db;
+  color: #fff;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  // transition: background-color 0.3s;
+  position: relative;
+  bottom: 120px;
+  left: 840px;
+
+  // &:hover {
+  //   background-color: darken($primary-color, 10%);
+  // }
 }

@@ -13,6 +13,7 @@ import { DiaglogoverviewComponent } from '../diaglogoverview/diaglogoverview.com
 import { SharedDataService } from '../shared-data.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-keyresult-page',
@@ -20,7 +21,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrl: './keyresult-page.component.scss',
 })
 export class KeyresultPageComponent implements OnInit {
-  userId: number = 2; // Replace with the actual user ID
+  userId!: number; // ReplAace with the actual user ID
   period: string = 'q1'; // Replace with the desired period (e.g., 'Q1', 'Q2', etc.)
   year: number = 2023; // Replace with the desired year
   status: boolean = false;
@@ -84,6 +85,9 @@ export class KeyresultPageComponent implements OnInit {
 
   loadKeyResults() {
     this.keyResults = []; // Reset keyResults
+    if(this.useApi!==undefined){
+      this.showButton = true;
+    }
     this.keyResultService
       .getKeyResults(this.userId, this.period, this.year, this.status)
       .subscribe((data) => {
@@ -149,7 +153,6 @@ export class KeyresultPageComponent implements OnInit {
           const isDateInRange =
             currentDate >= this.startDate && currentDate <= this.endDate;
 
-          if (isDateInRange) {
             if (empList[0].reportingManagerId === user.userId) {
               this.showButton = true;
               this.useApi = 0;
@@ -173,7 +176,9 @@ export class KeyresultPageComponent implements OnInit {
               this.showButton = false;
               console.log('Not a reporting manager');
             }
-          } else {
+          if (isDateInRange) {
+          } 
+          else {
             // Set showButton to false if the current date is not within the range
             this.showButton = false;
             console.log(currentDate);
@@ -220,10 +225,14 @@ export class KeyresultPageComponent implements OnInit {
   @ViewChild('overallFeedbackModal')
   overallFeedbackModal!: ElementRef;
   feedbackForm: FormGroup;
+  feedbackSubmitted: boolean = false;
 
   submitOverallFeedback() {
     if (this.feedbackForm.valid) {
       const feedbackData = this.feedbackForm.value;
+      if (feedbackData.feedback.length > 0) {
+        this.feedbackSubmitted = true;
+      }
       // You can handle the feedback data as needed, for example, log it
       console.log(
         'Overall Feedback:',
@@ -274,5 +283,13 @@ export class KeyresultPageComponent implements OnInit {
       'none'
     );
     document.body.classList.remove('modal-open');
+    this.feedbackSubmitted = false;
+  }
+  calculateNormalizedWeight(weight: number): number {
+    // Calculate the sum of all weights
+    const totalWeight = this.keyResults.reduce((sum, keyResult) => sum + keyResult.weight, 0);
+
+    // Return the normalized weight
+    return Math.round((weight / totalWeight) * 100);
   }
 }

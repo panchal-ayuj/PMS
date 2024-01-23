@@ -114,7 +114,7 @@
 
     <ng-container matColumnDef="weight">
       <mat-header-cell *matHeaderCellDef> Weight </mat-header-cell>
-      <mat-cell *matCellDef="let keyResult"> {{ keyResult.weight }} </mat-cell>
+      <mat-cell *matCellDef="let keyResult"> {{ calculateNormalizedWeight(keyResult.weight) }} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="rating">
@@ -190,13 +190,10 @@
         <!-- Overall Feedback Form Content -->
         <form [formGroup]="feedbackForm">
           <label for="feedback">Overall Feedback:</label>
-          <textarea
-            class="form-control"
-            id="feedback"
-            rows="4"
-            formControlName="feedback"
-          ></textarea>
+          <textarea class="form-control" id="feedback" rows="4" formControlName="feedback"></textarea>
+          <div *ngIf="feedbackSubmitted" class="text-success fade-in mt-2">Feedback submitted successfully!</div>
         </form>
+        
       </div>
       <div class="modal-footer">
         <!-- <button type="button" class="btn btn-secondary" (click)="closeOverallFeedbackModal()">Close</button> -->

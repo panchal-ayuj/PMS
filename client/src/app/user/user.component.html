@@ -20,11 +20,11 @@
 
     <div>
       <button
-        type="export"
+        type="button"
         mat-raised-button
         color="primary"
         (click)="exportData()"
-        style="margin-top: 8%;"
+        style="margin-top: 8%"
       >
         Export User Details
       </button>
@@ -85,14 +85,11 @@
         <input matInput formControlName="teams" />
       </mat-form-field>
 
-
       <button type="submit" mat-raised-button color="primary">
         {{ searchUserId ? "Update User" : "Register User" }}
       </button>
     </form>
   </div>
-
-
 
   <!-- User List -->
   <!-- <div class="user-list" *ngFor="let user of users">
