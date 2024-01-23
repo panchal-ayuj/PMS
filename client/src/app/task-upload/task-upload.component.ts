@@ -40,7 +40,7 @@ export class TaskUploadComponent {
             if (error.status == 200)
               this.showSuccessSnackBar('File uploaded successfully');
 
-            console.error(error);
+            console.error("File uploaded "+error);
             // Handle error (e.g., display an error message)
           }
         );
@@ -65,7 +65,13 @@ export class TaskUploadComponent {
             // Handle success (e.g., display a success message)
           },
           (error) => {
-            console.error(error);
+            if (error.status != 200) {
+              this.showSuccessSnackBar('File not uploaded');
+            }
+            if (error.status == 200)
+              this.showSuccessSnackBar('File uploaded successfully');
+
+            console.error("File uploaded "+error);
             // Handle error (e.g., display an error message)
           }
         );
