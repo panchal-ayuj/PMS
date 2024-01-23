@@ -30,6 +30,7 @@ export class ProfilePageComponent implements OnInit {
 
   userId: any;
   showButton: boolean = false;
+  showButton2: boolean = false;
   @ViewChild('idCard', { static: false }) idCard: ElementRef | undefined;
 
   constructor(private router: Router,private service: AuthService, private http:HttpClient, private sharedDataService: SharedDataService, private userInfoService: UserInfoService,private dialog: MatDialog) {}
@@ -50,6 +51,7 @@ export class ProfilePageComponent implements OnInit {
         // this.getUserById(userId);
       } else {
         this.showButton = false;
+        this.showButton2 = true;
         this.handleAsyncResponse();
       }
     });
@@ -86,6 +88,7 @@ export class ProfilePageComponent implements OnInit {
   }
 
   getUserById(userId: any): void {
+    this.showButton2 = false;
     console.log('User ID:', userId);
     if (!userId) {
       console.error('User ID is undefined');
