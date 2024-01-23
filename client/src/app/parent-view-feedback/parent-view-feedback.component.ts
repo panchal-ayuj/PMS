@@ -8,7 +8,7 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrl: './parent-view-feedback.component.scss'
 })
 export class ParentViewFeedbackComponent implements OnInit {
-  displayedColumns: string[] = ['userId', 'email', 'managerFeedback', 'rating'];
+  displayedColumns: string[] = ['userId', 'email', 'managerFeedback', 'rating', 'period', 'financialYear'];
   reviewCycleDataSource = new MatTableDataSource<any>();
   reviews: any;
   userEmail: any;

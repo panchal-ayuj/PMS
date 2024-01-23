@@ -1,16 +1,9 @@
-<!-- parent-view-feedback.component.html -->
-
 <div class="container">
-  <mat-form-field class="search-bar">
-    <input
-      matInput
-      (input)="applyFilter($event)"
-      placeholder="Search by User ID"
-      [(ngModel)]="userId"
-    />
-  </mat-form-field>
-
-  <table mat-table [dataSource]="reviewCycleDataSource.data" class="mat-elevation-z8">
+  <table
+    mat-table
+    [dataSource]="reviewCycleDataSource.data"
+    class="mat-elevation-z8"
+  >
     <!-- User ID Column -->
     <ng-container matColumnDef="userId">
       <th mat-header-cell *matHeaderCellDef>User ID</th>
