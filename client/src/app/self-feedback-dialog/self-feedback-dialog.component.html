@@ -1,0 +1,23 @@
+<!-- self-feedback-dialog.component.html -->
+
+<div class="dialog-content">
+    <h2>{{ data.viewMode ? 'View' : 'Give' }} Self Feedback</h2>
+  
+    <!-- Display existing self-feedback or a message if null (for view mode) -->
+    <div *ngIf="data.viewMode && data.feedback !== null; else noFeedback">
+      <p>{{ data.feedback }}</p>
+    </div>
+  
+    <ng-template #noFeedback>
+      <p *ngIf="data.viewMode">No Self feedback Given till now</p>
+    </ng-template>
+  
+    <!-- Form for giving self-feedback (only shown in give mode) -->
+    <form *ngIf="showSubmitButton" (ngSubmit)="submitFeedback()">
+      <label for="selfFeedbackInput">Your Feedback:</label>
+      <textarea id="selfFeedbackInput" name="selfFeedback" [(ngModel)]="feedbackInput" required></textarea>
+  
+      <button type="submit">Submit Feedback</button>
+    </form>
+  </div>
+  

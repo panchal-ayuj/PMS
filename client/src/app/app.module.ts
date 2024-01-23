@@ -49,6 +49,7 @@ import { TeamPageComponent } from './team-page/team-page.component';
 import { EmployeeService } from './employee.service';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatMenuModule } from '@angular/material/menu';
+import { SelfFeedbackDialogComponent } from './self-feedback-dialog/self-feedback-dialog.component';
 import { RatingDialogComponent } from './rating-dialog/rating-dialog.component';
 import { FeedbackComponent } from './feedback/feedback.component';
 import { ParentViewFeedbackComponent } from './parent-view-feedback/parent-view-feedback.component';
@@ -86,6 +87,7 @@ import { SublevelMenuComponent } from './sidebar/sublevel-menu.component';
     BodyComponent,
     NavbarComponent,
     TeamPageComponent,
+    SelfFeedbackDialogComponent,
     RatingDialogComponent,
     FeedbackComponent,
     ParentViewFeedbackComponent,

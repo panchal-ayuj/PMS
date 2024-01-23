@@ -6,11 +6,13 @@ import com.accolite.server.models.User;
 import com.accolite.server.repository.ReviewCycleRepository;
 import com.accolite.server.writers.ReviewCycleWriter;
 import com.accolite.server.writers.UserExcelWriter;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ReviewCycleService {
@@ -57,4 +59,27 @@ public class ReviewCycleService {
         reviewCycleRepository.saveAll(reviewCycles);
     }
 
+    public String getUserFeedbackForMostRecentCycle(Long userId) {
+        try {
+            Optional<ReviewCycle> mostRecentCycle = reviewCycleRepository.findTopByUserIdOrderByStartDateDesc(userId);
+
+            return mostRecentCycle.map(ReviewCycle::getUserFeedback).orElse("No feedback available");
+        } catch (Exception e) {
+            // Handle errors appropriately
+            throw e;
+        }
+    }
+    public void updateUserFeedbackForMostRecentCycle(Long userId, String userFeedback) {
+        try {
+            Optional<ReviewCycle> mostRecentCycle = reviewCycleRepository.findTopByUserIdOrderByStartDateDesc(userId);
+
+            mostRecentCycle.ifPresent(reviewCycle -> {
+                reviewCycle.setUserFeedback(userFeedback);
+                reviewCycleRepository.save(reviewCycle);
+            });
+        } catch (Exception e) {
+            // Handle errors appropriately
+            throw e;
+        }
+    }
 }
