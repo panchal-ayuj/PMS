@@ -15,7 +15,7 @@ export class SelfFeedbackDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<SelfFeedbackDialogComponent>,
     private http: HttpClient,
-    @Inject(MAT_DIALOG_DATA) public data: { feedback: string, viewMode: boolean, userId:string }
+    @Inject(MAT_DIALOG_DATA) public data: { feedback: any, viewMode: boolean, userId:string }
   ) {
     this.showSubmitButton = !data.viewMode;
     this.userId = data.userId;

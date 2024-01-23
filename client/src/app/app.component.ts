@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
   // displaySidebar = false;
 
   hideBar(): boolean {
-    console.log(localStorage.getItem("token"))
+    // console.log(localStorage.getItem("token"))
     return localStorage.getItem("token") !== null;
   }
   // constructor(private router: Router) {

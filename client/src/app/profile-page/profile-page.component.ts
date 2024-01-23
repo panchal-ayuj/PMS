@@ -129,7 +129,7 @@ export class ProfilePageComponent implements OnInit {
       (response: any) => {
         // Open the dialog with the received feedback
         const dialogRef = this.dialog.open(SelfFeedbackDialogComponent, {
-          data: { feedback: response.userFeedback, viewMode: true },
+          data: { feedback: response, viewMode: true },
         });
   
         dialogRef.afterClosed().subscribe((result) => {
