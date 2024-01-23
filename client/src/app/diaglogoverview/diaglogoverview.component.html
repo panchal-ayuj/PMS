@@ -1,5 +1,5 @@
+<!-- diaglogoverview.component.html -->
 
-<!-- Update your HTML file with Angular Material components -->
 <mat-table [dataSource]="data.tasks" class="mat-elevation-z8">
   <ng-container matColumnDef="description">
     <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
@@ -8,19 +8,76 @@
 
   <ng-container matColumnDef="weight">
     <mat-header-cell *matHeaderCellDef>Weight</mat-header-cell>
-    <mat-cell *matCellDef="let task">{{ task.weight }}</mat-cell>
+    <mat-cell *matCellDef="let task">{{getWeight(task.weight)}}</mat-cell>
   </ng-container>
-  
+
   <ng-container matColumnDef="completionStatus">
     <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
     <mat-cell *matCellDef="let task">{{ task.completionStatus }}</mat-cell>
   </ng-container>
 
+  <!-- Dropdown for Rating -->
   <ng-container matColumnDef="rating">
     <mat-header-cell *matHeaderCellDef>Rating</mat-header-cell>
-    <mat-cell *matCellDef="let task">{{ task.rating }}</mat-cell>
+    <mat-cell *matCellDef="let task">
+      <div *ngIf="data.panelClass === 'true'">
+        <mat-form-field>
+          <mat-label>Enter Rating</mat-label>
+          <mat-select
+            placeholder="Select Rating"
+            [(ngModel)]="task.rating"
+            (change)="updateRating(task)"
+          >
+            <mat-option
+              *ngFor="let rating of [1, 2, 3, 4, 5]"
+              [value]="rating"
+              >{{ rating }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div *ngIf="data.panelClass !== 'true'">
+        <!-- Display static data here -->
+        {{ task.rating }}
+      </div>
+    </mat-cell>
   </ng-container>
 
-  <mat-header-row *matHeaderRowDef="['description', 'weight', 'rating', 'completionStatus']"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: ['description', 'weight', 'rating', 'completionStatus'];"></mat-row>
+  <!-- Input field for Feedback -->
+  <ng-container matColumnDef="feedback">
+    <mat-header-cell *matHeaderCellDef>Feedback</mat-header-cell>
+    <mat-cell *matCellDef="let task" class="feedback-column">
+      <div *ngIf="data.panelClass === 'true'">
+        <mat-form-field style="width: 100%">
+          <textarea
+            matInput
+            placeholder="Enter Feedback"
+            [(ngModel)]="task.feedback"
+            (change)="updateFeedback(task)"
+          ></textarea>
+        </mat-form-field>
+      </div>
+      <div *ngIf="data.panelClass !== 'true'">
+        <!-- Display static data here -->
+        {{ task.feedback }}
+      </div>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row
+    *matHeaderRowDef="['description', 'weight', 'rating', 'feedback']"
+  ></mat-header-row>
+  <mat-row
+    *matRowDef="
+      let row;
+      columns: ['description', 'weight', 'rating', 'feedback']
+    "
+  ></mat-row>
 </mat-table>
+
+<div class="actions" *ngIf="data.panelClass === 'true'">
+  <button mat-raised-button color="primary" (click)="saveChanges()">
+    Save Changes
+  </button>
+  <button mat-raised-button color="warn" (click)="closeDialog()">Close</button>
+</div>

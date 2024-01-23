@@ -1,44 +1,32 @@
 <nav class="navbar">
-  <div class="navbar-logo"></div>
+  <div class="navbar-logo">
+    <img src="../../assets/images/accolite-logo.png" alt="Company Logo" />
+  </div>
   <ul class="navbar-links">
     <li>
-      <form class="d-flex" role="search">
-        <input
-          class="form-control me-2"
-          type="number"
-          placeholder="Search by User ID"
-          aria-label="Search"
-          id="userId"
-          #userIdInput
-        />
-        <button
-          class="btn btn-outline-success"
-          type="submit"
-          (click)="getUserById(userIdInput.value)"
-        >
-          Search
-        </button>
-      </form>
-    </li>
-
-    <li>
-      <form class="d-flex" role="search">
-        <input matInput type="text" placeholder="Search by name" (input)="searchUsersByName(userNameInput.value)" [matMenuTriggerFor]="userMenu" #userNameInput />
-      </form>
-      
-      <mat-menu #userMenu="matMenu">
-        <div class="user-dropdown">
-          <ul>
-            <li *ngFor="let user of searchResults" (click)="selectUserProfile(user)">
-              {{ user.firstName }} {{ user.lastName }}
-            </li>
-          </ul>
+      <form class="d-flex">
+        <div class="search-container">
+          <mat-icon class="search-icon">search</mat-icon>
+          <input
+            class="form-control me-2 search-bar"
+            type="text"
+            placeholder="Search by UserID or Name"
+            aria-label="Search"
+            id="searchInput"
+            #searchInput
+            (input)="onSearchInputChange(searchInput.value)"
+            [matAutocomplete]="auto"
+          />
         </div>
-      </mat-menu>
-      
-      
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let user of searchResults" (click)="selectUserProfile(user)">
+            {{ user.firstName }} {{ user.lastName }} - {{ user.userId }}
+          </mat-option>
+        </mat-autocomplete>
+      </form>
     </li>
   </ul>
+
   <div class="navbar-actions">
     <div class="dropdown">
       <span class="profile-username">{{ userName }}</span>

@@ -50,6 +50,10 @@ public class ReviewCycleService {
     public ReviewCycle getReviewCycleById(Long reviewCycleId) {
         return reviewCycleRepository.findByWindowId(reviewCycleId);
     }
+    public ReviewCycle getFeedbackbyuserId(Long userId)
+    {
+        return reviewCycleRepository.findByuserId(userId);
+    }
 
     public void saveAll(List<ReviewCycle> reviewCycles) {
         reviewCycleRepository.saveAll(reviewCycles);

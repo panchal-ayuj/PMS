@@ -50,7 +50,13 @@ import { EmployeeService } from './employee.service';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatMenuModule } from '@angular/material/menu';
 import { SelfFeedbackDialogComponent } from './self-feedback-dialog/self-feedback-dialog.component';
-
+import { RatingDialogComponent } from './rating-dialog/rating-dialog.component';
+import { FeedbackComponent } from './feedback/feedback.component';
+import { ParentViewFeedbackComponent } from './parent-view-feedback/parent-view-feedback.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { IdCardComponent } from './id-card/id-card.component';
+import { SublevelMenuComponent } from './sidebar/sublevel-menu.component';
 
 @NgModule({
   declarations: [
@@ -82,6 +88,11 @@ import { SelfFeedbackDialogComponent } from './self-feedback-dialog/self-feedbac
     NavbarComponent,
     TeamPageComponent,
     SelfFeedbackDialogComponent,
+    RatingDialogComponent,
+    FeedbackComponent,
+    ParentViewFeedbackComponent,
+    IdCardComponent,
+    SublevelMenuComponent,
   ],
   imports: [
     BrowserModule,
@@ -107,6 +118,9 @@ import { SelfFeedbackDialogComponent } from './self-feedback-dialog/self-feedbac
     MatListModule,
     MatAutocompleteModule,
     MatMenuModule,
+    MatSnackBarModule,
+    MatGridListModule
+    
   ],
   providers: [ExportService, EmployeeService],
   bootstrap: [AppComponent],

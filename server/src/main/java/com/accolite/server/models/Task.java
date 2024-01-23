@@ -15,7 +15,7 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long taskId;
-    private int keyResultId;
+    private Long keyResultId;
     private String description;
     @Temporal(TemporalType.TIMESTAMP)
     private Date creationDate;
@@ -23,7 +23,7 @@ public class Task {
     private Date deadline;
     private int weight;
     private String completionStatus;
-    private int userId;
+    private Long userId;
     //    @ManyToOne
 //    @JoinColumn(name = "windowId")
     private int windowId;
@@ -38,7 +38,7 @@ public class Task {
     public Task() {
     }
 
-    public Task(Long taskId, int keyResultId, String description, Date creationDate, Date deadline, int weight, String completionStatus, int userId, int windowId, int rating, String feedback, String period, List<String> taskAttributes) {
+    public Task(Long taskId, Long keyResultId, String description, Date creationDate, Date deadline, int weight, String completionStatus, Long userId, int windowId, int rating, String feedback, String period, List<String> taskAttributes) {
         this.taskId = taskId;
         this.keyResultId = keyResultId;
         this.description = description;
@@ -62,11 +62,11 @@ public class Task {
         this.taskId = taskId;
     }
 
-    public int getKeyResultId() {
+    public Long getKeyResultId() {
         return keyResultId;
     }
 
-    public void setKeyResultId(int keyResultId) {
+    public void setKeyResultId(Long keyResultId) {
         this.keyResultId = keyResultId;
     }
 
@@ -110,11 +110,11 @@ public class Task {
         this.completionStatus = completionStatus;
     }
 
-    public int getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 

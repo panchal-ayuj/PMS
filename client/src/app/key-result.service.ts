@@ -26,8 +26,11 @@ export class KeyResultService {
     const header = new HttpHeaders()
       .set('Content-Type', 'application/json')
       .set('Authorization', 'Bearer ' + authToken);
-    console.log(header);
+     console.log(header);
     const url = `http://localhost:8080/api/tasks/byKeyResultId/${keyResultId}`;
     return this.http.get<any[]>(url, { headers : header });
   }
+
+
+  
 }

@@ -4,6 +4,7 @@ import { SharedDataService } from '../shared-data.service';
 import { UserInfoService } from '../user-info.service';
 import { AuthService } from '../auth.service';
 import { MatDialog } from '@angular/material/dialog';
+import { Observable, Subject, catchError, debounceTime, distinctUntilChanged, of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -11,6 +12,7 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrl: './navbar.component.scss',
 })
 export class NavbarComponent implements OnInit {
+  private searchUserIdsSubject = new Subject<string>();
   userName: any = '';
   userEmail: any = '';
   searchResults: any;
@@ -24,23 +26,35 @@ export class NavbarComponent implements OnInit {
     private _ngZone: NgZone,
   ) {}
 
-  search() {
-    // Get the search query from the input field (you may use ngModel or form control)
-    const searchQuery = 'your-search-query'; // Replace with your actual search query
+  search(name: string) {
+    const inputValue = name.trim(); // Trim to remove leading and trailing whitespaces
 
-    // Navigate to the search route, assuming you have a route for searching
-    this.router.navigate(['/search'], { queryParams: { q: searchQuery } });
+    // Determine if the input is numeric or a string
+    if (!isNaN(Number(inputValue))) {
+      // If the input is numeric, perform search by User ID
+      this.getUserById(inputValue);
+      console.log("number" + inputValue);
+    } else {
+      // If the input is a string, perform search by name
+      this.searchUsersByName(inputValue);
+      console.log("String" + inputValue);
+    }
   }
 
   getUserById(userId: any): void {
-    this.sharedDataService.changeUserId(userId);
-    console.log(userId);
-    if (userId !== null && userId !== undefined && userId !== '') {
-      console.log('Hitting profile');
-      this.router.navigate(['/profile']);
-    } else {
-      console.log('Empty user id');
-    }
+    console.log("GetUserById");
+    // this.sharedDataService.changeUserId(userId);
+    // console.log(userId);
+    this.authService.searchUserIds(userId).subscribe(
+      (results) => {
+        this.searchResults = results;
+        console.log(results);
+        
+      },
+      (error) => {
+        console.error('Error searching user IDs:', error);
+      }
+    );
   }
 
   getProfile(): void {
@@ -49,6 +63,7 @@ export class NavbarComponent implements OnInit {
   }
 
   searchUsersByName(name: string) {
+    console.log("SearchUsersByName");
     this.authService.searchUsersByName(name).subscribe(
       (results) => {
         this.searchResults = results;
@@ -59,50 +74,46 @@ export class NavbarComponent implements OnInit {
     );
   }
 
+  onSearchInputChange(searchQuery: string) {
+    if (searchQuery.trim() !== '') {
+      this.search(searchQuery);
+      this.searchUserIdsSubject.next(searchQuery);
+    }
+  }
+
   selectUserProfile(user: any) {
     this.sharedDataService.changeUserId(user.userId);
     this.router.navigate(['/profile']);
   }
 
-  // onSearchInputChange(event: any) {
-  //   const searchQuery = event.target.value;
-  //   //console.log(searchQuery);
-
-  //   if (searchQuery.trim() !== '') {
-  //     this.searchUsersByName(searchQuery);
-  //   } else {
-  //     this.searchResults = [];
-  //   }
-  // }
-
-  // selectUserProfile(user: any) {
-  //   this.sharedDataService.changeUserId(user.userId);
-  //   this.router.navigate(['/profile']);
-  // }
-
   ngOnInit(): void {
     // Subscribe to changes in user information
-    // this.userInfoService.currentUserInfo.subscribe((userInfo) => {
-    //   if (userInfo) {
-    //     this.userName = `${userInfo.firstName} ${userInfo.lastName}`;
-    //   }
-    // });
+    this.userInfoService.currentUserInfo.subscribe((userInfo) => {
+      if (userInfo) {
+        this.userName = `${userInfo.firstName} ${userInfo.lastName}`;
+      }
+    });
     this.handleAsyncResponse();
   }
+  
   logout(): void {
     // Display a confirmation dialog before logging out
     const confirmLogout = confirm('Are you sure you want to logout?');
 
-  if (confirmLogout) {
-    // Call your logout service or perform logout actions
-    // Example: this.authService.logout();
-    // You may also want to navigate to the login page after logout
-    this.authService.signOutExternal();
-    this._ngZone.run(() => {
-      this.router.navigate(['/']).then(() => window.location.reload());
-    })
+    if (confirmLogout) {
+      // Call your logout service or perform logout actions
+      // Example: this.authService.logout();
+      // You may also want to navigate to the login page after logout
+      this.authService.signOutExternal();
+      this._ngZone.run(() => {
+        this.router.navigate(['/']).then(() => window.location.reload());
+      })
+    }
   }
+  searchUserIds(userId: string): Observable<any> {
+    return this.authService.searchUserIds(userId);
   }
+  
 
   async handleAsyncResponse() {
     try {

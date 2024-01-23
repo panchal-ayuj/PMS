@@ -1,6 +1,43 @@
 <!-- review-cycle-management.component.html -->
 
 <div class="review-cycle-management-container">
+  <div class="edit-container">
+    <div class="search-form">
+      <mat-form-field appearance="fill">
+        <mat-label>Search Review Cycle by ID:</mat-label>
+        <input
+          matInput
+          type="number"
+          id="reviewCycleId"
+          [(ngModel)]="reviewCycleId"
+        />
+      </mat-form-field>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="searchReviewCycle(reviewCycleId)"
+      >
+        Search
+      </button>
+      <!-- Reset Form Button -->
+      <div class="reset-button">
+        <button mat-raised-button (click)="resetForm()">Reset</button>
+      </div>
+    </div>
+
+    <div class="file-upload-container">
+      <app-review-cycle-upload></app-review-cycle-upload>
+    </div>
+    <button
+      mat-raised-button
+      color="primary"
+      type="button"
+      (click)="exportReviewCycles()"
+      style="margin-top: 8%"
+    >
+      Export Review Cycles
+    </button>
+  </div>
   <div class="form-container">
     <!-- ReviewCycle Registration Form -->
     <form
@@ -48,58 +85,6 @@
           searchReviewCycleId ? "Update Review Cycle" : "Register Review Cycle"
         }}
       </button>
-      <button
-        mat-raised-button
-        color="primary"
-        type="submit"
-        (click)="exportReviewCycles()"
-      >
-        Export Review Cycles
-      </button>
     </form>
   </div>
-
-  <div class="edit-container">
-    <div class="search-form">
-      <mat-form-field appearance="fill">
-        <mat-label>Search Review Cycle by ID:</mat-label>
-        <input
-          matInput
-          type="number"
-          id="reviewCycleId"
-          [(ngModel)]="reviewCycleId"
-        />
-      </mat-form-field>
-      <button
-        mat-raised-button
-        color="primary"
-        (click)="searchReviewCycle(reviewCycleId)"
-      >
-        Search
-      </button>
-      <!-- Reset Form Button -->
-      <div class="reset-button">
-        <button mat-raised-button (click)="resetForm()">Reset</button>
-      </div>
-    </div>
-
-    <div class="file-upload-container">
-      <app-review-cycle-upload></app-review-cycle-upload>
-    </div>
-  </div>
-
-  <!-- ReviewCycle List -->
-  <!-- <div class="review-cycle-list">
-    <div class="reviewcycle-card" *ngFor="let reviewcycle of reviewcycles">
-      <mat-card>
-        <mat-card-content class="reviewcycle-info">
-          <p>
-            {{ reviewcycle.userId }} {{ reviewcycle.startDate }}
-            {{ reviewcycle.endDate }} {{ reviewcycle.period }}
-            {{ reviewcycle.reviewStatus }}
-          </p>
-        </mat-card-content>
-      </mat-card>
-    </div>
-  </div> -->
 </div>

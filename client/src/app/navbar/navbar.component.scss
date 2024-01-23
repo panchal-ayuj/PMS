@@ -1,6 +1,5 @@
-// Define variables for common colors
 $primary-color: #3498db;
-$navbar-background: #2c3e50;
+$navbar-background: #080234;
 $navbar-text-color: #ecf0f1;
 
 // Navbar styles
@@ -22,8 +21,10 @@ $navbar-text-color: #ecf0f1;
 
   .navbar-logo {
     img {
-      max-width: 100px; // Adjust the max-width of your logo
+      max-width: 120px; // Adjust the max-width of your logo
       height: auto;
+      background-color: white;
+      margin-top: 5px;
     }
   }
 
@@ -47,43 +48,80 @@ $navbar-text-color: #ecf0f1;
         }
       }
     }
+    // Responsive styles
+    @media (max-width: 768px) {
+      flex-direction: column;
+      position: absolute;
+      top: 65px;
+      left: 0;
+      right: 0;
+      background-color: $navbar-background;
+      text-align: center;
+
+      li {
+        margin: 10px 0;
+      }
+    }
   }
 
   .navbar-actions {
-    // Add styles for login/logout buttons or user-related actions
     position: relative;
-    top:5px;
-    
+    top: 10px;
   }
 }
 
-
-
-.mat-icon-size{
+.mat-icon-size {
   font-size: 40px;
   height: 60px;
   width: 50px;
 }
 
-
-.input{
+.input {
   height: 20px;
-  width: 400px;
+  width: 100%; /* Full width on smaller screens */
+  max-width: 400px; /* Limited width on larger screens */
+}
+.search-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  .search-icon {
+    position: absolute;
+    left: 10px;
+    color: $navbar-text-color;
+    font-size: 24px; // Adjust the size as needed
+    color: #2c3e50;
+  }
+
+  .search-bar {
+    flex: 1; // Use flex property to fill the remaining space
+    height: 40px; // Adjust height as needed
+    border-radius: 0.60rem;
+    padding: 5px 40px 5px 40px; // Adjust padding to create space for the icon
+    box-sizing: border-box;
+    font-size: 16px;
+
+    @media (max-width: 768px) {
+      margin-top: 10px;
+    }
+  }
 }
 
-
-  .profile-username {
-    display: inline-block;
-    max-width: 200px; /* Set a maximum width to limit horizontal space */
-    overflow: hidden;
-    text-overflow: ellipsis; /* Truncate text with an ellipsis if it overflows */
-    white-space: nowrap; /* Prevent text from wrapping to the next line */
-    margin-left: 5px; /* Adjust the margin as needed */
-    vertical-align: middle; /* Align vertically with the profile icon */
-    line-height: 24px; /* Align vertically with the profile icon */
-  }
-  
-
+.profile-username {
+  display: inline-block;
+  max-width: 200px; /* Set a maximum width to limit horizontal space */
+  overflow: hidden;
+  text-overflow: ellipsis; /* Truncate text with an ellipsis if it overflows */
+  white-space: nowrap; /* Prevent text from wrapping to the next line */
+  margin-left: 5px; /* Adjust the margin as needed */
+  vertical-align: middle; /* Align vertically with the profile icon */
+  line-height: 24px; /* Align vertically with the profile icon */
+  position: relative;
+  bottom: 30px;
+  margin-right: 10px;
+  font-size: 20px;
+}
 
 // Add these styles to your existing SCSS file
 

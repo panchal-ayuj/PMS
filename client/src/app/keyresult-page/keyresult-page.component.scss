@@ -1,3 +1,6 @@
+@import "bootstrap/dist/css/bootstrap.min.css";
+@import "bootstrap-icons/font/bootstrap-icons.css";
+
 .key-results-container {
   display: flex;
   flex-direction: column;
@@ -40,3 +43,66 @@
     }
   }
 }
+/* Add this to your component's styles or stylesheet */
+
+
+
+
+
+/* Add this to your component's styles or stylesheet */
+
+/* Add this to your component's styles or stylesheet */
+
+/* Add this to your component's styles or stylesheet */
+
+.table.mat-table {
+  width: 100%;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f5f5f5; /* Light Grey on Hover */
+}
+
+.btn-view-task {
+  background-color: #07bbf1;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #10a9ea;
+}
+
+.modal-dialog {
+  margin-top: 7%;
+  z-index: 1;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Adding a subtle box shadow */
+  border-radius: 0.50rem; /* Adding rounded corners for a softer look */
+  max-width: 500px; /* Limiting the maximum width for better readability */
+  padding: 20px; /* Adding some padding for content spacing */
+  border: 1px solid #DEE2E6;
+
+  button{
+    border-radius: 0.50rem;
+  }
+}
+
+
+#feedback{
+  border: 1px solid #DEE2E6;
+  border-radius: 0.50rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Adding a subtle box shadow */
+  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+#over-feedback{
+  border-radius: 0.50rem;
+}
+

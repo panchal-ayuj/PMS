@@ -27,13 +27,13 @@ public class TaskExcelReader {
                 Row row = rowIterator.next();
                 Task task = new Task();
                 task.setTaskId((long) (row.getCell(0).getNumericCellValue()));
-                task.setKeyResultId((int) (row.getCell(1).getNumericCellValue()));
+                task.setKeyResultId((long) (row.getCell(1).getNumericCellValue()));
                 task.setDescription((String) (row.getCell(2).getStringCellValue()));
                 task.setCreationDate((Date) row.getCell(3).getDateCellValue());
                 task.setDeadline((Date) row.getCell(4).getDateCellValue());
                 task.setWeight((int) (row.getCell(5).getNumericCellValue()));
                 task.setCompletionStatus((String) (row.getCell(6).getStringCellValue()));
-                task.setUserId((int) (row.getCell(7).getNumericCellValue()));
+                task.setUserId((long) (row.getCell(7).getNumericCellValue()));
                 task.setWindowId((int) (row.getCell(8).getNumericCellValue()));
                 task.setRating((int) (row.getCell(9).getNumericCellValue()));
                 task.setFeedback((String) (row.getCell(10).getStringCellValue()));

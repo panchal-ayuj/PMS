@@ -15,5 +15,9 @@ export class UserService {
     return this.http.get<any[]>(url);
   }
 
+  getUserById(userId: any): Observable<any> {
+    const url = `${this.apiUrl}/${userId}`;
+    return this.http.get<any>(url);
+  }
   // Add more methods as needed
 }

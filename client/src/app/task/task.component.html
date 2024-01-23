@@ -1,4 +1,33 @@
 <div class="task-management-container">
+  <div class="edit-container">
+    <div class="search-form">
+      <mat-form-field appearance="fill">
+        <mat-label>Search Task by ID:</mat-label>
+        <input matInput type="number" id="taskId" [(ngModel)]="taskId" />
+      </mat-form-field>
+      <button mat-raised-button color="primary" (click)="searchTask(taskId)">
+        Search
+      </button>
+      <!-- Reset Form Button -->
+      <div class="reset-button">
+        <button mat-raised-button (click)="resetForm()">Reset</button>
+      </div>
+    </div>
+    <div class="file-upload-container">
+      <app-task-upload></app-task-upload>
+    </div>
+    <div>
+      <button
+        type="button"
+        mat-raised-button
+        color="primary"
+        (click)="exportTasks()"
+        style="margin-top: 8%"
+      >
+        Export Tasks
+      </button>
+    </div>
+  </div>
   <div class="form-container">
     <form [formGroup]="taskForm" (ngSubmit)="registerOrUpdateTask()">
       <h2>Task Management</h2>
@@ -83,27 +112,9 @@
       <button mat-raised-button color="primary" type="submit">
         {{ searchTaskId ? "Update Task" : "Register Task" }}
       </button>
-      <button (click)="exportTasks()">Export Tasks</button>
     </form>
   </div>
-  <div class="edit-container">
-    <div class="search-form">
-      <mat-form-field appearance="fill">
-        <mat-label>Search Task by ID:</mat-label>
-        <input matInput type="number" id="taskId" [(ngModel)]="taskId" />
-      </mat-form-field>
-      <button mat-raised-button color="primary" (click)="searchTask(taskId)">
-        Search
-      </button>
-      <!-- Reset Form Button -->
-      <div class="reset-button">
-        <button mat-raised-button (click)="resetForm()">Reset</button>
-      </div>
-    </div>
-    <div class="file-upload-container">
-      <app-task-upload></app-task-upload>
-    </div>
-  </div>
+
   <!-- Task List
   <div *ngFor="let task of tasks">
     <p>{{ task.description }} (ID: {{ task.taskId }})</p>

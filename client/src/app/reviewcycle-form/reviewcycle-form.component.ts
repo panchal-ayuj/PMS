@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-reviewcycle-form',
@@ -14,7 +15,7 @@ export class ReviewcycleFormComponent {
 
   searchReviewCycleId: number | undefined;
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient) { }
+  constructor(private formBuilder: FormBuilder, private http: HttpClient,private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -41,6 +42,8 @@ export class ReviewcycleFormComponent {
       this.http.put(`${apiUrl}reviewCycleById/${this.searchReviewCycleId}`, reviewcycle).subscribe(
         (response) => {
           console.log('Review Cycle updated successfully:', response);
+          this.showSuccessSnackBar('Review Cycle updated successfully');
+
           this.loadReviewCycles();
           this.resetForm();
         },
@@ -52,6 +55,8 @@ export class ReviewcycleFormComponent {
       this.http.post('http://localhost:8080/reviewCycle/register', reviewcycle).subscribe(
         (response) => {
           console.log('Review Cycle registered successfully:', response);
+          this.showSuccessSnackBar('Review Cycle registered successfully');
+          
           this.loadReviewCycles();
           this.resetForm();
         },
@@ -120,6 +125,12 @@ export class ReviewcycleFormComponent {
   resetForm() {
     this.reviewCycleForm.reset();
     this.searchReviewCycleId = undefined;
+  }
+  private showSuccessSnackBar(message: string): void {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000, // Duration in milliseconds
+      panelClass: ['snackbar-success'] // Add custom styles if needed
+    });
   }
 
 }

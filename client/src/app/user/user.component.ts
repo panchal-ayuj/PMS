@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { ExportService } from '../export.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-user',
@@ -17,7 +18,7 @@ export class UserManagementComponent implements OnInit {
 
   searchUserId: number | undefined;
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient,private exportService: ExportService) { }
+  constructor(private formBuilder: FormBuilder, private http: HttpClient,private exportService: ExportService,private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -75,6 +76,7 @@ export class UserManagementComponent implements OnInit {
       this.http.put(`${apiUrl}userById/${this.searchUserId}`, user).subscribe(
         (response) => {
           console.log('User updated successfully:', response);
+          this.showSuccessSnackBar('User updated successfully');
           this.loadUsers();
           this.resetForm();
         },
@@ -86,6 +88,7 @@ export class UserManagementComponent implements OnInit {
       this.http.post('http://localhost:8080/api/users/register', user).subscribe(
         (response) => {
           console.log('User registered successfully:', response);
+          this.showSuccessSnackBar('User registered successfully');
           this.loadUsers();
           this.resetForm();
         },
@@ -150,5 +153,11 @@ export class UserManagementComponent implements OnInit {
   resetForm() {
     this.userForm.reset();
     this.searchUserId = undefined;
+  }
+  private showSuccessSnackBar(message: string): void {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000, // Duration in milliseconds
+      panelClass: ['snackbar-success'] // Add custom styles if needed
+    });
   }
 }
