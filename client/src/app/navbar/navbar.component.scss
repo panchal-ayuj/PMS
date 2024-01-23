@@ -1,7 +1,3 @@
-@import "bootstrap/dist/css/bootstrap.min.css";
-@import "bootstrap-icons/font/bootstrap-icons.css";
-
-// Define variables for common colors
 $primary-color: #3498db;
 $navbar-background: #2c3e50;
 $navbar-text-color: #ecf0f1;
@@ -52,11 +48,25 @@ $navbar-text-color: #ecf0f1;
         }
       }
     }
+    // Responsive styles
+    @media (max-width: 768px) {
+      flex-direction: column;
+      position: absolute;
+      top: 65px;
+      left: 0;
+      right: 0;
+      background-color: $navbar-background;
+      text-align: center;
+
+      li {
+        margin: 10px 0;
+      }
+    }
   }
 
   .navbar-actions {
     position: relative;
-    top:4px;
+    top: 10px;
   }
 }
 
@@ -70,6 +80,32 @@ $navbar-text-color: #ecf0f1;
   height: 20px;
   width: 100%; /* Full width on smaller screens */
   max-width: 400px; /* Limited width on larger screens */
+}
+.search-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  .search-icon {
+    position: absolute;
+    left: 10px;
+    color: $navbar-text-color;
+    font-size: 24px; // Adjust the size as needed
+    color: #2c3e50;
+  }
+
+  .search-bar {
+    flex: 1; // Use flex property to fill the remaining space
+    height: 40px; // Adjust height as needed
+    border-radius: 5px;
+    padding: 5px 40px 5px 40px; // Adjust padding to create space for the icon
+    box-sizing: border-box;
+    font-size: 16px;
+
+    @media (max-width: 768px) {
+      margin-top: 10px;
+    }
+  }
 }
 
 .profile-username {
