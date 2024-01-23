@@ -33,7 +33,7 @@ export const navbarData: INavbarData[] = [
         items: [
             {
                 routeLink: '/admin/user',
-                label: 'User Regestration',
+                label: 'User Registration',
             },
             {
                 routeLink: '/admin/goalplan',

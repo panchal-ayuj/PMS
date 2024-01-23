@@ -1,6 +1,27 @@
 <div style="margin-top: 50px; text-align: center">
   <h2 style="font-size: 28px; margin-bottom: 20px">Feedback Page</h2>
 
+  <button
+    mat-button
+    style="
+      position: absolute;
+      top: 95px;
+      right: 95px;
+      background-color: #3498db;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-size: 16px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s ease;
+    "
+    [routerLink]="['/feedback/archive']"
+  >
+    Go to Archive
+  </button>
+
   <div style="display: flex; justify-content: space-around; gap: 20px">
     <!-- Feedback from Manager Section -->
     <div

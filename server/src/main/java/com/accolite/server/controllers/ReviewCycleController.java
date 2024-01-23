@@ -2,6 +2,7 @@ package com.accolite.server.controllers;
 
 import com.accolite.server.models.*;
 import com.accolite.server.readers.ReviewCycleExcelReader;
+import com.accolite.server.repository.GoalPlanRepository;
 import com.accolite.server.repository.KeyResultRepository;
 import com.accolite.server.repository.ReviewCycleRepository;
 import com.accolite.server.repository.UserRepository;
@@ -19,6 +20,7 @@ import org.springframework.http.HttpStatus;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -37,6 +39,9 @@ public class ReviewCycleController {
 
     @Autowired
     private KeyResultRepository keyResultRepository;
+
+    @Autowired
+    private GoalPlanRepository goalPlanRepository;
 
     @PostMapping("")
     public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
@@ -229,11 +234,25 @@ public class ReviewCycleController {
     }
 
     @GetMapping("/list/{userId}")
-    public ResponseEntity<List<ReviewCycle>> getFeedbackAndRatingList(@PathVariable Long userId){
+    public ResponseEntity<List<ReviewCycleDTO>> getFeedbackAndRatingList(@PathVariable Long userId){
         try {
             List<ReviewCycle> reviewCycleList = reviewCycleRepository.findByUserId(userId);
-            if(reviewCycleList != null){
-                return ResponseEntity.ok(reviewCycleList);
+            List<GoalPlan> goalPlanList = goalPlanRepository.findByUserId(userId);
+            GoalPlan goalPlan = goalPlanList.get(goalPlanList.size()-1);
+            List<ReviewCycleDTO> reviewCycleDTOS = new ArrayList<>();
+            for(ReviewCycle reviewCycle: reviewCycleList){
+                ReviewCycleDTO reviewCycleDTO = new ReviewCycleDTO();
+                reviewCycleDTO.setUserId(reviewCycle.getUserId());
+                reviewCycleDTO.setPeriod(reviewCycle.getPeriod());
+                reviewCycleDTO.setOverallRating(reviewCycle.getOverallRating());
+                reviewCycleDTO.setReviewStatus(reviewCycle.getReviewStatus());
+                reviewCycleDTO.setFeedback(reviewCycle.getFeedback());
+                reviewCycleDTO.setUserFeedback(reviewCycle.getUserFeedback());
+                reviewCycleDTO.setFinancialYear(goalPlan.getFinancialYear());
+                reviewCycleDTOS.add(reviewCycleDTO);
+            }
+            if(reviewCycleDTOS != null){
+                return ResponseEntity.ok(reviewCycleDTOS);
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
             }

@@ -106,6 +106,9 @@ export class SidebarComponent implements OnInit{
   }
 
   shrinkItems(item: INavbarData): void {
+    if(item.routeLink === "logout"){
+      this.sharedDataService.changeUserId(null);
+    }
     if (!this.multiple) {
       for(let modelItem of this.navData) {
         if (item !== modelItem && modelItem.expanded) {

@@ -57,6 +57,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { IdCardComponent } from './id-card/id-card.component';
 import { SublevelMenuComponent } from './sidebar/sublevel-menu.component';
+import { FeedbackArchivePageComponent } from './feedback-archive-page/feedback-archive-page.component';
 
 @NgModule({
   declarations: [
@@ -93,6 +94,7 @@ import { SublevelMenuComponent } from './sidebar/sublevel-menu.component';
     ParentViewFeedbackComponent,
     IdCardComponent,
     SublevelMenuComponent,
+    FeedbackArchivePageComponent,
   ],
   imports: [
     BrowserModule,

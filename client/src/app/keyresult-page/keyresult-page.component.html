@@ -119,7 +119,7 @@
 
     <ng-container matColumnDef="rating">
       <mat-header-cell *matHeaderCellDef> Rating </mat-header-cell>
-      <mat-cell *matCellDef="let keyResult"> {{ keyResult.rating }} </mat-cell>
+      <mat-cell *matCellDef="let keyResult"> {{ keyResult.rating | number: '1.2-2' }} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="viewTask">
