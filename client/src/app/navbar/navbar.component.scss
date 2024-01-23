@@ -1,5 +1,5 @@
 $primary-color: #3498db;
-$navbar-background: #2c3e50;
+$navbar-background: #080234;
 $navbar-text-color: #ecf0f1;
 
 // Navbar styles
@@ -24,7 +24,7 @@ $navbar-text-color: #ecf0f1;
       max-width: 120px; // Adjust the max-width of your logo
       height: auto;
       background-color: white;
-      margin-bottom: 20px;
+      margin-top: 5px;
     }
   }
 
@@ -97,7 +97,7 @@ $navbar-text-color: #ecf0f1;
   .search-bar {
     flex: 1; // Use flex property to fill the remaining space
     height: 40px; // Adjust height as needed
-    border-radius: 5px;
+    border-radius: 0.60rem;
     padding: 5px 40px 5px 40px; // Adjust padding to create space for the icon
     box-sizing: border-box;
     font-size: 16px;
@@ -110,8 +110,9 @@ $navbar-text-color: #ecf0f1;
 
 .profile-username {
   position: relative;
-  bottom: 35px;
+  bottom: 30px;
   margin-right: 10px;
+  font-size: 20px;
 }
 
 // Add these styles to your existing SCSS file
