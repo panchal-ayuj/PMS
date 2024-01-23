@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { SharedDataService } from '../shared-data.service';
 import { UserInfoService } from '../user-info.service';
 import { Router } from '@angular/router';
+import { SelfFeedbackDialogComponent } from '../self-feedback-dialog/self-feedback-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-profile-page',
@@ -26,11 +28,13 @@ export class ProfilePageComponent implements OnInit {
   userId: any;
   showButton: boolean = false;
 
-  constructor(private router: Router,private service: AuthService, private http:HttpClient, private sharedDataService: SharedDataService, private userInfoService: UserInfoService) {}
+  constructor(private router: Router,private service: AuthService, private http:HttpClient, private sharedDataService: SharedDataService, private userInfoService: UserInfoService,private dialog: MatDialog) {}
 
   ngOnInit(): void {
+    console.log('ngOnInit called');
 
     this.sharedDataService.currentUserId.subscribe(userId => {
+      console.log('currentUserId subscription:', userId);
       if (userId) {
         this.handleAsyncResponse2()
         .then(() => {
@@ -110,6 +114,58 @@ export class ProfilePageComponent implements OnInit {
     } else {
       console.log("Empty user id");
     }
+  }
+  viewSelfFeedback() {
+
+    const url = `http://localhost:8080/reviewCycle/user-feedback/${this.employee.userId}`;
+
+    this.http.get(url).subscribe(
+      (response: any) => {
+        // Open the dialog with the received feedback
+        const dialogRef = this.dialog.open(SelfFeedbackDialogComponent, {
+          data: { feedback: response.userFeedback, viewMode: true },
+        });
+  
+        dialogRef.afterClosed().subscribe((result) => {
+          // Handle any logic after the dialog is closed
+          console.log('Dialog closed with result:', result);
+        });
+      },
+      (error) => {
+        console.error('Error fetching user feedback:', error);
+      }
+    );
+
+    
+  }
+  giveSelfFeedback() {
+    const url = `http://localhost:8080/reviewCycle/user-feedback/${this.employee.userId}`;
+
+  // Fetch the user details including the userFeedback property
+  this.http.get(url , {responseType:'text'}).subscribe(
+    (response: any) => {
+      const dialogRef = this.dialog.open(SelfFeedbackDialogComponent, {
+        data: { tasks: response || '', viewMode: false, userId: this.employee.userId },
+      });
+
+      dialogRef.afterClosed().subscribe((newFeedback) => {
+        if (newFeedback !== undefined && newFeedback !== null) {
+          // Call API to update user feedback directly using http.put
+          this.http.put(url, { userFeedback: newFeedback }, { responseType: 'text' }).subscribe(
+            () => {
+              console.log('User feedback updated successfully.');
+            },
+            (error) => {
+              console.error('Error updating user feedback:', error);
+            }
+          );
+        }
+      });
+    },
+    (error) => {
+      console.error('Error fetching user details:', error);
+    }
+  );
   }
 
 }

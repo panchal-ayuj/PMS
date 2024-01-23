@@ -118,5 +118,27 @@ public class ReviewCycleController {
         reminderService.sendReminderEmailsForPendingReviews();
         return ResponseEntity.ok("Reminder emails sent successfully.");
     }
+    @GetMapping("/user-feedback/{userId}")
+    public ResponseEntity<String> getUserFeedbackForMostRecentCycle(@PathVariable Long userId) {
+        try {
+            String userFeedback = reviewCycleService.getUserFeedbackForMostRecentCycle(userId);
+            return ResponseEntity.ok(userFeedback);
+        } catch (Exception e) {
+            // Handle errors appropriately
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error retrieving user feedback");
+        }
+    }
+    @PutMapping("/user-feedback/{userId}")
+    public ResponseEntity<String> updateUserFeedbackForMostRecentCycle(
+            @PathVariable Long userId,
+            @RequestBody String userFeedback) {
+        try {
+            reviewCycleService.updateUserFeedbackForMostRecentCycle(userId, userFeedback);
+            return ResponseEntity.ok("User feedback updated successfully");
+        } catch (Exception e) {
+            // Handle errors appropriately
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating user feedback");
+        }
+    }
 }
 

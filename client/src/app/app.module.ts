@@ -49,6 +49,7 @@ import { TeamPageComponent } from './team-page/team-page.component';
 import { EmployeeService } from './employee.service';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatMenuModule } from '@angular/material/menu';
+import { SelfFeedbackDialogComponent } from './self-feedback-dialog/self-feedback-dialog.component';
 
 
 @NgModule({
@@ -80,6 +81,7 @@ import { MatMenuModule } from '@angular/material/menu';
     BodyComponent,
     NavbarComponent,
     TeamPageComponent,
+    SelfFeedbackDialogComponent,
   ],
   imports: [
     BrowserModule,

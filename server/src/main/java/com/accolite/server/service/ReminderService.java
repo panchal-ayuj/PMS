@@ -7,6 +7,7 @@ import com.accolite.server.writers.ReviewCycleWriter;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -34,6 +35,12 @@ public  class ReminderService {
 
     @Autowired
     private JavaMailSender javaMailSender;
+    @Value("${seniorRMreminder.email.body}")
+    private String reminderEmailBody;
+    @Value("${reminder.email.attachment.body}")
+    private String reminderEmailAttachmentBody;
+
+
 
     @Scheduled(cron = "0 0 8 * * ?") //
     public void sendReminderEmailsForPendingReviews() {
@@ -72,10 +79,8 @@ public  class ReminderService {
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
             helper.setTo(recipientEmail);
             helper.setSubject("Reminder: Pending Reviews Report");
-            helper.setText("Dear Reviewer,\n\n"
-                    + "This is a reminder that there are pending reviews for the review cycle.\n"
-                    + "Please find the attached Excel file for details.\n\n"
-                    + "Thank you,\nYour Application");
+            String formattedBody = String.format(reminderEmailAttachmentBody);
+            helper.setText(formattedBody);
 
             // Attach the Excel file
             FileSystemResource file = new FileSystemResource(new File(excelFilePath));
@@ -110,12 +115,11 @@ public  class ReminderService {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(seniorReportingManagerEmail);
         mailMessage.setSubject("Reminder: Teammate's Pending Review");
-        mailMessage.setText("Dear " + userService.getUserFullName(seniorReportingManagerId) + ",\n\n"
-                + "This is a reminder that one of your team members has pending reviews.\n"
-                + "Please ensure timely completion of the reviews.\n\n"
-                + "Reviewer : "+ userService.getUserFullName(reportingManagerId)+"\n"
-                + "Thank you,\nHR Department");
 
+        String seniorManagerName = userService.getUserFullName(seniorReportingManagerId);
+        String reviewerName = userService.getUserFullName(reportingManagerId);
+        String formattedBody = String.format(reminderEmailBody, seniorManagerName, reviewerName);
+        mailMessage.setText(formattedBody);
         javaMailSender.send(mailMessage);
     }
 

@@ -71,12 +71,19 @@ $navbar-text-color: #ecf0f1;
   width: 400px;
 }
 
-.profile-username {
-  position: relative;
-  bottom: 35px;
-  margin-right: 10px;
 
-}
+  .profile-username {
+    display: inline-block;
+    max-width: 200px; /* Set a maximum width to limit horizontal space */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Truncate text with an ellipsis if it overflows */
+    white-space: nowrap; /* Prevent text from wrapping to the next line */
+    margin-left: 5px; /* Adjust the margin as needed */
+    vertical-align: middle; /* Align vertically with the profile icon */
+    line-height: 24px; /* Align vertically with the profile icon */
+  }
+  
+
 
 // Add these styles to your existing SCSS file
 
@@ -103,4 +110,30 @@ $navbar-text-color: #ecf0f1;
   &:hover {
     background-color: #f2f2f2; // Highlight on hover
   }
+}
+.profile-info {
+  text-align: center;
+}
+
+.bold-text {
+  font-weight: bold;
+}
+
+.email-container {
+  max-width: 350px; /* Adjust the max-width as needed */
+  overflow: hidden;
+  text-overflow: ellipsis;
+   /* Truncate text with an ellipsis if it overflows */
+   margin-top: -10px;
+   
+}
+
+.smaller-text {
+  font-size: 0.9em;
+  margin: 10px;
+  margin-top: -5px;
+}
+mat-icon {
+  margin-right: 8px; /* Adjust the spacing between the icon and text */
+  vertical-align: middle; /* Align the icon vertically with the text */
 }

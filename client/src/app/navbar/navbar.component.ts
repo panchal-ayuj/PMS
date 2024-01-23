@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SharedDataService } from '../shared-data.service';
 import { UserInfoService } from '../user-info.service';
 import { AuthService } from '../auth.service';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-navbar',
@@ -11,13 +12,16 @@ import { AuthService } from '../auth.service';
 })
 export class NavbarComponent implements OnInit {
   userName: any = '';
+  userEmail: any = '';
   searchResults: any;
 
   constructor(
     private router: Router,
     private sharedDataService: SharedDataService,
     private userInfoService: UserInfoService,
-    private authService: AuthService
+    private authService: AuthService,
+    public dialog: MatDialog,
+    private _ngZone: NgZone,
   ) {}
 
   search() {
@@ -78,10 +82,41 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     // Subscribe to changes in user information
-    this.userInfoService.currentUserInfo.subscribe((userInfo) => {
-      if (userInfo) {
-        this.userName = `${userInfo.firstName} ${userInfo.lastName}`;
-      }
-    });
+    // this.userInfoService.currentUserInfo.subscribe((userInfo) => {
+    //   if (userInfo) {
+    //     this.userName = `${userInfo.firstName} ${userInfo.lastName}`;
+    //   }
+    // });
+    this.handleAsyncResponse();
   }
+  logout(): void {
+    // Display a confirmation dialog before logging out
+    const confirmLogout = confirm('Are you sure you want to logout?');
+
+  if (confirmLogout) {
+    // Call your logout service or perform logout actions
+    // Example: this.authService.logout();
+    // You may also want to navigate to the login page after logout
+    this.authService.signOutExternal();
+    this._ngZone.run(() => {
+      this.router.navigate(['/']).then(() => window.location.reload());
+    })
+  }
+  }
+
+  async handleAsyncResponse() {
+    try {
+      // Assume this is an asynchronous method that returns a Promise
+      const user = await this.authService
+        .getUser(localStorage.getItem('token'))
+        .toPromise();
+      console.log(user);
+      this.userName = user.firstName + ' ' + user.lastName;
+      this.userEmail = user.email;
+
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+  }
+
 }
