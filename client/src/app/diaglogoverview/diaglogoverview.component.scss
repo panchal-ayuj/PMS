@@ -37,6 +37,7 @@ body {
 
 .actions{
   margin: 1%;
+  text-align: right;
 
   button{
     margin: 1%;
@@ -52,4 +53,21 @@ body {
 .feedback-column {
   width: 700px; /* Set your desired width */
   margin-top: 10px;
+}
+
+mat-header-cell {
+  font-size: 18px;
+}
+
+
+.even-row {
+  background-color: #e8f1cc; /* Set the background color for even rows */
+}
+
+.odd-row {
+  background-color: #ffffff; /* Set the background color for odd rows */
+}
+
+.mat-mdc-cell{
+  border: none;
 }

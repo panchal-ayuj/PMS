@@ -1,9 +1,16 @@
 <div class="key-results-container">
-  <h2 *ngIf="userName !== undefined">{{userName}}'s Key Results</h2>
-  <h2 *ngIf="userName === undefined">My Key Results</h2>
   <!-- <h2>{{startDate}}</h2> -->
   <!-- <h2>{{endDate}}</h2> -->
-
+  <h2
+    *ngIf="userName !== undefined"
+    [ngClass]="{
+      header: userName !== undefined && userName.length >= 7,
+      header2: userName !== undefined && userName.length < 7
+    }"
+  >
+    {{ userName }}'s Key Results
+  </h2>
+  <h2 *ngIf="userName === undefined">My Key Results</h2>
   <div class="filter-section">
     <mat-form-field appearance="fill">
       <mat-label>Period:</mat-label>
@@ -42,7 +49,7 @@
         (ngModelChange)="loadKeyResults()"
       >
         <mat-option value="true">Reviewed</mat-option>
-        <mat-option value="false">Pending</mat-option>
+        <mat-option value="false">Unreviewed</mat-option>
       </mat-select>
     </mat-form-field>
 
@@ -50,15 +57,6 @@
       Apply Filters
     </button> -->
   </div>
-  <button
-    type="button"
-    class="btn btn-primary"
-    id="over-feedback"
-    (click)="openOverallFeedbackModal()"
-    *ngIf="showButton"
-  >
-    Overall Feedback
-  </button>
 
   <!-- <mat-table [dataSource]="keyResults" class="mat-elevation-z8">
     <ng-container matColumnDef="areaName">
@@ -114,12 +112,22 @@
 
     <ng-container matColumnDef="weight">
       <mat-header-cell *matHeaderCellDef> Weight </mat-header-cell>
-      <mat-cell *matCellDef="let keyResult"> {{ calculateNormalizedWeight(keyResult.weight) }} </mat-cell>
+      <mat-cell
+        *matCellDef="let keyResult"
+        style="position: relative; left: 3%"
+      >
+        {{ calculateNormalizedWeight(keyResult.weight) }}
+      </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="rating">
       <mat-header-cell *matHeaderCellDef> Rating </mat-header-cell>
-      <mat-cell *matCellDef="let keyResult"> {{ keyResult.rating | number: '1.2-2' }} </mat-cell>
+      <mat-cell
+        *matCellDef="let keyResult"
+        style="position: relative; left: 2%"
+      >
+        {{ keyResult.rating | number : "1.2-2" }}
+      </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="viewTask">
@@ -131,19 +139,18 @@
           class="btn btn-view-task"
           (click)="openDialog(keyResult.keyResultId)"
           style="
-            background-color: #2196f3;
-            color: #fff;
+            background-color: #f9f2ea;
+            color: #000000;
             border: none;
             text-align: center;
             text-decoration: none;
             display: inline-block;
-            font-size: 16px;
+            font-size: 14px;
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease, color 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
           "
-          onmouseover="this.style.backgroundColor='#1565C0'; this.style.color='#ffffff';"
-          onmouseout="this.style.backgroundColor='#2196F3'; this.style.color='#fff';"
         >
           View Task
         </button>
@@ -156,10 +163,36 @@
     <mat-row
       *matRowDef="
         let row;
-        columns: ['areaName', 'weight', 'rating', 'viewTask']
+        columns: ['areaName', 'weight', 'rating', 'viewTask'];
+        let even = even;
+        let odd = odd
       "
+      [ngClass]="{ 'even-row': even, 'odd-row': odd }"
     ></mat-row>
   </mat-table>
+  <button
+    type="button"
+    id="over-feedback"
+    (click)="openOverallFeedbackModal()"
+    *ngIf="showButton"
+    style="
+      background-color: #efe4d8;
+      color: #000000;
+      border: none;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 20px;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, color 0.3s ease,
+        box-shadow 0.3s ease;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
+    "
+  >
+    Overall Feedback
+  </button>
 </div>
 
 <div
@@ -170,41 +203,118 @@
   aria-labelledby="overallFeedbackModalLabel"
   aria-hidden="true"
 >
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="overallFeedbackModalLabel">
-          Overall Feedback Form
-        </h5>
+  <div
+    class="modal-content"
+    style="
+      width: 100%;
+      max-width: 700px;
+      margin: 7% auto;
+      background-color: #fff;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
+      overflow: hidden;
+    "
+  >
+    <div
+      class="modal-header"
+      style="
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #ffe8d0;
+        border-bottom: 1px solid #dcdcdc;
+      "
+    >
+      <h5
+        class="modal-title"
+        id="overallFeedbackModalLabel"
+        style="
+          color: #4c3822;
+          font-size: 24px;
+          font-weight: bold;
+          margin-bottom: 0;
+        "
+      >
+        Overall Feedback Form
+      </h5>
 
-        <button
-          type="button"
-          class="close"
-          (click)="closeOverallFeedbackModal()"
-          aria-label="Close"
+      <button
+        type="button"
+        class="close"
+        (click)="closeOverallFeedbackModal()"
+        aria-label="Close"
+        style="
+          background-color: transparent;
+          border: none;
+          font-size: 20px;
+          line-height: 1;
+          color: #333;
+          opacity: 0.7;
+          cursor: pointer;
+          transition: opacity 0.3s ease;
+        "
+      >
+        <span aria-hidden="true" style="font-size: 32px">&times;</span>
+      </button>
+    </div>
+
+    <div class="modal-body" style="padding: 20px">
+      <!-- Overall Feedback Form Content -->
+      <form
+        [formGroup]="feedbackForm"
+        style="display: flex; flex-direction: column; align-items: center"
+      >
+        <mat-form-field style="width: 100%; margin-bottom: 15px">
+          <textarea
+            matInput
+            formControlName="feedback"
+            placeholder="Enter your feedback"
+            rows="4"
+          ></textarea>
+        </mat-form-field>
+
+        <div
+          *ngIf="feedbackSubmitted"
+          class="text-success fade-in mt-2"
+          style="color: #28a745; font-size: 16px; text-align: center"
         >
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <!-- Overall Feedback Form Content -->
-        <form [formGroup]="feedbackForm">
-          <label for="feedback">Overall Feedback:</label>
-          <textarea class="form-control" id="feedback" rows="4" formControlName="feedback"></textarea>
-          <div *ngIf="feedbackSubmitted" class="text-success fade-in mt-2">Feedback submitted successfully!</div>
-        </form>
-        
-      </div>
-      <div class="modal-footer">
-        <!-- <button type="button" class="btn btn-secondary" (click)="closeOverallFeedbackModal()">Close</button> -->
-        <button
-          type="button"
-          class="btn btn-primary"
-          (click)="submitOverallFeedback()"
-        >
-          Submit Feedback
-        </button>
-      </div>
+          Feedback submitted successfully!
+        </div>
+      </form>
+    </div>
+
+    <div
+      class="modal-footer"
+      style="
+        margin-top: -20px;
+        padding: 20px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+      "
+    >
+      <button
+        type="button"
+        (click)="submitOverallFeedback()"
+        style="
+          background-color: #efe4d8;
+          color: #000000;
+          border: none;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 20px;
+          padding: 10px;
+          border-radius: 5px;
+          cursor: pointer;
+          transition: background-color 0.3s ease, color 0.3s ease,
+            box-shadow 0.3s ease;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
+        "
+      >
+        Submit Feedback
+      </button>
     </div>
   </div>
 </div>
