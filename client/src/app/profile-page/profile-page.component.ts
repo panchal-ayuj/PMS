@@ -224,6 +224,17 @@ export class ProfilePageComponent implements OnInit {
       return '';
     }
   }
-  
+  formatRoles(roles: string | string[]): string {
+    if (Array.isArray(roles)) {
+      // If it's an array, join the values with '|'
+      return roles.join(' | ');
+    } else if (typeof roles == 'string') {
+      // If it's a string, split it (if it contains commas) and join with '|'
+      return roles.includes(',') ? roles.split(',').join(' | ') : roles;
+    } else {
+      // Handle other cases
+      return '';
+    }
+  }
 
 }

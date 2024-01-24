@@ -31,7 +31,7 @@ $background-color: #f4f7fa; // Light background color
   }
 
   .profile-header {
-    background-color: #f39c12; // Blue color, you can change it to your desired color
+    background-color: #bac783; // Blue color, you can change it to your desired color
     padding: 20px;
     border-radius: 15px 15px 0 0; // Rounded corners at the top
     display: flex;
@@ -63,29 +63,32 @@ $background-color: #f4f7fa; // Light background color
 
   .details {
     padding: 20px;
-
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  
     .detail {
       font-size: 1.2rem;
       margin-bottom: 12px;
-      display: grid;
-      grid-template-columns: repeat(2, 240px);
-      gap: 10px;
-    
       strong {
         margin-right: 5px;
         color: $text-color;
         display: inline-block;
       }
-    
-      .teams {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        grid-column: span 2; // Make the Teams section span two columns
-      }
-        
+    }
+  
+    .teams {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      grid-column: span 3; // Make the Teams section span all three columns
+    }
+  
+    .idCard {
+      align-self: end;
     }
   }
+  
 
   .divider {
     width: 100%;
@@ -126,14 +129,18 @@ $background-color: #f4f7fa; // Light background color
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  width: 50%;
   // transition: background-color 0.3s;
   position: relative;
-  bottom: 120px;
-  left: 840px;
+  // bottom: 120px;
+  // left: 840px;
 
   // &:hover {
   //   background-color: darken($primary-color, 10%);
   // }
+}
+.idCard{
+  align-items: end;
 }
 
 .custom-button {
@@ -142,12 +149,25 @@ $background-color: #f4f7fa; // Light background color
   padding: 12px 24px;
   border: none;
   border-radius: 8px;
+  width: 50%;
   cursor: pointer;
   transition: background-color 0.3s;
+  
 
   &:hover {
     background-color: darken($primary-color, 10%);
   }
   
-  margin-right: 10px;
+  
+}
+.src_logo
+{ 
+  height: 30px;
+  width:30px ;
+  margin-bottom: -7px;
+}
+.role-email
+{ 
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
 }
