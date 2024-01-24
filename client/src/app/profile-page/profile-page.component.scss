@@ -1,7 +1,7 @@
 $primary-color: #f39c12; // Blue color
 $secondary-color: #2ecc71; // Green color
 $text-color: #333; // Dark text color
-$background-color: #ecf0f1; // Light background color
+$background-color: #f4f7fa; // Light background color
 
 .container {
   font-family: "Roboto", sans-serif;
@@ -67,11 +67,23 @@ $background-color: #ecf0f1; // Light background color
     .detail {
       font-size: 1.2rem;
       margin-bottom: 12px;
-
+      display: grid;
+      grid-template-columns: repeat(2, 240px);
+      gap: 10px;
+    
       strong {
         margin-right: 5px;
         color: $text-color;
+        display: inline-block;
       }
+    
+      .teams {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        grid-column: span 2; // Make the Teams section span two columns
+      }
+        
     }
   }
 
