@@ -8,7 +8,9 @@
 
   <ng-container matColumnDef="weight">
     <mat-header-cell *matHeaderCellDef>Weight</mat-header-cell>
-    <mat-cell *matCellDef="let task" style="margin-left: 5%;">{{ getWeight(task.weight) }}</mat-cell>
+    <mat-cell *matCellDef="let task" style="margin-left: 5%">{{
+      getWeight(task.weight)
+    }}</mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="completionStatus">
@@ -36,7 +38,7 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div *ngIf="data.panelClass !== 'true'" style="margin-left: 8%;">
+      <div *ngIf="data.panelClass !== 'true'" style="margin-left: 8%">
         <!-- Display static data here -->
         {{ task.rating }}
       </div>
@@ -57,7 +59,7 @@
           ></textarea>
         </mat-form-field>
       </div>
-      <div *ngIf="data.panelClass !== 'true'" style="margin-left: -5%;">
+      <div *ngIf="data.panelClass !== 'true'" style="margin-left: -5%">
         <!-- Display static data here -->
         {{ task.feedback }}
       </div>
@@ -78,8 +80,14 @@
   ></mat-row>
 </mat-table>
 
-<div class="actions" >
-  <button mat-raised-button color="primary" (click)="saveChanges()" *ngIf="data.panelClass === 'true'">
+<div class="actions">
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="saveChanges()"
+    *ngIf="data.panelClass === 'true'"
+    [disabled]="!isSaveEnabled()"
+  >
     Save Changes
   </button>
   <button mat-raised-button color="warn" (click)="closeDialog()">Close</button>

@@ -68,4 +68,13 @@ export class DiaglogoverviewComponent implements OnInit {
     return Math.round(taskWeight/(this.data.tasks.reduce((sum: any, task: { weight: any; }) => sum + task.weight, 0))*100);
   }
 
+  isSaveEnabled(): boolean {
+    // Check if any value is selected in the rating dropdown
+    // and if there is content in any of the feedback textareas
+    return (
+      this.data.tasks.every((task: { rating: undefined; }) => task.rating !== undefined) &&
+      this.data.tasks.some((task: { feedback: string; }) => task.feedback?.trim() !== '')
+    );
+  }
+
 }
