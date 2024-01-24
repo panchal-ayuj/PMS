@@ -1,4 +1,12 @@
 /* dashboard.component.css */
+
+.dashboard-container {
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
+  overflow: hidden;
+}
+
 .progress-container {
   position: relative;
   display: flex;
@@ -17,49 +25,67 @@
   transform: translate(-50%, -50%);
   font-size: 18px;
   font-weight: bold;
-  color: #333; /* Set text color */
+  color: #112D4E; /* Set text color */
 }
 
 /* Add some styles for the mat-card */
 mat-card {
-  max-width: 400px;
-  margin: 0 auto;
-  margin-top: 50px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  margin: auto;
+  margin-top: -0.5%;
   text-align: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 1%;
+  // width: 30%;
+  position: absolute;
+  right: 1%;
 }
 
 mat-card-title {
-  font-size: 24px;
+  font-size: 18px;
   font-weight: bold;
   margin-bottom: 16px;
+  color: #112D4E; /* Blue color, you can change it to your preference */
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  // text-shadow: 2px 2px 4px rgba(33, 150, 243, 0.3); /* Add a subtle text shadow */
 }
 
 mat-progress-spinner {
-  margin-bottom: 16px;
+  margin-bottom: 12px;
+  stroke: #b4d4ff; /* Set your desired color */
 }
 
 /* Adjust the font color for the progress text */
 /* dashboard.component.css */
 
-
 .feedback-text {
   position: absolute;
-  top: 33%;
+  top: 44%;
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 18px;
   font-weight: bold;
-  color: #333; /* Set text color */
+  color: #112D4E; /* Set text color */
+}
+
+.rating-text {
+  position: absolute;
+  top: 44%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 18px;
+  font-weight: bold;
+  color: #112D4E; /* Set text color */
 }
 
 /* Rest of the styles remain the same */
 
-
 /* Customize mat-progress-spinner appearance */
 .mat-progress-spinner circle {
-  stroke: #1976d2; /* Set your desired color */
+  stroke: #b4d4ff; /* Set your desired color */
 }
 
 /* dashboard.component.scss */
@@ -78,4 +104,21 @@ mat-progress-spinner {
   max-width: 300px; /* Adjust as needed */
   margin: 0 auto;
   word-wrap: break-word;
+}
+
+mat-card-content {
+  width: 350px;
+  // height: 250px;
+}
+
+.even-row {
+  background-color: #3F72AF; /* Change this color to your desired shade of green */
+}
+
+.even-row2 {
+  background-color: #DBE2EF;
+}
+
+mat-header-cell {
+  font-size: 18px;
 }

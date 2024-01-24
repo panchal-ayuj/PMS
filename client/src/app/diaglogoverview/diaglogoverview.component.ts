@@ -73,7 +73,7 @@ export class DiaglogoverviewComponent implements OnInit {
     // and if there is content in any of the feedback textareas
     return (
       this.data.tasks.every((task: { rating: undefined; }) => task.rating !== undefined) &&
-      this.data.tasks.some((task: { feedback: string; }) => task.feedback?.trim() !== '')
+      this.data.tasks.every((task: { feedback: string; }) => task.feedback?.trim() !== '')
     );
   }
 

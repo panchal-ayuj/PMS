@@ -1,39 +1,140 @@
 <!-- dashboard.component.html -->
-<mat-card>
-  <mat-card-title>Team Members Reviewed</mat-card-title>
-  <mat-card-content>
-    <div class="progress-container">
-      <mat-progress-spinner
-        mode="determinate"
-        [value]="calculateProgress()"
-        diameter="100"
-        strokeWidth="10"
-      ></mat-progress-spinner>
-      <div class="progress-text">
-        {{ completedReviewCount }} / {{ totalUserCount }}
-      </div>
-    </div>
-  </mat-card-content>
-</mat-card>
+<div class="dashboard-container">
+  <mat-card>
+    <div style="position: relative; right: 120%">
+      <mat-card *ngIf="topThreeKeyResults && topThreeKeyResults.length > 0">
+        <mat-card-title style="color: #112d4e"
+          >Performing well in</mat-card-title
+        >
+        <mat-card-content>
+          <mat-table class="mat-elevation-z8" [dataSource]="topThreeKeyResults">
+            <ng-container matColumnDef="keyResultName">
+              <mat-header-cell *matHeaderCellDef>Key Result</mat-header-cell>
+              <mat-cell *matCellDef="let keyResult">
+                {{ keyResult.keyResultName }}
+              </mat-cell>
+            </ng-container>
 
-<mat-card>
-  <mat-card-title>Previous Cycle's Performance</mat-card-title>
-  <mat-card-content>
-    <div class="progress-container">
-      <mat-progress-spinner
-        mode="determinate"
-        [value]="calculateSecondLatestProgress()"
-        diameter="100"
-        strokeWidth="10"
-      ></mat-progress-spinner>
-      <div class="feedback-text">
-        {{ secondLatestReviewCycle.overallRating | number:'1.2-2' }} / 5
-      </div>
-      <div class="feedback-container">
-        <div class="feedback-label">Feedback:</div>
-        <div class="feedback-message">{{ truncateFeedback(secondLatestReviewCycle.feedback) }}</div>
-      </div>
-    </div>
-  </mat-card-content>
-</mat-card>
+            <ng-container matColumnDef="rating">
+              <mat-header-cell *matHeaderCellDef>Rating</mat-header-cell>
+              <mat-cell *matCellDef="let keyResult" style="margin-left: 14%;">
+                {{ keyResult.rating | number : "1.2-2" }}
+              </mat-cell>
+            </ng-container>
 
+            <mat-header-row
+              *matHeaderRowDef="['keyResultName', 'rating']"
+            ></mat-header-row>
+            <mat-row
+              *matRowDef="
+                let row;
+                columns: ['keyResultName', 'rating'];
+                let even = even;
+                let odd = odd
+              "
+              [ngClass]="{ 'even-row': even, 'odd-row': odd }"
+            ></mat-row>
+          </mat-table>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div style="position: relative; right: 120%; top: 300px; margin-top: 8%">
+      <mat-card
+        *ngIf="bottomThreeKeyResults && bottomThreeKeyResults.length > 0"
+      >
+        <mat-card-title style="color: #112d4e"
+          >Needs Improvement In</mat-card-title
+        >
+        <mat-card-content>
+          <mat-table
+            class="mat-elevation-z8"
+            [dataSource]="bottomThreeKeyResults"
+          >
+            <ng-container matColumnDef="keyResultName">
+              <mat-header-cell *matHeaderCellDef>Key Result</mat-header-cell>
+              <mat-cell *matCellDef="let keyResult">
+                {{ keyResult.keyResultName }}
+              </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="rating">
+              <mat-header-cell *matHeaderCellDef>Rating</mat-header-cell>
+              <mat-cell *matCellDef="let keyResult" style="margin-left: 14%;">
+                {{ keyResult.rating | number : "1.2-2" }}
+              </mat-cell>
+            </ng-container>
+
+            <mat-header-row
+              *matHeaderRowDef="['keyResultName', 'rating']"
+            ></mat-header-row>
+            <mat-row
+              *matRowDef="
+                let row;
+                columns: ['keyResultName', 'rating'];
+                let even = even;
+                let odd = odd
+              "
+              [ngClass]="{ 'even-row2': even, 'odd-row2': odd }"
+            ></mat-row>
+          </mat-table>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div style="margin-top: -8%">
+      <mat-card-title>Team Members Reviewed</mat-card-title>
+      <mat-card-content>
+        <div class="progress-container">
+          <mat-progress-spinner
+            mode="determinate"
+            [value]="calculateProgress()"
+            diameter="100"
+            strokeWidth="10"
+          ></mat-progress-spinner>
+          <div class="progress-text">
+            {{ completedReviewCount }} / {{ totalUserCount }}
+          </div>
+        </div>
+      </mat-card-content>
+    </div>
+    <div>
+      <mat-card-title>Previous Cycle's Performance</mat-card-title>
+      <mat-card-content>
+        <div class="progress-container">
+          <mat-progress-spinner
+            mode="determinate"
+            [value]="calculateSecondLatestProgress()"
+            diameter="100"
+            strokeWidth="10"
+          ></mat-progress-spinner>
+          <div class="feedback-text">
+            {{ secondLatestReviewCycle.overallRating | number : "1.2-2" }} / 5
+          </div>
+        </div>
+      </mat-card-content>
+      <!-- <div class="feedback-container">
+    <div class="feedback-label">Feedback:</div>
+    <div class="feedback-message">
+      {{ secondLatestReviewCycle.feedback }}
+    </div>
+  </div> -->
+    </div>
+    <div>
+      <mat-card-title>Average Rating</mat-card-title>
+      <mat-card-content>
+        <div class="progress-container">
+          <mat-progress-spinner
+            mode="determinate"
+            [value]="calculateOverallProgress()"
+            diameter="100"
+            strokeWidth="10"
+          ></mat-progress-spinner>
+          <div class="rating-text">
+            {{ averageRating | number : "1.2-2" }} / 5
+          </div>
+        </div>
+      </mat-card-content>
+    </div>
+  </mat-card>
+</div>

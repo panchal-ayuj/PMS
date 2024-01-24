@@ -35,7 +35,7 @@ import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-logout',
   templateUrl: './logout.component.html',
-  styleUrls: ['./logout.component.scss']
+  styleUrls: ['./logout.component.scss'],
 })
 export class LogoutComponent implements OnInit {
   admin: boolean = false;
@@ -43,6 +43,10 @@ export class LogoutComponent implements OnInit {
   totalUserCount!: number;
   userId!: number;
   secondLatestReviewCycle: any = {}; // Modify based on your ReviewCycleDTO structure
+  averageRating: number = 0;
+  topThreeKeyResults!: any[];
+  bottomThreeKeyResults!: any[];
+
 
 
   constructor(private http: HttpClient,private cookieService: CookieService, private router: Router, private service: AuthService, private _ngZone: NgZone, private userInfoService: UserInfoService, private sharedDataService : SharedDataService) {}
@@ -54,6 +58,15 @@ export class LogoutComponent implements OnInit {
     })
     .then(() => {
       this.fetchRating();
+    })
+    .then(() => {
+      this.fetchOverallRating();
+    })
+    .then(() => {
+      this.fetchTopThreeKRA();
+    })
+    .then(() => {
+      this.fetchBottomThreeKRA();
     })
     .catch((error) => {
       console.error('Error handling async response:', error);
@@ -128,6 +141,39 @@ export class LogoutComponent implements OnInit {
     );
   }
 
+  fetchOverallRating(){
+    this.http.get<any>(`http://localhost:8080/reviewCycle/averageRating/${this.userId}`).subscribe(
+      (data) => {
+        this.averageRating = data;
+      },
+      (error) => {
+        console.error('Error fetching overall rating:', error);
+      }
+    );
+  }
+
+  fetchTopThreeKRA(){
+    this.http.get<any>(`http://localhost:8080/keyResult/topThreeKeyResults/${this.userId}`).subscribe(
+      (data) => {
+        this.topThreeKeyResults = data;
+      },
+      (error) => {
+        console.error('Error fetching overall rating:', error);
+      }
+    );
+  }
+
+  fetchBottomThreeKRA(){
+    this.http.get<any>(`http://localhost:8080/keyResult/bottomThreeKeyResults/${this.userId}`).subscribe(
+      (data) => {
+        this.bottomThreeKeyResults = data;
+      },
+      (error) => {
+        console.error('Error fetching overall rating:', error);
+      }
+    );
+  }
+
   calculateProgress(): number {
     return (this.completedReviewCount / this.totalUserCount) * 100;
   }
@@ -137,9 +183,9 @@ export class LogoutComponent implements OnInit {
     return this.secondLatestReviewCycle.overallRating * 20;
   }
 
-  truncateFeedback(feedback: string): string {
-    const maxLength = 100; // Adjust as needed
-    return feedback.length > maxLength ? feedback.substring(0, maxLength) + '...' : feedback;
+  calculateOverallProgress(): number {
+    // Customize as needed based on your rating scale
+    return this.averageRating * 20;
   }
 }
 
