@@ -1,60 +1,124 @@
-.center-container {
+/* dashboard.component.css */
+
+.dashboard-container {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column; /* Align items in a column */
-  height: 100vh;
+  flex-direction: row;
+  margin-top: 20px;
+  overflow: hidden;
 }
 
-.options-row {
-  display: flex;
-  margin-bottom: 20px;
-}
-
-.options-container {
-  margin: 10px;
-  text-align: center;
-
-  mat-card {
-    width: 270px; /* Adjust the width of the card as needed */
-    height: 160px; /* Adjust the height of the card as needed */
-    display: flex;
-    flex-direction: column;
-  }
-}
-
-mat-card {
+.progress-container {
+  position: relative;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  padding: 16px;
+  background-color: #ffffff; /* Add a background color */
+  border-radius: 8px; /* Add rounded corners */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
 }
 
-mat-card-header {
+.progress-text {
+  position: absolute;
+  top: 44%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 18px;
+  font-weight: bold;
+  color: #112D4E; /* Set text color */
+}
+
+/* Add some styles for the mat-card */
+mat-card {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 20px;
+  justify-content: space-between;
+  flex-direction: column;
+  margin: auto;
+  margin-top: -0.5%;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 1%;
+  // width: 30%;
+  position: absolute;
+  right: 1%;
 }
 
 mat-card-title {
-  font-size: 1.5rem; /* Adjust the font size of the title as needed */
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 16px;
+  color: #112D4E; /* Blue color, you can change it to your preference */
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  // text-shadow: 2px 2px 4px rgba(33, 150, 243, 0.3); /* Add a subtle text shadow */
+}
+
+mat-progress-spinner {
+  margin-bottom: 12px;
+  stroke: #b4d4ff; /* Set your desired color */
+}
+
+/* Adjust the font color for the progress text */
+/* dashboard.component.css */
+
+.feedback-text {
+  position: absolute;
+  top: 44%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 18px;
+  font-weight: bold;
+  color: #112D4E; /* Set text color */
+}
+
+.rating-text {
+  position: absolute;
+  top: 44%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 18px;
+  font-weight: bold;
+  color: #112D4E; /* Set text color */
+}
+
+/* Rest of the styles remain the same */
+
+/* Customize mat-progress-spinner appearance */
+.mat-progress-spinner circle {
+  stroke: #b4d4ff; /* Set your desired color */
+}
+
+/* dashboard.component.scss */
+
+.feedback-container {
+  margin-top: 10px;
   text-align: center;
 }
 
+.feedback-label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.feedback-message {
+  max-width: 300px; /* Adjust as needed */
+  margin: 0 auto;
+  word-wrap: break-word;
+}
+
 mat-card-content {
-  flex-grow: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 350px;
+  // height: 250px;
 }
 
-.profile-icon-container {
-  position: absolute;
-  top: 20px;
-  right: 20px;
+.even-row {
+  background-color: #3F72AF; /* Change this color to your desired shade of green */
 }
 
-.profile-icon {
-  cursor: pointer;
-  font-size: 28px;
-  color: #333;
+.even-row2 {
+  background-color: #DBE2EF;
+}
+
+mat-header-cell {
+  font-size: 18px;
 }

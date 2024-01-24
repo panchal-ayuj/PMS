@@ -22,9 +22,9 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class KeyresultPageComponent implements OnInit {
   userId!: number; // ReplAace with the actual user ID
-  period: string = ''; // Replace with the desired period (e.g., 'Q1', 'Q2', etc.)
-  year: number = 2023; // Replace with the desired year
-  status: boolean = false;
+  period: string = 'q1'; // Replace with the desired period (e.g., 'Q1', 'Q2', etc.)
+  year: string = '2024'; // Replace with the desired year
+  status: string = 'false';
   showButton: boolean = false;
   useApi!: number;
   managerId: any;

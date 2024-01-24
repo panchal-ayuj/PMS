@@ -150,7 +150,7 @@ public class ReviewCycleController {
         reminderService.sendReminderEmailsForPendingReviews();
         return ResponseEntity.ok("Reminder emails sent successfully.");
     }
-  
+
     @GetMapping("/user-feedback/{userId}")
     public ResponseEntity<String> getUserFeedbackForMostRecentCycle(@PathVariable Long userId) {
         try {
@@ -193,7 +193,8 @@ public class ReviewCycleController {
                         totalWeight += keyResult.getWeight();
                     }
                     rating = rating/totalWeight;
-                    reviewCycle.setOverallRating(rating.toString());
+                    reviewCycle.setOverallRating(String.format("%.3f", rating));
+                    reviewCycle.setReviewStatus("Reviewed");
                 } else if(useApi == 1){
                     reviewCycle.setSeniorRMfeedback(feedback);
                     reviewCycle.setSeniorRMId(managerId);
@@ -241,6 +242,8 @@ public class ReviewCycleController {
             GoalPlan goalPlan = goalPlanList.get(goalPlanList.size()-1);
             List<ReviewCycleDTO> reviewCycleDTOS = new ArrayList<>();
             for(ReviewCycle reviewCycle: reviewCycleList){
+                List<KeyResult> keyResultList = keyResultRepository.findByWindowId(reviewCycle.getWindowId());
+                GoalPlan goalPlan1 = goalPlanRepository.findByGoalPlanId(keyResultList.get(0).getGoalPlanId());
                 ReviewCycleDTO reviewCycleDTO = new ReviewCycleDTO();
                 reviewCycleDTO.setUserId(reviewCycle.getUserId());
                 reviewCycleDTO.setPeriod(reviewCycle.getPeriod());
@@ -248,7 +251,7 @@ public class ReviewCycleController {
                 reviewCycleDTO.setReviewStatus(reviewCycle.getReviewStatus());
                 reviewCycleDTO.setFeedback(reviewCycle.getFeedback());
                 reviewCycleDTO.setUserFeedback(reviewCycle.getUserFeedback());
-                reviewCycleDTO.setFinancialYear(goalPlan.getFinancialYear());
+                reviewCycleDTO.setFinancialYear(goalPlan1.getFinancialYear());
                 reviewCycleDTOS.add(reviewCycleDTO);
             }
             if(reviewCycleDTOS != null){
@@ -260,5 +263,95 @@ public class ReviewCycleController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
+
+    @GetMapping("/userCounts/{managerId}")
+    public ResponseEntity<UserCountsDTO> getUserCountsByManagerId(@PathVariable Long managerId) {
+        try {
+            // Get userIds based on the managerId
+            List<User> users = userRepository.findByReportingManagerId(managerId);
+
+            List<Long> userIds = new ArrayList<>();
+            for(User user: users){
+                userIds.add(user.getUserId());
+            }
+            // Get the count of users whose latest review cycle's review_status is completed
+            int completedReviewCount = reviewCycleRepository.countUsersWithLatestReviewStatus(userIds, "Reviewed");
+
+            // Get the count of total users under the reporting manager
+            int totalUserCount = userIds.size();
+
+            // Create a DTO (Data Transfer Object) to hold the counts
+            UserCountsDTO userCountsDTO = new UserCountsDTO();
+            userCountsDTO.setCompletedReviewCount(completedReviewCount);
+            userCountsDTO.setTotalUserCount(totalUserCount);
+
+            return ResponseEntity.ok(userCountsDTO);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+    @GetMapping("/secondLatestFeedbackAndRating/{userId}")
+    public ResponseEntity<ReviewCycleDTO> getSecondLatestFeedbackAndRating(@PathVariable Long userId) {
+        try {
+            ReviewCycle secondLatestReviewCycle = reviewCycleService.getSecondLatestReviewCycleByUserId(userId);
+
+            if (secondLatestReviewCycle != null) {
+                ReviewCycleDTO reviewCycleDTO = new ReviewCycleDTO();
+                reviewCycleDTO.setUserId(secondLatestReviewCycle.getUserId());
+                reviewCycleDTO.setPeriod(secondLatestReviewCycle.getPeriod());
+                reviewCycleDTO.setOverallRating(secondLatestReviewCycle.getOverallRating());
+                reviewCycleDTO.setReviewStatus(secondLatestReviewCycle.getReviewStatus());
+                reviewCycleDTO.setFeedback(secondLatestReviewCycle.getFeedback());
+                reviewCycleDTO.setUserFeedback(secondLatestReviewCycle.getUserFeedback());
+
+                return ResponseEntity.ok(reviewCycleDTO);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+    @GetMapping("/averageRating/{userId}")
+    public ResponseEntity<Double> getAverageRatingByUserId(@PathVariable Long userId) {
+        try {
+            // Retrieve all review cycles for the given user
+            List<ReviewCycle> reviewCycles = reviewCycleRepository.findByUserId(userId);
+
+            if (!reviewCycles.isEmpty()) {
+                // Calculate the average rating
+                double totalRating = 0.0;
+                int validRatingsCount = 0;
+
+                for (ReviewCycle reviewCycle : reviewCycles) {
+                    String overallRatingStr = reviewCycle.getOverallRating();
+
+                    // Check if overallRating is not null and is a valid double
+                    if (overallRatingStr != null && overallRatingStr.matches("-?\\d+(\\.\\d+)?")) {
+                        totalRating += Double.parseDouble(overallRatingStr);
+                        validRatingsCount++;
+                    }
+                }
+
+                if (validRatingsCount > 0) {
+                    double averageRating = totalRating / validRatingsCount;
+
+                    // Return the average rating
+                    return ResponseEntity.ok(averageRating);
+                } else {
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+                }
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+
+
 }
 
