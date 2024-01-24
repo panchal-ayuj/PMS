@@ -15,3 +15,25 @@
     </div>
   </mat-card-content>
 </mat-card>
+
+<mat-card>
+  <mat-card-title>Previous Cycle's Performance</mat-card-title>
+  <mat-card-content>
+    <div class="progress-container">
+      <mat-progress-spinner
+        mode="determinate"
+        [value]="calculateSecondLatestProgress()"
+        diameter="100"
+        strokeWidth="10"
+      ></mat-progress-spinner>
+      <div class="feedback-text">
+        {{ secondLatestReviewCycle.overallRating | number:'1.2-2' }} / 5
+      </div>
+      <div class="feedback-container">
+        <div class="feedback-label">Feedback:</div>
+        <div class="feedback-message">{{ truncateFeedback(secondLatestReviewCycle.feedback) }}</div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+

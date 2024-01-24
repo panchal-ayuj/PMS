@@ -12,7 +12,7 @@
 
 .progress-text {
   position: absolute;
-  top: 50%;
+  top: 44%;
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 18px;
@@ -27,6 +27,7 @@ mat-card {
   margin-top: 50px;
   text-align: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 1%;
 }
 
 mat-card-title {
@@ -40,6 +41,41 @@ mat-progress-spinner {
 }
 
 /* Adjust the font color for the progress text */
-.progress-text {
-  color: #4caf50; /* Green color */
+/* dashboard.component.css */
+
+
+.feedback-text {
+  position: absolute;
+  top: 33%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 18px;
+  font-weight: bold;
+  color: #333; /* Set text color */
+}
+
+/* Rest of the styles remain the same */
+
+
+/* Customize mat-progress-spinner appearance */
+.mat-progress-spinner circle {
+  stroke: #1976d2; /* Set your desired color */
+}
+
+/* dashboard.component.scss */
+
+.feedback-container {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.feedback-label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.feedback-message {
+  max-width: 300px; /* Adjust as needed */
+  margin: 0 auto;
+  word-wrap: break-word;
 }

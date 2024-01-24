@@ -24,4 +24,6 @@ public interface ReviewCycleRepository extends JpaRepository<ReviewCycle, Long> 
 
     @Query("SELECT COUNT(rc) FROM ReviewCycle rc WHERE rc.userId IN :userIds AND rc.startDate = (SELECT MAX(subRc.startDate) FROM ReviewCycle subRc WHERE subRc.userId = rc.userId AND subRc.reviewStatus = :reviewStatus)")
     int countUsersWithLatestReviewStatus(@Param("userIds") List<Long> userIds, @Param("reviewStatus") String reviewStatus);
+
+    List<ReviewCycle> findByUserIdOrderByStartDateDesc(Long userId);
 }

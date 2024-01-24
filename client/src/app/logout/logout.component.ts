@@ -42,6 +42,8 @@ export class LogoutComponent implements OnInit {
   completedReviewCount!: number;
   totalUserCount!: number;
   userId!: number;
+  secondLatestReviewCycle: any = {}; // Modify based on your ReviewCycleDTO structure
+
 
   constructor(private http: HttpClient,private cookieService: CookieService, private router: Router, private service: AuthService, private _ngZone: NgZone, private userInfoService: UserInfoService, private sharedDataService : SharedDataService) {}
 
@@ -49,6 +51,9 @@ export class LogoutComponent implements OnInit {
     this.handleResponseAsync()
     .then(() => {
       this.fetchUserCounts();
+    })
+    .then(() => {
+      this.fetchRating();
     })
     .catch((error) => {
       console.error('Error handling async response:', error);
@@ -112,8 +117,29 @@ export class LogoutComponent implements OnInit {
     );
   }
 
+  fetchRating(){
+    this.http.get<any>(`http://localhost:8080/reviewCycle/secondLatestFeedbackAndRating/${this.userId}`).subscribe(
+      (data) => {
+        this.secondLatestReviewCycle = data;
+      },
+      (error) => {
+        console.error('Error fetching second latest feedback and rating:', error);
+      }
+    );
+  }
+
   calculateProgress(): number {
     return (this.completedReviewCount / this.totalUserCount) * 100;
+  }
+
+  calculateSecondLatestProgress(): number {
+    // Customize as needed based on your rating scale
+    return this.secondLatestReviewCycle.overallRating * 20;
+  }
+
+  truncateFeedback(feedback: string): string {
+    const maxLength = 100; // Adjust as needed
+    return feedback.length > maxLength ? feedback.substring(0, maxLength) + '...' : feedback;
   }
 }
 

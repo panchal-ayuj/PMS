@@ -289,5 +289,28 @@ public class ReviewCycleController {
         }
     }
 
+    @GetMapping("/secondLatestFeedbackAndRating/{userId}")
+    public ResponseEntity<ReviewCycleDTO> getSecondLatestFeedbackAndRating(@PathVariable Long userId) {
+        try {
+            ReviewCycle secondLatestReviewCycle = reviewCycleService.getSecondLatestReviewCycleByUserId(userId);
+
+            if (secondLatestReviewCycle != null) {
+                ReviewCycleDTO reviewCycleDTO = new ReviewCycleDTO();
+                reviewCycleDTO.setUserId(secondLatestReviewCycle.getUserId());
+                reviewCycleDTO.setPeriod(secondLatestReviewCycle.getPeriod());
+                reviewCycleDTO.setOverallRating(secondLatestReviewCycle.getOverallRating());
+                reviewCycleDTO.setReviewStatus(secondLatestReviewCycle.getReviewStatus());
+                reviewCycleDTO.setFeedback(secondLatestReviewCycle.getFeedback());
+                reviewCycleDTO.setUserFeedback(secondLatestReviewCycle.getUserFeedback());
+
+                return ResponseEntity.ok(reviewCycleDTO);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
 }
 
