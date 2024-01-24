@@ -10,19 +10,41 @@ interface SideNavToggle {
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
+  shouldDisplayBars: boolean = true; // Default to true for non-login pages
+
   ngOnInit(): void {
-    this.hideBar();
-    
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.shouldDisplayBars =
+          event.url.includes('/logout') ||
+          event.url.includes('/hierarchy') ||
+          event.url.includes('/navbar') ||
+          event.url.includes('/keyresult') ||
+          event.url.includes('/profile') ||
+          event.url.includes('/admin') ||
+          event.url.includes('/admin/user') ||
+          event.url.includes('/admin/goalplan') ||
+          event.url.includes('/admin/keyresult') ||
+          event.url.includes('/admin/reviewcycle') ||
+          event.url.includes('/admin/feedback') ||
+          event.url.includes('/admin/task') ||
+          event.url.includes('/team') ||
+          event.url.includes('/feedback');
+      }
+    });
+    // this.hideBar();
   }
   // displaySidebar = false;
 
-  hideBar(): boolean {
-    // console.log(localStorage.getItem("token"))
-    return localStorage.getItem("token") !== null;
-  }
+  constructor(private router: Router) {}
+
+  // hideBar(): boolean {
+  //   // console.log(localStorage.getItem("token"))
+  //   return localStorage.getItem('token') !== null;
+  // }
   // constructor(private router: Router) {
   //   this.router.events.subscribe(event => {
   //     if (event instanceof NavigationEnd) {

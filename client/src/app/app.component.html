@@ -1,8 +1,7 @@
-<!-- <app-login></app-login> -->
-<div *ngIf="hideBar()">
-  <app-sidebar  (onToggleSideNav)="onToggleSideNav($event)"></app-sidebar>
+<div *ngIf="shouldDisplayBars">
+  <app-sidebar (onToggleSideNav)="onToggleSideNav($event)"></app-sidebar>
   <app-navbar></app-navbar>
-  </div>
+</div>
 <app-body
     [collapsed]="isSideNavCollapsed"
     [screenWidth]="screenWidth"
