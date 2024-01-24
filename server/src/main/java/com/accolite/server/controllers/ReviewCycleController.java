@@ -194,6 +194,7 @@ public class ReviewCycleController {
                     }
                     rating = rating/totalWeight;
                     reviewCycle.setOverallRating(rating.toString());
+                    reviewCycle.setReviewStatus("Reviewed");
                 } else if(useApi == 1){
                     reviewCycle.setSeniorRMfeedback(feedback);
                     reviewCycle.setSeniorRMId(managerId);
@@ -260,5 +261,33 @@ public class ReviewCycleController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
+
+    @GetMapping("/userCounts/{managerId}")
+    public ResponseEntity<UserCountsDTO> getUserCountsByManagerId(@PathVariable Long managerId) {
+        try {
+            // Get userIds based on the managerId
+            List<User> users = userRepository.findByReportingManagerId(managerId);
+
+            List<Long> userIds = new ArrayList<>();
+            for(User user: users){
+                userIds.add(user.getUserId());
+            }
+            // Get the count of users whose latest review cycle's review_status is completed
+            int completedReviewCount = reviewCycleRepository.countUsersWithLatestReviewStatus(userIds, "Reviewed");
+
+            // Get the count of total users under the reporting manager
+            int totalUserCount = userIds.size();
+
+            // Create a DTO (Data Transfer Object) to hold the counts
+            UserCountsDTO userCountsDTO = new UserCountsDTO();
+            userCountsDTO.setCompletedReviewCount(completedReviewCount);
+            userCountsDTO.setTotalUserCount(totalUserCount);
+
+            return ResponseEntity.ok(userCountsDTO);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
 }
 

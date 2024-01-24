@@ -30,6 +30,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { AuthService } from '../auth.service';
 import { UserInfoService } from '../user-info.service';
 import { SharedDataService } from '../shared-data.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-logout',
@@ -38,11 +39,20 @@ import { SharedDataService } from '../shared-data.service';
 })
 export class LogoutComponent implements OnInit {
   admin: boolean = false;
+  completedReviewCount!: number;
+  totalUserCount!: number;
+  userId!: number;
 
-  constructor(private cookieService: CookieService, private router: Router, private service: AuthService, private _ngZone: NgZone, private userInfoService: UserInfoService, private sharedDataService : SharedDataService) {}
+  constructor(private http: HttpClient,private cookieService: CookieService, private router: Router, private service: AuthService, private _ngZone: NgZone, private userInfoService: UserInfoService, private sharedDataService : SharedDataService) {}
 
   ngOnInit(): void {
-    this.handleResponseAsync();
+    this.handleResponseAsync()
+    .then(() => {
+      this.fetchUserCounts();
+    })
+    .catch((error) => {
+      console.error('Error handling async response:', error);
+    });
   }
 
   // onSignOut() {
@@ -64,6 +74,7 @@ export class LogoutComponent implements OnInit {
       // Assume this is an asynchronous method that returns a Promise
       const user = await this.service.getUser(localStorage.getItem('token')).toPromise();
       console.log(user);
+      this.userId = user.userId;
       this.userInfoService.changeUserInfo({
         firstName: user.firstName,
         lastName: user.lastName,
@@ -87,5 +98,26 @@ export class LogoutComponent implements OnInit {
       this.router.navigate(['/keyresult']);
     // } 
   }
+  fetchUserCounts() {
+    // Replace with your API endpoint
+    const managerId = this.userId; // Replace with the actual managerId
+    this.http.get<UserCountsDTO>(`http://localhost:8080/reviewCycle/userCounts/${managerId}`).subscribe(
+      (data) => {
+        this.completedReviewCount = data.completedReviewCount;
+        this.totalUserCount = data.totalUserCount;
+      },
+      (error) => {
+        console.error('Error fetching user counts', error);
+      }
+    );
+  }
 
+  calculateProgress(): number {
+    return (this.completedReviewCount / this.totalUserCount) * 100;
+  }
+}
+
+interface UserCountsDTO {
+  completedReviewCount: number;
+  totalUserCount: number;
 }

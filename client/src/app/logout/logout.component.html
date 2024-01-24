@@ -1,0 +1,17 @@
+<!-- dashboard.component.html -->
+<mat-card>
+  <mat-card-title>Team Members Reviewed</mat-card-title>
+  <mat-card-content>
+    <div class="progress-container">
+      <mat-progress-spinner
+        mode="determinate"
+        [value]="calculateProgress()"
+        diameter="100"
+        strokeWidth="10"
+      ></mat-progress-spinner>
+      <div class="progress-text">
+        {{ completedReviewCount }} / {{ totalUserCount }}
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
