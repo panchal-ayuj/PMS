@@ -167,7 +167,7 @@ export class HierarchyComponent {
             expanded: true,
             type: 'person',
             data: {
-              name: data.firstName,
+              name: data.firstName + ' ' + data.lastName,
               band: data.band,
               userId: data.userId, // You can modify this based on your requirements
             },
@@ -202,7 +202,7 @@ export class HierarchyComponent {
             expanded: true,
             type: 'person',
             data: {
-              name: data.firstName,
+              name: data.firstName + ' ' + data.lastName,
               band: data.band,
               userId: data.userId, // You can modify this based on your requirements
             },
@@ -236,7 +236,7 @@ mapToTreeNodes(userReportingChainMap: { [key: string]: string[] }): TreeNode[] {
             expanded: true,
             type: 'person',
             data: {
-              name: data.firstName,
+              name: data.firstName + ' ' + data.lastName,
               band: data.band,
               userId: data.userId, // You can modify this based on your requirements
             },
@@ -267,7 +267,7 @@ mapToTreeNodes(userReportingChainMap: { [key: string]: string[] }): TreeNode[] {
             expanded: true,
             type: 'person',
             data: {
-              name: data.firstName,
+              name: data.firstName + ' ' + data.lastName,
               band: data.band,
               userId: data.userId, // You can modify this based on your requirements
             },
