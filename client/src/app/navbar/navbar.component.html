@@ -10,7 +10,7 @@
           <input
             class="form-control me-2 search-bar"
             type="text"
-            placeholder="Search by UserID or Name"
+            placeholder="Search by User ID or First Name"
             aria-label="Search"
             id="searchInput"
             #searchInput
@@ -29,9 +29,8 @@
 
   <div class="navbar-actions">
     <div class="dropdown">
-      <span class="profile-username">{{ userName }}</span>
       <mat-icon class="mat-icon-size" mat-menu-trigger [matMenuTriggerFor]="profileMenu">account_circle</mat-icon>
-
+      <span class="profile-username">{{ userName }}</span>
       <mat-menu #profileMenu="matMenu">
         <div class="profile-info">
           <p class="bold-text">{{ userName }}</p>
@@ -43,6 +42,5 @@
         <button mat-menu-item (click)="logout()"> <mat-icon>exit_to_app</mat-icon> Logout</button>
       </mat-menu>
     </div>
-    <!-- Add login/logout buttons or user-related actions here -->
   </div>
 </nav>
