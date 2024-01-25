@@ -59,6 +59,8 @@ import { IdCardComponent } from './id-card/id-card.component';
 import { SublevelMenuComponent } from './sidebar/sublevel-menu.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { FeedbackArchivePageComponent } from './feedback-archive-page/feedback-archive-page.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -95,7 +97,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     ParentViewFeedbackComponent,
     IdCardComponent,
     SublevelMenuComponent,
-    
+    FeedbackArchivePageComponent,
   ],
   imports: [
     BrowserModule,
@@ -125,8 +127,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatGridListModule,
     MatDatepickerModule,
     MatNativeDateModule,
-   
-    
+    MatProgressSpinnerModule,
   ],
   providers: [ExportService, EmployeeService],
   bootstrap: [AppComponent],

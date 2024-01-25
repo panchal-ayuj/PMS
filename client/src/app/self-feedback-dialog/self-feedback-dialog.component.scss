@@ -1,0 +1,66 @@
+.dialog-content {
+  font-family: "Your-Modern-Font", sans-serif;
+  color: #112D4E; /* Your text color */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+  padding: 20px;
+
+  h2 {
+    color: #112D4E; /* Your header color */
+    margin-bottom: 16px;
+  }
+
+  .feedback-view {
+    background-color: #F9F7F7; /* Background color for existing feedback */
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+
+    p {
+      margin: 0;
+    }
+  }
+
+  .no-feedback-message {
+    color: #3F72AF; /* Your message color */
+  }
+
+  .feedback-form {
+    margin-top: 16px;
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    textarea {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #F9F7F7;
+      border-radius: 4px;
+      margin-bottom: 16px;
+      box-sizing: border-box;
+      transition: border-color 0.3s ease;
+
+      &:focus {
+        border-color: #3F72AF;
+      }
+    }
+
+    .submit-button {
+      background-color: #112D4E; /* Your button color */
+      color: #F9F7F7; /* Your button text color */
+      padding: 10px 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: #3F72AF; /* Your button hover color */
+      }
+    }
+  }
+
+  // Add more styles as needed
+}

@@ -24,6 +24,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { TeamPageComponent } from './team-page/team-page.component';
 import { FeedbackComponent } from './feedback/feedback.component';
 import { ParentViewFeedbackComponent } from './parent-view-feedback/parent-view-feedback.component';
+import { FeedbackArchivePageComponent } from './feedback-archive-page/feedback-archive-page.component';
 
 const routes: Routes = [
   { path: 'hierarchy', component: HierarchyComponent},
@@ -42,6 +43,7 @@ const routes: Routes = [
   { path: 'team', component: TeamPageComponent },
   { path: 'profile',component:ProfilePageComponent },
   { path: 'feedback',component:FeedbackComponent},
+  { path: 'feedback/archive', component:FeedbackArchivePageComponent},
 ];
 
 @NgModule({

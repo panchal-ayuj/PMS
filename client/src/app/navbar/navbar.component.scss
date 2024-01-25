@@ -1,6 +1,6 @@
-$primary-color: #3498db;
-$navbar-background: #080234;
-$navbar-text-color: #ecf0f1;
+$primary-color: #112D4E;
+$navbar-background: #F9F7F7;
+$navbar-text-color: #112D4E;
 
 // Navbar styles
 .navbar {
@@ -24,8 +24,9 @@ $navbar-text-color: #ecf0f1;
     img {
       max-width: 120px; // Adjust the max-width of your logo
       height: auto;
-     // background-color: white;
+      background-color: #F9F7F7;
       margin-top: 5px;
+      border-radius: 1.00rem;
     }
   }
 
@@ -80,33 +81,35 @@ $navbar-text-color: #ecf0f1;
 .input {
   height: 20px;
   width: 100%; /* Full width on smaller screens */
-  max-width: 400px; /* Limited width on larger screens */
+  max-width: 500px; /* Limited width on larger screens */
 }
 .search-container {
   position: relative;
   display: flex;
   align-items: center;
 
-  .search-icon {
-    position: absolute;
-    left: 10px;
-    color: $navbar-text-color;
-    font-size: 24px; // Adjust the size as needed
-    color: #2c3e50;
-  }
-
   .search-bar {
     border: 3px solid #15026b;
     flex: 1; // Use flex property to fill the remaining space
     height: 40px; // Adjust height as needed
     border-radius: 0.60rem;
-    padding: 5px 40px 5px 40px; // Adjust padding to create space for the icon
+    padding: 5px 40px 5px 20px; // Adjust padding to create space for the icon on the right
     box-sizing: border-box;
     font-size: 16px;
+    width: 350px;
+    // text-align: center;
 
     @media (max-width: 768px) {
       margin-top: 10px;
     }
+  }
+
+  .search-icon {
+    position: absolute;
+    right: 10px; // Adjust the position to move the icon to the right
+    color: $navbar-text-color;
+    font-size: 24px; // Adjust the size as needed
+    color: #2c3e50;
   }
 }
 
@@ -157,7 +160,9 @@ $navbar-text-color: #ecf0f1;
 }
 
 .bold-text {
+  font-size: 20px;
   font-weight: bold;
+  color: #112D4E;
 }
 
 .email-container {
@@ -171,11 +176,10 @@ $navbar-text-color: #ecf0f1;
 
 .smaller-text {
   font-size: 0.9em;
-  margin: 10px;
-  margin-top: -5px;
+  margin: 14px;
+  color: #112D4E;
 }
 mat-icon {
   margin-right: 8px; /* Adjust the spacing between the icon and text */
   vertical-align: middle; /* Align the icon vertically with the text */
-  color: #15026b;
 }

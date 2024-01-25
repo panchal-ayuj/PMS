@@ -82,4 +82,32 @@ public class ReviewCycleService {
             throw e;
         }
     }
+
+    public ReviewCycle getSecondLatestReviewCycleByUserId(Long userId) {
+        // Find all review cycles for the given userId, ordered by start date in descending order
+        List<ReviewCycle> userReviewCycles = reviewCycleRepository.findByUserIdOrderByStartDateDesc(userId);
+
+        // Check if there are at least two review cycles
+        if (userReviewCycles.size() >= 2) {
+            // Return the second review cycle
+            return userReviewCycles.get(1);
+        } else {
+            // Return null if there are not enough review cycles
+            return null;
+        }
+    }
+
+    public ReviewCycle getLatestReviewCycleByUserId(Long userId) {
+        // Find all review cycles for the given userId, ordered by start date in descending order
+        List<ReviewCycle> userReviewCycles = reviewCycleRepository.findByUserIdOrderByStartDateDesc(userId);
+
+        // Check if there are at least two review cycles
+        if (userReviewCycles.size() >= 1) {
+            // Return the second review cycle
+            return userReviewCycles.get(0);
+        } else {
+            // Return null if there are not enough review cycles
+            return null;
+        }
+    }
 }

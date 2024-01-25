@@ -26,10 +26,13 @@ export class ProfilePageComponent implements OnInit {
     hrId: '',
     reportingManagerId: '',
     band: '',
+    enabled: '',
+    teams: ''
   };
 
   userId: any;
   showButton: boolean = false;
+  showButton2: boolean = false;
   @ViewChild('idCard', { static: false }) idCard: ElementRef | undefined;
 
   constructor(private router: Router,private service: AuthService, private http:HttpClient, private sharedDataService: SharedDataService, private userInfoService: UserInfoService,private dialog: MatDialog) {}
@@ -50,6 +53,7 @@ export class ProfilePageComponent implements OnInit {
         // this.getUserById(userId);
       } else {
         this.showButton = false;
+        this.showButton2 = true;
         this.handleAsyncResponse();
       }
     });
@@ -86,6 +90,7 @@ export class ProfilePageComponent implements OnInit {
   }
 
   getUserById(userId: any): void {
+    this.showButton2 = false;
     console.log('User ID:', userId);
     if (!userId) {
       console.error('User ID is undefined');
@@ -129,7 +134,7 @@ export class ProfilePageComponent implements OnInit {
       (response: any) => {
         // Open the dialog with the received feedback
         const dialogRef = this.dialog.open(SelfFeedbackDialogComponent, {
-          data: { feedback: response, viewMode: true },
+          data: { feedback: response.userFeedback, viewMode: true },
         });
   
         dialogRef.afterClosed().subscribe((result) => {
@@ -148,18 +153,18 @@ export class ProfilePageComponent implements OnInit {
     const url = `http://localhost:8080/reviewCycle/user-feedback/${this.employee.userId}`;
 
   // Fetch the user details including the userFeedback property
-  this.http.get(url , {responseType:'text'}).subscribe(
+  this.http.get(url).subscribe(
     (response: any) => {
       const dialogRef = this.dialog.open(SelfFeedbackDialogComponent, {
-        data: { tasks: response || '', viewMode: false, userId: this.employee.userId },
+        data: { feedback: response.userFeedback || '', viewMode: false, userId: this.employee.userId },
       });
 
       dialogRef.afterClosed().subscribe((newFeedback) => {
         if (newFeedback !== undefined && newFeedback !== null) {
           // Call API to update user feedback directly using http.put
-          this.http.put(url, { userFeedback: newFeedback }, { responseType: 'text' }).subscribe(
+          this.http.put(url, newFeedback.userFeedback).subscribe(
             () => {
-              console.log('User feedback updated successfully.');
+              console.log('User feedback updated successfully.' + newFeedback);
             },
             (error) => {
               console.error('Error updating user feedback:', error);
@@ -210,6 +215,29 @@ export class ProfilePageComponent implements OnInit {
     console.log("not uploading");
     }
   }
-  
+  formatTeams(teams: string | string[]): string {
+    if (Array.isArray(teams)) {
+      // If it's an array, join the values with '|'
+      return teams.join(' | ');
+    } else if (typeof teams == 'string') {
+      // If it's a string, split it (if it contains commas) and join with '|'
+      return teams.includes(',') ? teams.split(',').join(' | ') : teams;
+    } else {
+      // Handle other cases
+      return '';
+    }
+  }
+  formatRoles(roles: string | string[]): string {
+    if (Array.isArray(roles)) {
+      // If it's an array, join the values with '|'
+      return roles.join(' | ');
+    } else if (typeof roles == 'string') {
+      // If it's a string, split it (if it contains commas) and join with '|'
+      return roles.includes(',') ? roles.split(',').join(' | ') : roles;
+    } else {
+      // Handle other cases
+      return '';
+    }
+  }
 
 }

@@ -1,7 +1,7 @@
-$primary-color: #f39c12; // Blue color
+$primary-color: #3F72AF; // Blue color
 $secondary-color: #2ecc71; // Green color
 $text-color: #333; // Dark text color
-$background-color: #ecf0f1; // Light background color
+$background-color: #f4f7fa; // Light background color
 
 .container {
   font-family: "Roboto", sans-serif;
@@ -31,12 +31,12 @@ $background-color: #ecf0f1; // Light background color
   }
 
   .profile-header {
-    background-color: #f39c12; // Blue color, you can change it to your desired color
+    background-color: #DBE2EF; // Blue color, you can change it to your desired color
     padding: 20px;
     border-radius: 15px 15px 0 0; // Rounded corners at the top
     display: flex;
     align-items: center;
-    box-shadow: 0 12px 12px rgba(0, 0, 0, 0.1); // Beautiful box shadow
+    // box-shadow: 0 12px 12px rgba(0, 0, 0, 0.1); // Beautiful box shadow
 
     .profile-image {
       width: 80px;
@@ -50,30 +50,45 @@ $background-color: #ecf0f1; // Light background color
       h2 {
         font-size: 2rem;
         margin-bottom: 5px;
-        color: #fff; // Text color for the name
+        color: #112D4E; // Text color for the name
       }
 
       p {
         font-size: 1.2rem;
         margin: 15px 0;
-        color: #fff; // Text color for role and email
+        color: #112D4E; // Text color for role and email
       }
     }
   }
 
   .details {
     padding: 20px;
-
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  
     .detail {
       font-size: 1.2rem;
       margin-bottom: 12px;
-
       strong {
         margin-right: 5px;
-        color: $text-color;
+        color: #112D4E;
+        display: inline-block;
       }
     }
+  
+    .teams {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      grid-column: span 3; // Make the Teams section span all three columns
+    }
+  
+    .idCard {
+      align-self: end;
+    }
   }
+  
 
   .divider {
     width: 100%;
@@ -97,6 +112,7 @@ $background-color: #ecf0f1; // Light background color
       padding: 12px 24px;
       border: none;
       border-radius: 8px;
+      width: 17%;
       cursor: pointer;
       transition: background-color 0.3s;
 
@@ -108,20 +124,24 @@ $background-color: #ecf0f1; // Light background color
 }
 
 .custom-button-download {
-  background-color: #3498db;
+  background-color: $primary-color;
   color: #fff;
   padding: 12px 24px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  width: 50%;
   // transition: background-color 0.3s;
   position: relative;
-  bottom: 120px;
-  left: 840px;
+  // bottom: 120px;
+  // left: 840px;
 
   // &:hover {
   //   background-color: darken($primary-color, 10%);
   // }
+}
+.idCard{
+  align-items: end;
 }
 
 .custom-button {
@@ -130,12 +150,26 @@ $background-color: #ecf0f1; // Light background color
   padding: 12px 24px;
   border: none;
   border-radius: 8px;
+  width: 50%;
+  position: relative;
   cursor: pointer;
   transition: background-color 0.3s;
+  
 
   &:hover {
     background-color: darken($primary-color, 10%);
   }
   
-  margin-right: 10px;
+  
+}
+.src_logo
+{ 
+  height: 30px;
+  width:30px ;
+  margin-bottom: -7px;
+}
+.role-email
+{ 
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
 }

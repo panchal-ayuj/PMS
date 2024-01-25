@@ -8,10 +8,10 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrl: './parent-view-feedback.component.scss'
 })
 export class ParentViewFeedbackComponent implements OnInit {
-  displayedColumns: string[] = ['userId', 'email', 'managerFeedback', 'rating'];
+  displayedColumns: string[] = ['userId', 'name', 'managerFeedback', 'rating', 'period', 'financialYear'];
   reviewCycleDataSource = new MatTableDataSource<any>();
   reviews: any;
-  userEmail: any;
+  userName: any;
   userId: any;
 
   constructor(private http: HttpClient) {}
@@ -37,8 +37,8 @@ export class ParentViewFeedbackComponent implements OnInit {
     );
     this.http.get<any>(`http://localhost:8080/api/users/${userId}`).subscribe(
       (data) => {
-        this.userEmail = data.email;
-        console.log("User Email!!!: ", this.userEmail);
+        this.userName = data.firstName + ' ' + data.lastName ;
+        console.log("User Email!!!: ", this.userName);
       },
       (error) => {
         console.error('Error fetching feedback and rating list:', error);
