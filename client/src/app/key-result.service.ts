@@ -10,12 +10,12 @@ export class KeyResultService {
 
   constructor(private http: HttpClient) {}
 
-  getKeyResults(userId: number, period: string, year: number, status: boolean): Observable<any[]> {
+  getKeyResults(userId: number, period: string, year: string, status: string): Observable<any[]> {
     const params = new HttpParams()
       .set('userId', userId.toString())
       .set('period', period)
-      .set('year', year.toString())
-      .set('status', status.toString());
+      .set('year', year)
+      .set('status', status);
 
     return this.http.get<any[]>(`${this.apiUrl}/keyResults`, { params });
   }

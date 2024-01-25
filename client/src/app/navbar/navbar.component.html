@@ -33,13 +33,13 @@
       <!-- <span class="profile-username">{{ userName }}</span> -->
       <mat-menu #profileMenu="matMenu">
         <div class="profile-info">
-          <p class="bold-text">{{ userName }}</p>
           <div class="email-container">
             <p class="smaller-text">{{ userEmail }}</p>
           </div>
+          <p class="bold-text">Hi, {{ userName }}</p>
         </div>
-        <button mat-menu-item (click)="getProfile()"><mat-icon>account_circle</mat-icon> User Profile</button>
-        <button mat-menu-item (click)="logout()"> <mat-icon>exit_to_app</mat-icon> Logout</button>
+        <button mat-menu-item (click)="getProfile()" style="color: #112D4E;"><mat-icon>account_circle</mat-icon> User Profile</button>
+        <button mat-menu-item (click)="logout()" style="color: #112D4E;"> <mat-icon>exit_to_app</mat-icon> Logout</button>
       </mat-menu>
     </div>
   </div>

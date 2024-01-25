@@ -1,90 +1,196 @@
-<div class="center-container">
-  <div class="options-row">
-    <div class="options-container">
-      <mat-card>
-        <mat-card-header>
-          <mat-card-title>View Tasks</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <button mat-raised-button color="primary" (click)="viewDetails()">
-            Click
-          </button>
-        </mat-card-content>
+<!-- dashboard.component.html -->
+<div class="dashboard-container">
+  <mat-card style="margin-right: 1%;">
+    <div style="position: relative; right: 240%;" class="table-card">
+      <mat-card *ngIf="taskList && taskList.length > 0">
+        <mat-card-title style="color: #112d4e">Ongoing tasks</mat-card-title>
+        <div class="scrollable-table">
+          <mat-card-content style="width: 400px">
+            <mat-table
+              class="mat-elevation-z8"
+              [dataSource]="taskList"
+              style="overflow-y: scroll; max-height: 530px"
+            >
+              <ng-container matColumnDef="taskName">
+                <mat-header-cell *matHeaderCellDef>Task</mat-header-cell>
+                <mat-cell *matCellDef="let task">
+                  {{ task.description }}
+                </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="weight">
+                <mat-header-cell *matHeaderCellDef>Weight</mat-header-cell>
+                <mat-cell *matCellDef="let task" style="margin-left: 13%">
+                  {{ task.weight }}
+                </mat-cell>
+              </ng-container>
+
+              <mat-header-row
+                *matHeaderRowDef="['taskName', 'weight']"
+              ></mat-header-row>
+              <mat-row
+                *matRowDef="
+                  let row;
+                  columns: ['taskName', 'weight'];
+                  let even = even;
+                  let odd = odd
+                "
+                [ngClass]="{ 'even-row3': even, 'odd-row3': odd }"
+              ></mat-row>
+            </mat-table>
+          </mat-card-content>
+        </div>
       </mat-card>
     </div>
+    <mat-card style="margin-right: 110%;" *ngIf="topThreeKeyResults && topThreeKeyResults.length > 0" >
+      <mat-card-title style="color: #112d4e">Performing well in</mat-card-title>
+      <mat-card-content style="width: 400px">
+        <div style="position: relative; " class="table-card">
+          <mat-table class="mat-elevation-z8" [dataSource]="topThreeKeyResults">
+            <ng-container matColumnDef="keyResultName">
+              <mat-header-cell *matHeaderCellDef>Key Result</mat-header-cell>
+              <mat-cell *matCellDef="let keyResult">
+                {{ keyResult.keyResultName }}
+              </mat-cell>
+            </ng-container>
 
-    <div *ngIf="admin" class="options-container">
-      <mat-card>
-        <mat-card-header>
-          <mat-card-title>Admin Option</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <button mat-raised-button color="primary" routerLink="/admin">
-            Admin
-          </button>
-        </mat-card-content>
-      </mat-card>
+            <ng-container matColumnDef="weight">
+              <mat-header-cell *matHeaderCellDef>Weight</mat-header-cell>
+              <mat-cell *matCellDef="let keyResult" style="margin-left: 13%">
+                {{ keyResult.weight }}
+              </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="rating">
+              <mat-header-cell *matHeaderCellDef>Rating</mat-header-cell>
+              <mat-cell *matCellDef="let keyResult">
+                {{ keyResult.rating | number : "1.2-2" }}
+              </mat-cell>
+            </ng-container>
+
+            <mat-header-row
+              *matHeaderRowDef="['keyResultName', 'weight', 'rating']"
+            ></mat-header-row>
+            <mat-row
+              *matRowDef="
+                let row;
+                columns: ['keyResultName', 'weight', 'rating'];
+                let even = even;
+                let odd = odd
+              "
+              [ngClass]="{ 'even-row': even, 'odd-row': odd }"
+            ></mat-row>
+          </mat-table>
+          <!-- </mat-card-content>
+      </mat-card> -->
+        </div>
+
+        <div
+          style="position: relative; margin-top: 15%"
+          class="table-card"
+        >
+        <mat-card-title>Needs Improvement In</mat-card-title>
+          <!-- <mat-card style="margin-top: 5%;"
+        *ngIf="bottomThreeKeyResults && bottomThreeKeyResults.length > 0"
+      >
+        <mat-card-title style="color: #112d4e"
+          >Needs Improvement In</mat-card-title
+        >
+        <mat-card-content style="width: 500px"> -->
+          <mat-table
+            class="mat-elevation-z8"
+            [dataSource]="bottomThreeKeyResults"
+          >
+            <ng-container matColumnDef="keyResultName">
+              <mat-header-cell *matHeaderCellDef>Key Result</mat-header-cell>
+              <mat-cell *matCellDef="let keyResult">
+                {{ keyResult.keyResultName }}
+              </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="weight">
+              <mat-header-cell *matHeaderCellDef>Weight</mat-header-cell>
+              <mat-cell *matCellDef="let keyResult" style="margin-left: 13%">
+                {{ keyResult.weight }}
+              </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="rating">
+              <mat-header-cell *matHeaderCellDef>Rating</mat-header-cell>
+              <mat-cell *matCellDef="let keyResult">
+                {{ keyResult.rating | number : "1.2-2" }}
+              </mat-cell>
+            </ng-container>
+
+            <mat-header-row
+              *matHeaderRowDef="['keyResultName', 'weight', 'rating']"
+            ></mat-header-row>
+            <mat-row
+              *matRowDef="
+                let row;
+                columns: ['keyResultName', 'weight', 'rating'];
+                let even = even;
+                let odd = odd
+              "
+              [ngClass]="{ 'even-row2': even, 'odd-row2': odd }"
+            ></mat-row>
+          </mat-table>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    <div>
+      <mat-card-title>Team Members Reviewed</mat-card-title>
+      <mat-card-content>
+        <div class="progress-container">
+          <mat-progress-spinner
+            mode="determinate"
+            [value]="calculateProgress()"
+            diameter="100"
+            strokeWidth="10"
+          ></mat-progress-spinner>
+          <div class="progress-text">
+            {{ completedReviewCount }} / {{ totalUserCount }}
+          </div>
+        </div>
+      </mat-card-content>
     </div>
-
-    <div class="options-container">
-      <mat-card>
-        <mat-card-header>
-          <mat-card-title>View Team</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <button mat-raised-button color="primary" routerLink="/team">
-            View
-          </button>
-        </mat-card-content>
-      </mat-card>
+    <div>
+      <mat-card-title>Previous Cycle's Performance</mat-card-title>
+      <mat-card-content>
+        <div class="progress-container">
+          <mat-progress-spinner
+            mode="determinate"
+            [value]="calculateSecondLatestProgress()"
+            diameter="100"
+            strokeWidth="10"
+          ></mat-progress-spinner>
+          <div class="feedback-text">
+            {{ secondLatestReviewCycle.overallRating | number : "1.2-2" }} / 5
+          </div>
+        </div>
+      </mat-card-content>
+      <!-- <div class="feedback-container">
+    <div class="feedback-label">Feedback:</div>
+    <div class="feedback-message">
+      {{ secondLatestReviewCycle.feedback }}
     </div>
-  </div>
-
-  <div class="options-row">
-    <div class="options-container">
-      <mat-card>
-        <mat-card-header>
-          <mat-card-title>View Feedback</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <button mat-raised-button color="primary" routerLink="/feedback">
-            View
-          </button>
-        </mat-card-content>
-      </mat-card>
+  </div> -->
     </div>
-
-    <div class="options-container">
-      <mat-card>
-        <mat-card-header>
-          <mat-card-title>View Hierarchy</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <button mat-raised-button color="primary" routerLink="/hierarchy">
-            View
-          </button>
-        </mat-card-content>
-      </mat-card>
+    <div>
+      <mat-card-title>Average Rating</mat-card-title>
+      <mat-card-content>
+        <div class="progress-container">
+          <mat-progress-spinner
+            mode="determinate"
+            [value]="calculateOverallProgress()"
+            diameter="100"
+            strokeWidth="10"
+          ></mat-progress-spinner>
+          <div class="rating-text">
+            {{ averageRating | number : "1.2-2" }} / 5
+          </div>
+        </div>
+      </mat-card-content>
     </div>
-
-    <div class="options-container">
-      <mat-card>
-        <mat-card-header>
-          <mat-card-title>Logout Option</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <button mat-raised-button color="warn" (click)="onSignOut()">
-            Sign out
-          </button>
-        </mat-card-content>
-      </mat-card>
-    </div>
-  </div>
-
-  <!-- Add the profile icon on the top right -->
-  <div class="profile-icon-container">
-    <mat-icon class="profile-icon" routerLink="/profile">person</mat-icon>
-  </div>
+  </mat-card>
 </div>
-
-<router-outlet></router-outlet>

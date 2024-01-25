@@ -52,12 +52,8 @@
             Download Id Card
           </button>
         </div>
-        <button class="custom-button" (click)="viewSelfFeedback()">
-          View Self Feedback
-        </button>
-        <button class="custom-button" (click)="giveSelfFeedback()">
-          Give Self Feedback
-        </button>
+        <button class="custom-button" (click)="viewSelfFeedback()">View Self Feedback</button>
+        <button class="custom-button" (click)="giveSelfFeedback()" *ngIf="showButton2">Give Self Feedback</button>
       </div>
       <div class="divider"></div>
       <div class="manager-actions" *ngIf="showButton">

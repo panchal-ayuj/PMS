@@ -13,13 +13,6 @@ body {
   margin-top: 20px;
 }
 
-/* Style the table header cells */
-.mat-header-cell {
-  background-color: #283593; /* Deep Blue background */
-  color: white; /* White text color */
-  font-weight: bold;
-}
-
 /* Style the table rows */
 .mat-row {
   transition: background-color 0.3s;
@@ -37,6 +30,7 @@ body {
 
 .actions{
   margin: 1%;
+  text-align: right;
 
   button{
     margin: 1%;
@@ -52,4 +46,21 @@ body {
 .feedback-column {
   width: 700px; /* Set your desired width */
   margin-top: 10px;
+}
+
+mat-header-cell {
+  font-size: 18px;
+}
+
+
+.even-row {
+  background-color: #DBE2EF; /* Set the background color for even rows */
+}
+
+.odd-row {
+  background-color: #ffffff; /* Set the background color for odd rows */
+}
+
+.mat-mdc-cell{
+  border: none;
 }

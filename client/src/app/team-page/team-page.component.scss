@@ -1,7 +1,9 @@
 .team-page-container {
   padding: 20px;
+  margin-top: 1%;
 
   h2 {
+    text-align: center;
     font-size: 24px;
     margin-bottom: 20px;
   }
@@ -9,7 +11,7 @@
   mat-table {
     width: 100%;
     overflow-x: auto;
-    margin-top: 20px;
+    margin-top: 30px;
 
     mat-header-cell,
     mat-cell {
@@ -18,19 +20,15 @@
     }
 
     mat-header-cell {
-      font-weight: bold;
+      font-size: 18px;
+      background-color: rgb(255, 255, 255);
     }
 
-    mat-row,
-    mat-header-row {
+    .mat-row,
+    .mat-header-row {
       display: flex;
       width: 100%;
       box-sizing: border-box;
-      border-bottom: 1px solid #ddd;
-
-      &:last-child {
-        border-bottom: none;
-      }
     }
 
     mat-cell {
@@ -44,15 +42,20 @@
 }
 
 button.view-details-button {
-  background-color: #2196F3; // Replace with your preferred shade of blue
+  background-color: #2196f3; // Replace with your preferred shade of blue
   color: #fff; // White text for better contrast
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // Add your preferred box-shadow values
 
   &:hover {
-    background-color: #1565C0; // Darker shade for hover effect
+    background-color: #1565c0; // Darker shade for hover effect
   }
 
   &:active {
-    background-color: #0D47A1; // Even darker shade for active/pressed effect
+    background-color: #0d47a1; // Even darker shade for active/pressed effect
   }
 }
+
+.even-row {
+  background-color: #dbe2ef; /* Set the background color for even rows */
+}
+

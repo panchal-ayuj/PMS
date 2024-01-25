@@ -1,15 +1,10 @@
 package com.accolite.server.controllers;
 
-import com.accolite.server.models.GoalPlan;
-import com.accolite.server.models.KeyResult;
-import com.accolite.server.models.ReviewCycle;
-import com.accolite.server.models.User;
+import com.accolite.server.models.*;
 import com.accolite.server.readers.KeyResultExcelReader;
-import com.accolite.server.repository.GoalPlanRepository;
-import com.accolite.server.repository.KeyResultRepository;
-import com.accolite.server.repository.ReviewCycleRepository;
-import com.accolite.server.repository.UserRepository;
+import com.accolite.server.repository.*;
 import com.accolite.server.service.KeyResultService;
+import com.accolite.server.service.ReviewCycleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
@@ -23,8 +18,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/keyResult")
@@ -44,6 +41,12 @@ public class KeyResultController {
 
     @Autowired
     private ReviewCycleRepository reviewCycleRepository;
+
+    @Autowired
+    private ReviewCycleService reviewCycleService;
+
+    @Autowired
+    private TaskRepository taskRepository;
 
     @PostMapping("")
     public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
@@ -185,4 +188,84 @@ public class KeyResultController {
         // You may need to adjust this based on your actual entity structure
         return filteredKeyResults;
     }
+
+    @GetMapping("/topThreeKeyResults/{userId}")
+    public ResponseEntity<List<KeyResult>> getTopThreeKeyResults(@PathVariable Long userId) {
+        try {
+            // Retrieve the second most latest review cycle by ID
+            ReviewCycle secondLatestReviewCycle = reviewCycleService.getSecondLatestReviewCycleByUserId(userId);
+
+            if (secondLatestReviewCycle != null) {
+                // Assuming you have a method in the repository to fetch key results by userId and review cycle ID
+                List<KeyResult> keyResults = keyResultRepository.findByWindowId(secondLatestReviewCycle.getWindowId());
+
+                // Sort key results by rating in descending order
+                keyResults.sort(Comparator.comparingDouble(KeyResult::getRating).reversed());
+
+                // Select the top three key results
+                List<KeyResult> topThreeKeyResults = keyResults.stream().limit(3).collect(Collectors.toList());
+
+                return ResponseEntity.ok(topThreeKeyResults);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+    @GetMapping("/bottomThreeKeyResults/{userId}")
+    public ResponseEntity<List<KeyResult>> getBottomThreeKeyResults(@PathVariable Long userId) {
+        try {
+            // Retrieve the second most latest review cycle by ID
+            ReviewCycle secondLatestReviewCycle = reviewCycleService.getSecondLatestReviewCycleByUserId(userId);
+
+            if (secondLatestReviewCycle != null) {
+                // Assuming you have a method in the repository to fetch key results by userId and review cycle ID
+                List<KeyResult> keyResults = keyResultRepository.findByWindowId(secondLatestReviewCycle.getWindowId());
+
+                // Sort key results by rating in ascending order
+                keyResults.sort(Comparator.comparingDouble(KeyResult::getRating));
+
+                // Select the bottom three key results
+                List<KeyResult> bottomThreeKeyResults = keyResults.stream().limit(3).collect(Collectors.toList());
+
+                return ResponseEntity.ok(bottomThreeKeyResults);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+    @GetMapping("/tasks/{userId}")
+    public ResponseEntity<List<Task>> getCurrentTask(@PathVariable Long userId) {
+        try {
+            // Retrieve the second most latest review cycle by ID
+            ReviewCycle latestReviewCycle = reviewCycleService.getLatestReviewCycleByUserId(userId);
+
+            if (latestReviewCycle != null) {
+                // Assuming you have a method in the repository to fetch key results by userId and review cycle ID
+                List<KeyResult> keyResults = keyResultRepository.findByWindowId(latestReviewCycle.getWindowId());
+
+                // Sort key results by rating in ascending order
+                keyResults.sort(Comparator.comparingDouble(KeyResult::getWeight));
+                List<Task> taskList = new ArrayList<>();
+                // Select the bottom three key results
+                for(KeyResult keyResult: keyResults){
+                    List<Task> newTaskList = taskRepository.findByKeyResultId(keyResult.getKeyResultId());
+                    for (Task task : newTaskList){
+                        taskList.add(task);
+                    }
+                }
+                return ResponseEntity.ok(taskList);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
 }
