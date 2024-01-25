@@ -34,59 +34,62 @@
   <div class="form-container">
     <h2>User Registration</h2>
 
-    <form [formGroup]="userForm" (ngSubmit)="registerOrUpdateUser()">
+    <form [formGroup]="userForm" (ngSubmit)="submitForm($event)">
       <mat-form-field appearance="fill">
         <mat-label>First Name</mat-label>
-        <input matInput formControlName="firstName" />
+        <input matInput formControlName="firstName" #firstNameField/>
       </mat-form-field>
 
       <mat-form-field appearance="fill">
         <mat-label>Last Name</mat-label>
-        <input matInput formControlName="lastName" />
+        <input matInput formControlName="lastName" #lastNameField/>
       </mat-form-field>
 
       <mat-form-field appearance="fill">
         <mat-label>Email</mat-label>
-        <input matInput type="email" formControlName="email" />
+        <input matInput type="email" formControlName="email" #emailField/>
       </mat-form-field>
 
       <mat-form-field appearance="fill">
         <mat-label>Status</mat-label>
-        <input matInput formControlName="status" />
+        <input matInput formControlName="status" #statusField/>
       </mat-form-field>
 
       <mat-form-field appearance="fill">
         <mat-label>Joining Date</mat-label>
-        <input matInput type="date" formControlName="joiningDate" />
+        <input matInput type="date" formControlName="joiningDate" #joiningDateField />
       </mat-form-field>
 
       <mat-form-field appearance="fill">
         <mat-label>HR ID</mat-label>
-        <input matInput formControlName="hrId" />
+        <input matInput formControlName="hrId" #hrIdField/>
       </mat-form-field>
 
       <mat-form-field appearance="fill">
         <mat-label>Band</mat-label>
-        <input matInput formControlName="band" />
+        <input matInput formControlName="band" #bandField />
       </mat-form-field>
 
       <mat-form-field appearance="fill">
         <mat-label>Reporting Manager ID</mat-label>
-        <input matInput formControlName="reportingManagerId" />
+        <input matInput formControlName="reportingManagerId" #reportingManagerIdField />
       </mat-form-field>
 
       <mat-form-field appearance="fill">
         <mat-label>Roles (comma-separated)</mat-label>
-        <input matInput formControlName="roles" />
+        <input matInput formControlName="roles" #rolesField/>
       </mat-form-field>
 
       <mat-form-field appearance="fill">
         <mat-label>Teams (comma-separated)</mat-label>
-        <input matInput formControlName="teams" />
+        <input matInput formControlName="teams" #teamsField/>
       </mat-form-field>
 
       <button type="submit" mat-raised-button color="primary">
         {{ searchUserId ? "Update User" : "Register User" }}
+      </button>
+      <button type="button" mat-raised-button color="warn" (click)="clearForm()">
+        Clear
       </button>
     </form>
   </div>

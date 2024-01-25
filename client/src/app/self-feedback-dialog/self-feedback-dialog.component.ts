@@ -36,6 +36,11 @@ export class SelfFeedbackDialogComponent {
     // Optionally, you can close the dialog after submitting
     this.dialogRef.close();
   }
+  displayFeedback(feedback: any): string {
+    return feedback !== null && typeof feedback === 'object'
+    ? feedback.userFeedback || 'No feedback given'
+    : feedback || 'No feedback given';
+  }
 }
 
 

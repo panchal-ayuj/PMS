@@ -5,7 +5,7 @@
   
     <!-- Display existing self-feedback or a message if null (for view mode) -->
     <div *ngIf="data.viewMode && data.feedback !== null; else noFeedback">
-      <p>{{ data.feedback }}</p>
+      <p>{{ displayFeedback(data.feedback) }}</p>
     </div>
   
     <ng-template #noFeedback>

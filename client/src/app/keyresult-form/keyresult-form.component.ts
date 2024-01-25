@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators,AbstractControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -9,6 +9,20 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrl: './keyresult-form.component.scss'
 })
 export class KeyresultFormComponent {
+  @ViewChild('userIdField')
+  userIdField!: ElementRef;
+  @ViewChild('goalPlanIdField')
+  goalPlanIdField!: ElementRef;
+  @ViewChild('keyResultNameField')
+  keyResultNameField!: ElementRef;
+  @ViewChild('descriptionField')
+  descriptionField!: ElementRef;
+  @ViewChild('weightField')
+  weightField!: ElementRef;
+  @ViewChild('periodField')
+  periodField!: ElementRef;
+  @ViewChild('windowIdField')
+  windowIdField!: ElementRef;
   keyResultForm!: FormGroup;
   keyresults: any[] = [];
   keyResultId: number | undefined;
@@ -24,13 +38,13 @@ export class KeyresultFormComponent {
 
   initForm() {
     this.keyResultForm = this.formBuilder.group({
-      userId: [''],
-      goalPlanId: [''],
-      keyResultName: [''],
-      description: [''],
-      weight: [''],
-      period: [''],
-      windowId: ['']
+      userId: ['' , Validators.required],
+      goalPlanId: ['' , Validators.required],
+      keyResultName: ['' , [Validators.required , Validators.maxLength(255)]],
+      description: ['' , Validators.required],
+      weight: ['', Validators.required],
+      period: ['', Validators.required],
+      windowId: ['', Validators.required]
     });
   }
 
@@ -134,4 +148,51 @@ export class KeyresultFormComponent {
       panelClass: ['snackbar-success'] // Add custom styles if needed
     });
   }
+  submitForm(event: Event) {
+    event.preventDefault(); // Prevent the default form submission behavior
+    this.highlightInvalidFields();
+  }
+  
+  highlightInvalidFields() {
+    // Loop through form controls and mark the invalid ones
+    Object.keys(this.keyResultForm.controls).forEach((field) => {
+      const control: AbstractControl = this.keyResultForm.get(field)!;
+  
+      // If the control is invalid
+      if (control.invalid) {
+        // Mark the control as touched to display error messages (if any)
+        control.markAsTouched();
+  
+        // Focus on the first invalid field
+        if (field === 'userId' && this.userIdField) {
+          this.userIdField.nativeElement.focus();
+        } else if (field === 'goalPlanId' && this.goalPlanIdField) {
+          this.goalPlanIdField.nativeElement.focus();
+        } else if (field === 'keyResultName' && this.keyResultNameField) {
+          this.keyResultNameField.nativeElement.focus();
+        } else if (field === 'description' && this.descriptionField) {
+          this.descriptionField.nativeElement.focus();
+        } else if (field === 'weight' && this.weightField) {
+          this.weightField.nativeElement.focus();
+        } else if (field === 'period' && this.periodField) {
+          this.periodField.nativeElement.focus();
+        } else if (field === 'windowId' && this.windowIdField) {
+          this.windowIdField.nativeElement.focus();
+        }
+        // Add similar conditions for other fields
+      }
+    });
+    if (this.keyResultForm.valid) {
+      this.registerOrUpdateKeyResult();
+    }
+  }
+  clearForm() {
+    this.resetForm();
+  }
+  
+  
+  
+  
+  
+  
 }

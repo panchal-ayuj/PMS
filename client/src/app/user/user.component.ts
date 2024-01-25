@@ -1,7 +1,7 @@
 // user-management.component.ts
 
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { ExportService } from '../export.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -12,6 +12,16 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./user.component.scss']
 })
 export class UserManagementComponent implements OnInit {
+  @ViewChild('firstNameField') firstNameField!: ElementRef;
+  @ViewChild('lastNameField') lastNameField!: ElementRef;
+  @ViewChild('emailField') emailField!: ElementRef;
+  @ViewChild('statusField') statusField!: ElementRef;
+  @ViewChild('joiningDateField') joiningDateField!: ElementRef;
+  @ViewChild('hrIdField') hrIdField!: ElementRef;
+  @ViewChild('bandField') bandField!: ElementRef;
+  @ViewChild('reportingManagerIdField') reportingManagerIdField!: ElementRef;
+  @ViewChild('rolesField') rolesField!: ElementRef;
+  @ViewChild('teamsField') teamsField!: ElementRef;
   userForm!: FormGroup;
   users: any[] = [];
   userId: number | undefined;
@@ -27,16 +37,16 @@ export class UserManagementComponent implements OnInit {
 
   initForm() {
     this.userForm = this.formBuilder.group({
-      firstName: [''],
-      lastName: [''],
-      email: [''],
-      status: [''],
-      joiningDate: [''],
-      hrId: [''],
-      band: [''],
-      reportingManagerId: [''],
-      roles: [''],
-      teams: ['']
+      firstName: ['' , Validators.required],
+      lastName: ['' , Validators.required],
+      email: ['', [Validators.required , Validators.email]],
+      status: ['', Validators.required],
+      joiningDate: ['', Validators.required],
+      hrId: ['', Validators.required],
+      band: ['', Validators.required],
+      reportingManagerId: ['', Validators.required],
+      roles: ['', Validators.required],
+      teams: ['', Validators.required]
     });
   }
 
@@ -160,4 +170,60 @@ export class UserManagementComponent implements OnInit {
       panelClass: ['snackbar-success'] // Add custom styles if needed
     });
   }
+  
+  highlightInvalidFields() {
+    Object.keys(this.userForm.controls).forEach((field) => {
+      const control = this.userForm.get(field)!;
+
+      if (control.invalid) {
+        control.markAsTouched();
+
+        switch (field) {
+          case 'firstName':
+            this.firstNameField?.nativeElement.focus();
+            break;
+          case 'lastName':
+            this.lastNameField?.nativeElement.focus();
+            break;
+          case 'email':
+            this.emailField?.nativeElement.focus();
+            break;
+          case 'status':
+            this.statusField?.nativeElement.focus();
+            break;
+          case 'joiningDate':
+            this.joiningDateField?.nativeElement.focus();
+            break;
+          case 'hrId':
+            this.hrIdField?.nativeElement.focus();
+            break;
+          case 'band':
+            this.bandField?.nativeElement.focus();
+            break;
+          case 'reportingManagerId':
+            this.reportingManagerIdField?.nativeElement.focus();
+            break;
+          case 'roles':
+            this.rolesField?.nativeElement.focus();
+            break;
+          case 'teams':
+            this.teamsField?.nativeElement.focus();
+            break;
+          // Add similar cases for other fields
+        }
+      }
+    });
+
+    if (this.userForm.valid) {
+      this.registerOrUpdateUser();
+    }
+  }
+  submitForm(event :Event) {
+    event.preventDefault(); // Prevent the default form submission behavior
+    this.highlightInvalidFields();
+  }
+  
+clearForm() {
+  this.resetForm();
+}
 }

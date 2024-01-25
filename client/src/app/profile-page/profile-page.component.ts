@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { SelfFeedbackDialogComponent } from '../self-feedback-dialog/self-feedback-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import html2canvas from 'html2canvas';
-import * as jspdf from 'jspdf';
+//import * as jspdf from 'jspdf';
 
 @Component({
   selector: 'app-profile-page',
@@ -151,7 +151,7 @@ export class ProfilePageComponent implements OnInit {
   this.http.get(url , {responseType:'text'}).subscribe(
     (response: any) => {
       const dialogRef = this.dialog.open(SelfFeedbackDialogComponent, {
-        data: { tasks: response || '', viewMode: false, userId: this.employee.userId },
+        data: { feedback: response || '', viewMode: false, userId: this.employee.userId },
       });
 
       dialogRef.afterClosed().subscribe((newFeedback) => {

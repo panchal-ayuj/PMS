@@ -44,10 +44,10 @@
     <h2>KeyResult Management</h2>
 
     <!-- KeyResult Registration Form -->
-    <form [formGroup]="keyResultForm" (ngSubmit)="registerOrUpdateKeyResult()">
+    <form [formGroup]="keyResultForm" (ngSubmit)="submitForm($event)">
       <mat-form-field appearance="fill">
         <mat-label>User Id</mat-label>
-        <input matInput type="number" id="userId" formControlName="userId" />
+        <input matInput type="number" id="userId" formControlName="userId" #userIdField />
       </mat-form-field>
 
       <mat-form-field appearance="fill">
@@ -56,38 +56,40 @@
           matInput
           type="number"
           id="goalPlanId"
-          formControlName="goalPlanId"
+          formControlName="goalPlanId" #goalPlanIdField
         />
       </mat-form-field>
 
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="fill" hintLabel="Max 255 characters">
         <mat-label>KeyResult Name</mat-label>
         <input
-          matInput
+          matInput #input
           type="text"
           id="keyResultName"
-          formControlName="keyResultName"
+          formControlName="keyResultName" #keyResultNameField
         />
+        <mat-hint align="end">{{input.value.length}}/255</mat-hint>
       </mat-form-field>
 
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="fill" hintLabel="Max 255 characters">
         <mat-label>Description</mat-label>
         <input
-          matInput
+          matInput #input
           type="text"
           id="description"
-          formControlName="description"
+          formControlName="description" #descriptionField
         />
+        <mat-hint align="end">{{input.value.length}}/255</mat-hint>
       </mat-form-field>
 
       <mat-form-field appearance="fill">
         <mat-label>Weight</mat-label>
-        <input matInput type="number" id="weight" formControlName="weight" />
+        <input matInput type="number" id="weight" formControlName="weight" #weightField />
       </mat-form-field>
 
       <mat-form-field appearance="fill">
         <mat-label>Period</mat-label>
-        <input matInput type="text" id="period" formControlName="period" />
+        <input matInput type="text" id="period" formControlName="period" #periodField/>
       </mat-form-field>
 
       <mat-form-field appearance="fill">
@@ -96,14 +98,20 @@
           matInput
           type="number"
           id="windowId"
-          formControlName="windowId"
+          formControlName="windowId" #windowIdField
         />
       </mat-form-field>
 
-      <button mat-raised-button color="primary" type="submit">
+      <button mat-raised-button color="primary" type="submit" (click)="highlightInvalidFields()">
         {{ searchKeyResultId ? "Update Key Result" : "Register Key Result" }}
       </button>
+      <button mat-raised-button color="warn" type="button" (click)="clearForm()">
+        Clear
+      </button>
     </form>
+    <div *ngIf="keyResultForm.invalid" class="mandatory-message">
+      All fields are mandatory.
+    </div>
   </div>
 
   <!-- KeyResult List -->
