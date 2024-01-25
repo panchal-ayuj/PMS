@@ -1,6 +1,6 @@
-$primary-color: #3498db;
-$navbar-background: #080234;
-$navbar-text-color: #ecf0f1;
+$primary-color: #112D4E;
+$navbar-background: #F9F7F7;
+$navbar-text-color: #112D4E;
 
 // Navbar styles
 .navbar {
@@ -23,7 +23,7 @@ $navbar-text-color: #ecf0f1;
     img {
       max-width: 120px; // Adjust the max-width of your logo
       height: auto;
-      background-color: white;
+      background-color: #F9F7F7;
       margin-top: 5px;
       border-radius: 1.00rem;
     }
@@ -155,7 +155,9 @@ $navbar-text-color: #ecf0f1;
 }
 
 .bold-text {
+  font-size: 20px;
   font-weight: bold;
+  color: #112D4E;
 }
 
 .email-container {
@@ -169,8 +171,8 @@ $navbar-text-color: #ecf0f1;
 
 .smaller-text {
   font-size: 0.9em;
-  margin: 10px;
-  margin-top: -5px;
+  margin: 14px;
+  color: #112D4E;
 }
 mat-icon {
   margin-right: 8px; /* Adjust the spacing between the icon and text */
