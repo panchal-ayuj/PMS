@@ -19,17 +19,24 @@
           />
         </div>
         <mat-autocomplete #auto="matAutocomplete">
-          <mat-option *ngFor="let user of searchResults" (click)="selectUserProfile(user)">
+          <mat-option
+            *ngFor="let user of searchResults"
+            (click)="selectUserProfile(user)"
+          >
             {{ user.firstName }} {{ user.lastName }} - {{ user.userId }}
           </mat-option>
         </mat-autocomplete>
       </form>
     </li>
   </ul>
-
   <div class="navbar-actions">
     <div class="dropdown">
-      <mat-icon class="mat-icon-size" mat-menu-trigger [matMenuTriggerFor]="profileMenu">account_circle</mat-icon>
+      <mat-icon
+        class="mat-icon-size"
+        mat-menu-trigger
+        [matMenuTriggerFor]="profileMenu"
+        >account_circle</mat-icon
+      >
       <!-- <span class="profile-username">{{ userName }}</span> -->
       <mat-menu #profileMenu="matMenu">
         <div class="profile-info">
@@ -38,8 +45,12 @@
           </div>
           <p class="bold-text">Hi, {{ userName }}</p>
         </div>
-        <button mat-menu-item (click)="getProfile()" style="color: #112D4E;"><mat-icon>account_circle</mat-icon> User Profile</button>
-        <button mat-menu-item (click)="logout()" style="color: #112D4E;"> <mat-icon>exit_to_app</mat-icon> Logout</button>
+        <button mat-menu-item (click)="getProfile()" style="color: #112d4e">
+          <mat-icon>account_circle</mat-icon> User Profile
+        </button>
+        <button mat-menu-item (click)="logout()" style="color: #112d4e">
+          <mat-icon>exit_to_app</mat-icon> Logout
+        </button>
       </mat-menu>
     </div>
   </div>

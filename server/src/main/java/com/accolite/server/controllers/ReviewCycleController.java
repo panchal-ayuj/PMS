@@ -352,6 +352,18 @@ public class ReviewCycleController {
     }
 
 
-
+    @GetMapping("/listOld/{userId}")
+    public ResponseEntity<List<ReviewCycle>> getFeedbackList(@PathVariable Long userId){
+        try {
+            List<ReviewCycle> reviewCycleList = reviewCycleRepository.findByUserId(userId);
+            if(reviewCycleList != null){
+                return ResponseEntity.ok(reviewCycleList);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
 }
 

@@ -1,7 +1,6 @@
-$primary-color: #112D4E;
-$navbar-background: #F9F7F7;
-$navbar-text-color: #112D4E;
-
+$primary-color: #112d4e;
+$navbar-background: #f9f7f7;
+$navbar-text-color: #112d4e;
 // Navbar styles
 .navbar {
   position: fixed;
@@ -13,38 +12,32 @@ $navbar-text-color: #112D4E;
   align-items: center;
   justify-content: space-between;
   padding: 10px 20px;
-  //background-color: $navbar-background;
-  //background-image: linear-gradient(to right, orange , purple);
-  color: white;
+  background-color: $navbar-background;
+  color: $navbar-text-color;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   width: 100%;
   z-index: 1000; // Set a high z-index to ensure it's on top of other elements
-
   .navbar-logo {
     img {
       max-width: 120px; // Adjust the max-width of your logo
       height: auto;
-      background-color: #F9F7F7;
+      background-color: #f9f7f7;
       margin-top: 5px;
-      border-radius: 1.00rem;
+      border-radius: 1rem;
     }
   }
-
   .navbar-links {
     list-style: none;
     display: flex;
     margin-bottom: 15px;
     padding: 0;
-
     li {
       margin-right: 20px;
       font-size: 16px;
-
       a {
         text-decoration: none;
         color: $navbar-text-color;
         transition: color 0.3s ease;
-
         &:hover {
           color: $primary-color;
         }
@@ -59,25 +52,21 @@ $navbar-text-color: #112D4E;
       right: 0;
       background-color: $navbar-background;
       text-align: center;
-
       li {
         margin: 10px 0;
       }
     }
   }
-
   .navbar-actions {
     position: relative;
     top: 10px;
   }
 }
-
 .mat-icon-size {
   font-size: 40px;
   height: 60px;
   width: 50px;
 }
-
 .input {
   height: 20px;
   width: 100%; /* Full width on smaller screens */
@@ -87,23 +76,19 @@ $navbar-text-color: #112D4E;
   position: relative;
   display: flex;
   align-items: center;
-
   .search-bar {
-    border: 3px solid #15026b;
     flex: 1; // Use flex property to fill the remaining space
     height: 40px; // Adjust height as needed
-    border-radius: 0.60rem;
+    border-radius: 0.6rem;
     padding: 5px 40px 5px 20px; // Adjust padding to create space for the icon on the right
     box-sizing: border-box;
     font-size: 16px;
     width: 350px;
     // text-align: center;
-
     @media (max-width: 768px) {
       margin-top: 10px;
     }
   }
-
   .search-icon {
     position: absolute;
     right: 10px; // Adjust the position to move the icon to the right
@@ -112,7 +97,6 @@ $navbar-text-color: #112D4E;
     color: #2c3e50;
   }
 }
-
 .profile-username {
   display: inline-block;
   max-width: 200px; /* Set a maximum width to limit horizontal space */
@@ -126,31 +110,24 @@ $navbar-text-color: #112D4E;
   bottom: 10px;
   margin-right: 10px;
   font-size: 20px;
-  color: #15026b;
 }
-
 // Add these styles to your existing SCSS file
-
 .mat-menu-panel {
-  box-shadow: 0 0 10px #15026b;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
-
 .user-dropdown {
   max-height: 200px; // Set a maximum height for the dropdown to enable scrolling if needed
   overflow-y: auto; // Enable vertical scrolling if the content overflows
 }
-
 .user-dropdown ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
-
 .user-dropdown li {
   padding: 10px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-
   &:hover {
     background-color: #f2f2f2; // Highlight on hover
   }
@@ -158,26 +135,22 @@ $navbar-text-color: #112D4E;
 .profile-info {
   text-align: center;
 }
-
 .bold-text {
   font-size: 20px;
   font-weight: bold;
-  color: #112D4E;
+  color: #112d4e;
 }
-
 .email-container {
   max-width: 350px; /* Adjust the max-width as needed */
   overflow: hidden;
   text-overflow: ellipsis;
-   /* Truncate text with an ellipsis if it overflows */
-   margin-top: -10px;
-   
+  /* Truncate text with an ellipsis if it overflows */
+  margin-top: -10px;
 }
-
 .smaller-text {
   font-size: 0.9em;
   margin: 14px;
-  color: #112D4E;
+  color: #112d4e;
 }
 mat-icon {
   margin-right: 8px; /* Adjust the spacing between the icon and text */
