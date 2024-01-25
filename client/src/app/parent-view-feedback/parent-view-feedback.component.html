@@ -1,6 +1,8 @@
 <!-- parent-view-feedback.component.html -->
 
 <div class="container">
+  <h2>View Employee Feedback</h2>
+
   <mat-form-field class="search-bar">
     <input
       matInput
@@ -39,12 +41,12 @@
 
     <ng-container matColumnDef="period">
       <mat-header-cell *matHeaderCellDef>Period</mat-header-cell>
-      <mat-cell *matCellDef="let reviews" style="position: relative; left: 0.5%;">{{ reviews.period }}</mat-cell>
+      <mat-cell *matCellDef="let reviews" style="position: relative; left: 0.5%;text-transform: uppercase; margin-right: -2.8%;">{{ reviews.period }}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="financialYear">
-      <mat-header-cell *matHeaderCellDef>financialYear</mat-header-cell>
-      <mat-cell *matCellDef="let reviews">{{ reviews.financialYear }}</mat-cell>
+      <mat-header-cell *matHeaderCellDef>Financial Year</mat-header-cell>
+      <mat-cell *matCellDef="let reviews" style="display: flex; justify-content: flex-end; margin-right: 2.8%;">{{ reviews.financialYear }}</mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

@@ -39,4 +39,30 @@
   
 
   
+  h2 {
+    font-size: 30px;
+    margin-bottom: -0.5%;
+    margin-top: -1.7%;
+    // position: relative;
+    // left: -25%; /* Adjusted to center the heading */
+    color: #112D4E; /* Adjust the color as needed */
+    font-family: 'Arial', sans-serif; /* Specify the font family */
+    text-transform: uppercase; /* Convert text to uppercase */
+    letter-spacing: 1px; /* Add letter-spacing for better readability */
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2); /* Add a subtle text shadow */
+  }
+
+  .header-container {
+    margin-left: 7%;
+    margin-right: 5.6%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: -1.5%;
+    margin-bottom: 20px;
+  }
   
+  .filter-form {
+    display: flex;
+    flex-direction: row;
+  }

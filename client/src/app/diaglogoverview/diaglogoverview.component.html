@@ -1,5 +1,7 @@
 <!-- diaglogoverview.component.html -->
-
+<div class="table-heading">
+  <h2>Task Overview</h2>
+</div>
 <mat-table [dataSource]="data.tasks" class="mat-elevation-z8">
   <ng-container matColumnDef="description">
     <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
@@ -90,5 +92,7 @@
   >
     Save Changes
   </button>
-  <button mat-raised-button color="warn" (click)="closeDialog()">Close</button>
+  <div class="close-icon" (click)="closeDialog()">
+    <mat-icon>close</mat-icon>
+  </div>
 </div>

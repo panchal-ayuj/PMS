@@ -2,6 +2,7 @@
 
 .container {
   padding: 30px;
+  padding-left: 20px;
 }
 
 .search-bar {
@@ -28,3 +29,40 @@ mat-header-cell {
   border: none;
 }
 
+.mat-column-userId{
+  width: 120px;
+  max-width: 120px;
+}
+
+.mat-column-rating{
+  width: 120px;
+  max-width: 120px;
+}
+
+.mat-column-period{
+  width: 120px;
+  max-width: 120px;
+}
+
+.mat-column-name{
+  width: 210px;
+  max-width: 210px;
+}
+
+.mat-column-financialYear{
+  width: 180px;
+  max-width: 180px;
+}
+
+h2 {
+  font-size: 30px;
+  margin-top: 1.5%;
+  margin-right: 60%;
+  // position: relative;
+  // left: -25%; /* Adjusted to center the heading */
+  color: #112D4E; /* Adjust the color as needed */
+  font-family: 'Arial', sans-serif; /* Specify the font family */
+  text-transform: uppercase; /* Convert text to uppercase */
+  letter-spacing: 1px; /* Add letter-spacing for better readability */
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2); /* Add a subtle text shadow */
+}
