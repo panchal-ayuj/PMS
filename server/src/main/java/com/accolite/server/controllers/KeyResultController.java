@@ -1,14 +1,8 @@
 package com.accolite.server.controllers;
 
-import com.accolite.server.models.GoalPlan;
-import com.accolite.server.models.KeyResult;
-import com.accolite.server.models.ReviewCycle;
-import com.accolite.server.models.User;
+import com.accolite.server.models.*;
 import com.accolite.server.readers.KeyResultExcelReader;
-import com.accolite.server.repository.GoalPlanRepository;
-import com.accolite.server.repository.KeyResultRepository;
-import com.accolite.server.repository.ReviewCycleRepository;
-import com.accolite.server.repository.UserRepository;
+import com.accolite.server.repository.*;
 import com.accolite.server.service.KeyResultService;
 import com.accolite.server.service.ReviewCycleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +44,9 @@ public class KeyResultController {
 
     @Autowired
     private ReviewCycleService reviewCycleService;
+
+    @Autowired
+    private TaskRepository taskRepository;
 
     @PostMapping("")
     public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
@@ -234,6 +231,35 @@ public class KeyResultController {
                 List<KeyResult> bottomThreeKeyResults = keyResults.stream().limit(3).collect(Collectors.toList());
 
                 return ResponseEntity.ok(bottomThreeKeyResults);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+    @GetMapping("/tasks/{userId}")
+    public ResponseEntity<List<Task>> getCurrentTask(@PathVariable Long userId) {
+        try {
+            // Retrieve the second most latest review cycle by ID
+            ReviewCycle latestReviewCycle = reviewCycleService.getLatestReviewCycleByUserId(userId);
+
+            if (latestReviewCycle != null) {
+                // Assuming you have a method in the repository to fetch key results by userId and review cycle ID
+                List<KeyResult> keyResults = keyResultRepository.findByWindowId(latestReviewCycle.getWindowId());
+
+                // Sort key results by rating in ascending order
+                keyResults.sort(Comparator.comparingDouble(KeyResult::getWeight));
+                List<Task> taskList = new ArrayList<>();
+                // Select the bottom three key results
+                for(KeyResult keyResult: keyResults){
+                    List<Task> newTaskList = taskRepository.findByKeyResultId(keyResult.getKeyResultId());
+                    for (Task task : newTaskList){
+                        taskList.add(task);
+                    }
+                }
+                return ResponseEntity.ok(taskList);
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
             }
