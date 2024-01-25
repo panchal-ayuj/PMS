@@ -54,7 +54,7 @@ export class UploadComponent {
   }
 
   onUpload2(): void {
-    if (this.selectedFile) {
+    if (this.selectedFile && this.selectedBand) {
       const formData = new FormData();
       formData.append('file', this.selectedFile);
 

@@ -13,8 +13,9 @@ $navbar-text-color: #112D4E;
   align-items: center;
   justify-content: space-between;
   padding: 10px 20px;
-  background-color: $navbar-background;
-  color: $navbar-text-color;
+  //background-color: $navbar-background;
+  //background-image: linear-gradient(to right, orange , purple);
+  color: white;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   width: 100%;
   z-index: 1000; // Set a high z-index to ensure it's on top of other elements
@@ -88,6 +89,7 @@ $navbar-text-color: #112D4E;
   align-items: center;
 
   .search-bar {
+    border: 3px solid #15026b;
     flex: 1; // Use flex property to fill the remaining space
     height: 40px; // Adjust height as needed
     border-radius: 0.60rem;
@@ -124,12 +126,13 @@ $navbar-text-color: #112D4E;
   bottom: 10px;
   margin-right: 10px;
   font-size: 20px;
+  color: #15026b;
 }
 
 // Add these styles to your existing SCSS file
 
 .mat-menu-panel {
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 10px #15026b;
 }
 
 .user-dropdown {

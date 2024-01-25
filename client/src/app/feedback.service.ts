@@ -33,7 +33,7 @@ export class FeedbackService {
   // private backendUrl = 'http://localhost:8080/api/tasks';
 
   getFeedback(userId: number): Observable<any> {
-    const url = `${this.backendUrl}/feedbackAndRating/${userId}`;
+    const url = `${this.backendUrl}/list/${userId}`;
    
     return this.http.get(url);
   }

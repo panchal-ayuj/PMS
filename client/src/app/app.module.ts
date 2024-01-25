@@ -57,6 +57,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { IdCardComponent } from './id-card/id-card.component';
 import { SublevelMenuComponent } from './sidebar/sublevel-menu.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 import { FeedbackArchivePageComponent } from './feedback-archive-page/feedback-archive-page.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
@@ -123,6 +125,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatMenuModule,
     MatSnackBarModule,
     MatGridListModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     MatProgressSpinnerModule,
   ],
   providers: [ExportService, EmployeeService],

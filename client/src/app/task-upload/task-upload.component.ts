@@ -49,36 +49,66 @@ export class TaskUploadComponent {
     }
   }
 
+  // onUpload2(): void {
+  //   if (this.selectedFile) {
+  //     const formData = new FormData();
+  //     formData.append('file', this.selectedFile);
+
+  //     this.http
+  //       .post<any>(
+  //         `http://localhost:8080/api/tasks/${this.selectedBand}/${this.selectedRole}`,
+  //         formData
+  //       )
+  //       .subscribe(
+  //         (response) => {
+  //           console.log(response);
+  //           // Handle success (e.g., display a success message)
+  //         },
+  //         (error) => {
+  //           if (error.status != 200) {
+  //             this.showSuccessSnackBar('File not uploaded');
+  //           }
+  //           if (error.status == 200)
+  //             this.showSuccessSnackBar('File uploaded successfully');
+
+  //           console.error("File uploaded "+error);
+  //           // Handle error (e.g., display an error message)
+  //         }
+  //       );
+  //   } else {
+  //     // Handle case where no file is selected
+  //   }
+  // }
   onUpload2(): void {
-    if (this.selectedFile) {
+    if (this.selectedRole && this.selectedBand && this.selectedFile) {
       const formData = new FormData();
       formData.append('file', this.selectedFile);
-
+  
       this.http
-        .post<any>(
-          `http://localhost:8080/api/tasks/${this.selectedBand}/${this.selectedRole}`,
-          formData
-        )
+        .post<any>(`http://localhost:8080/api/tasks/${this.selectedBand}/${this.selectedRole}`, formData)
         .subscribe(
           (response) => {
             console.log(response);
+            this.showSuccessSnackBar('File uploaded successfully');
             // Handle success (e.g., display a success message)
           },
           (error) => {
-            if (error.status != 200) {
+            if (error.status !== 200) {
               this.showSuccessSnackBar('File not uploaded');
             }
-            if (error.status == 200)
+            if (error.status === 200) {
               this.showSuccessSnackBar('File uploaded successfully');
-
-            console.error("File uploaded "+error);
+            }
+  
+            console.error('File uploaded ' + error);
             // Handle error (e.g., display an error message)
           }
         );
     } else {
-      // Handle case where no file is selected
+      this.showSuccessSnackBar('Please select both role and band before uploading');
     }
   }
+  
   private showSuccessSnackBar(message: string): void {
     this.snackBar.open(message, 'Close', {
       duration: 3000, // Duration in milliseconds
