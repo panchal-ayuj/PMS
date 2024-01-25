@@ -8,7 +8,7 @@
       />
     </mat-card-title>
     <mat-card-header class="login-header">
-      <mat-card-title>Login below with Google</mat-card-title>
+      <mat-card-title>Login with Google</mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <!-- Button with Google logo image -->
@@ -16,15 +16,15 @@
         mat-raised-button
         color="primary"
         (click)="onSignIn()"
-        style="background-color: white; color: black; padding: 20px"
+        class="google-sign-in-button"
       >
-        <span style="display: flex; align-items: center">
+        <span class="google-button-content">
           <img
             src="../../assets/images/google-logo.png"
             alt="Google Logo"
-            style="width: 24px; height: 24px; margin-right: 8px"
+            class="google-logo"
           />
-          <span>Sign in with Google</span>
+          <span class="google-button-text">Sign in with Google</span>
         </span>
       </button>
     </mat-card-content>

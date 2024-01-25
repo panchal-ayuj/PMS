@@ -11,35 +11,50 @@
         />
         <div class="user-info">
           <h2>{{ employee.firstName }} {{ employee.lastName }}</h2>
+          <div class ="role-email">
           <p style="font-size: 18px">
-            <strong>Role:</strong> {{ employee.roles }}
+            <img src="../../assets/images/role_logo.png" class="src_logo">
+            <!-- <strong>Role:</strong> -->
+            {{  formatRoles(employee.roles) }}
           </p>
           <p style="font-size: 18px">
-            <strong>Email:</strong> {{ employee.email }}
+            <img src="../../assets/images/email_logo.png" class="src_logo">
+            <!-- <strong>Role:</strong> -->
+            {{ employee.email }}
           </p>
+        </div>
         </div>
       </div>
       <div class="details">
+        <div class="detail teams">
+          <strong>Teams:</strong>
+          {{ formatTeams(employee.teams) }}
+        </div>
         <div class="detail">
           <strong>Employee ID:</strong> {{ employee.userId }}
         </div>
         <div class="detail">
-          <strong>Joining Date:</strong> {{ employee.joiningDate | date }}
-        </div>
-        <div class="detail"><strong>HR ID:</strong> {{ employee.hrId }}</div>
-        <div class="detail">
           <strong>RM ID:</strong> {{ employee.reportingManagerId }}
         </div>
-        <div class="detail" style="margin-bottom: -30px;"><strong>Band:</strong> {{ employee.band }}</div>
-        <div id="idCard">
+        
+        <div class="detail"><strong>HR ID:</strong> {{ employee.hrId }}</div>
+        
+        <div class="detail"><strong>Band:</strong> {{ employee.band }}</div>
+        <div class="detail">
+          <strong>Joining Date:</strong> {{ employee.joiningDate | date }}
+        </div>
+        <div class="detail" style="margin-bottom: 30px">
+          <strong>Employment Status:</strong>
+          {{ employee.enabled ? "Active" : "In Active" }}
+        </div>
+        <div id="idCard" class="idCard">
           <button class="custom-button-download" (click)="generateIdCardPDF()">
-            Download User Details
+            Download Id Card
           </button>
         </div>
         <button class="custom-button" (click)="viewSelfFeedback()">View Self Feedback</button>
         <button class="custom-button" (click)="giveSelfFeedback()" *ngIf="showButton2">Give Self Feedback</button>
       </div>
-
       <div class="divider"></div>
       <div class="manager-actions" *ngIf="showButton">
         <h3>Manager Actions</h3>
@@ -49,5 +64,9 @@
 
       </div>
     </div>
+    </div>
+    
   </div>
-</div>
+ 
+  
+

@@ -26,6 +26,8 @@ export class ProfilePageComponent implements OnInit {
     hrId: '',
     reportingManagerId: '',
     band: '',
+    enabled: '',
+    teams: ''
   };
 
   userId: any;
@@ -213,6 +215,29 @@ export class ProfilePageComponent implements OnInit {
     console.log("not uploading");
     }
   }
-  
+  formatTeams(teams: string | string[]): string {
+    if (Array.isArray(teams)) {
+      // If it's an array, join the values with '|'
+      return teams.join(' | ');
+    } else if (typeof teams == 'string') {
+      // If it's a string, split it (if it contains commas) and join with '|'
+      return teams.includes(',') ? teams.split(',').join(' | ') : teams;
+    } else {
+      // Handle other cases
+      return '';
+    }
+  }
+  formatRoles(roles: string | string[]): string {
+    if (Array.isArray(roles)) {
+      // If it's an array, join the values with '|'
+      return roles.join(' | ');
+    } else if (typeof roles == 'string') {
+      // If it's a string, split it (if it contains commas) and join with '|'
+      return roles.includes(',') ? roles.split(',').join(' | ') : roles;
+    } else {
+      // Handle other cases
+      return '';
+    }
+  }
 
 }
