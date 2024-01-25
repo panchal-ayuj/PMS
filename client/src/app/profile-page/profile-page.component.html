@@ -37,7 +37,7 @@
           </button>
         </div>
         <button class="custom-button" (click)="viewSelfFeedback()">View Self Feedback</button>
-        <button class="custom-button" (click)="giveSelfFeedback()">Give Self Feedback</button>
+        <button class="custom-button" (click)="giveSelfFeedback()" *ngIf="!showButton">Give Self Feedback</button>
       </div>
 
       <div class="divider"></div>

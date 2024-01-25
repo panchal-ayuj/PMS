@@ -57,7 +57,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { IdCardComponent } from './id-card/id-card.component';
 import { SublevelMenuComponent } from './sidebar/sublevel-menu.component';
-
+import { FeedbackArchivePageComponent } from './feedback-archive-page/feedback-archive-page.component';
+import {MatRadioModule} from '@angular/material/radio';
 @NgModule({
   declarations: [
     AppComponent,
@@ -93,6 +94,7 @@ import { SublevelMenuComponent } from './sidebar/sublevel-menu.component';
     ParentViewFeedbackComponent,
     IdCardComponent,
     SublevelMenuComponent,
+    FeedbackArchivePageComponent,
   ],
   imports: [
     BrowserModule,
@@ -119,7 +121,8 @@ import { SublevelMenuComponent } from './sidebar/sublevel-menu.component';
     MatAutocompleteModule,
     MatMenuModule,
     MatSnackBarModule,
-    MatGridListModule
+    MatGridListModule,
+    MatRadioModule,
     
   ],
   providers: [ExportService, EmployeeService],

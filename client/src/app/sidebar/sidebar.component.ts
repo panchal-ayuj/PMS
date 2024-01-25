@@ -64,7 +64,9 @@ export class SidebarComponent implements OnInit{
   }
 
   ngOnInit(): void {
-      this.screenWidth = window.innerWidth;
+    this.screenWidth = window.innerWidth;
+    this.collapsed = true;
+    this.onToggleSideNav.emit({ collapsed: this.collapsed, screenWidth: this.screenWidth });
   }
 
   toggleCollapse(): void {
@@ -106,6 +108,9 @@ export class SidebarComponent implements OnInit{
   }
 
   shrinkItems(item: INavbarData): void {
+    if(item.routeLink === "logout"){
+      this.sharedDataService.changeUserId(null);
+    }
     if (!this.multiple) {
       for(let modelItem of this.navData) {
         if (item !== modelItem && modelItem.expanded) {

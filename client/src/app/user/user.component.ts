@@ -1,5 +1,3 @@
-// user-management.component.ts
-
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -9,7 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
-  styleUrls: ['./user.component.scss']
+  styleUrls: ['./user.component.scss'],
 })
 export class UserManagementComponent implements OnInit {
   @ViewChild('firstNameField') firstNameField!: ElementRef;
@@ -23,6 +21,10 @@ export class UserManagementComponent implements OnInit {
   @ViewChild('rolesField') rolesField!: ElementRef;
   @ViewChild('teamsField') teamsField!: ElementRef;
   userForm!: FormGroup;
+  selectedOption!: string;
+  value = 'Clear me';
+  addForm!: FormGroup
+  updateForm!: FormGroup;
   users: any[] = [];
   userId: number | undefined;
 
@@ -32,11 +34,14 @@ export class UserManagementComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
-    this.loadUsers(); // Assuming you want to load existing users on component initialization
+    this.loadUsers();
+    this.initAddForm();
+
+     // Assuming you want to load existing users on component initialization
   }
 
   initForm() {
-    this.userForm = this.formBuilder.group({
+    this.updateForm = this.formBuilder.group({
       firstName: ['' , Validators.required],
       lastName: ['' , Validators.required],
       email: ['', [Validators.required , Validators.email]],
@@ -50,26 +55,49 @@ export class UserManagementComponent implements OnInit {
     });
   }
 
-  // registerUser() {
-  //   const user = this.userForm.value;
-  //   user.roles = user.roles.split(',').map((role: string) => role.trim());
-  //   user.teams = user.teams.split(',').map((team: string) => team.trim());
+  initAddForm() {
+    this.addForm = this.formBuilder.group({
+      firstName: [''],
+      lastName: [''],
+      email: [''],
+      status: [''],
+      joiningDate: [''],
+      hrId: [''],
+      band: [''],
+      reportingManagerId: [''],
+      roles: [''],
+      teams: ['']
+    });
+  }
 
-  //   const apiUrl = 'http://localhost:8080/api/users/register';
+  addUser(){
+    const user = this.addForm.value;
+    console.log(typeof user.roles);
+    console.log(user.roles);
+    if (typeof user.roles === 'string'){
+      user.roles = user.roles.split(',').map((role: string) => role.trim());
+    }
+    if (typeof user.teams === 'string'){
+      user.teams = user.teams.split(',').map((team: string) => team.trim());
+    }
+  
+    const apiUrl = 'http://localhost:8080/api/users/';
+    this.http.post(`${apiUrl}register`, user).subscribe(
+        (response) => {
+          console.log('User registered successfully:', response);
+          this.showSuccessSnackBar('User registered successfully');
+          this.loadUsers();
+          this.resetAddForm();
+        },
+        (error) => {
+          console.error('Error registering User:', error);
+        }
+      );
 
-  //   this.http.post(apiUrl, user).subscribe(
-  //     (response) => {
-  //       console.log('User registered successfully:', response);
-  //       this.loadUsers(); // Refresh user list after registration
-  //     },
-  //     (error) => {
-  //       console.error('Error registering user:', error);
-  //     }
-  //   );
-  // }
-
-  registerOrUpdateUser() {
-    const user = this.userForm.value;
+  }
+  
+  updateUser(){
+    const user = this.updateForm.value;
     console.log(typeof user.roles);
     console.log(user.roles);
     if (typeof user.roles === 'string'){
@@ -88,28 +116,14 @@ export class UserManagementComponent implements OnInit {
           console.log('User updated successfully:', response);
           this.showSuccessSnackBar('User updated successfully');
           this.loadUsers();
-          this.resetForm();
+          this.resetUpdateForm();
         },
         (error) => {
           console.error('Error updating User:', error);
         }
       );
-    } else {
-      this.http.post('http://localhost:8080/api/users/register', user).subscribe(
-        (response) => {
-          console.log('User registered successfully:', response);
-          this.showSuccessSnackBar('User registered successfully');
-          this.loadUsers();
-          this.resetForm();
-        },
-        (error) => {
-          console.error('Error registering User:', error);
-        }
-      );
-    }
+    } 
   }
-
-
   loadUsers() {
     const apiUrl = 'http://localhost:8080/api/users';
     this.http.get(apiUrl).subscribe(
@@ -151,7 +165,7 @@ export class UserManagementComponent implements OnInit {
       const apiUrl = `http://localhost:8080/api/users/userById/${userId}`;
       this.http.get(apiUrl).subscribe(
         (data: any) => {
-          this.userForm.patchValue(data); // Autofill the form with the fetched data
+          this.updateForm.patchValue(data); // Autofill the form with the fetched data
         },
         (error) => {
           console.error('Error fetching User:', error);
@@ -160,8 +174,12 @@ export class UserManagementComponent implements OnInit {
     }
   }
 
-  resetForm() {
-    this.userForm.reset();
+  resetUpdateForm() {
+    this.updateForm.reset();
+    this.searchUserId = undefined;
+  }
+  resetAddForm() {
+    this.addForm.reset();
     this.searchUserId = undefined;
   }
   private showSuccessSnackBar(message: string): void {
@@ -215,15 +233,11 @@ export class UserManagementComponent implements OnInit {
     });
 
     if (this.userForm.valid) {
-      this.registerOrUpdateUser();
+      this.updateUser();
     }
   }
   submitForm(event :Event) {
     event.preventDefault(); // Prevent the default form submission behavior
     this.highlightInvalidFields();
   }
-  
-clearForm() {
-  this.resetForm();
-}
 }

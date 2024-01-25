@@ -129,7 +129,7 @@ export class ProfilePageComponent implements OnInit {
       (response: any) => {
         // Open the dialog with the received feedback
         const dialogRef = this.dialog.open(SelfFeedbackDialogComponent, {
-          data: { feedback: response, viewMode: true },
+          data: { feedback: response.userFeedback, viewMode: true },
         });
   
         dialogRef.afterClosed().subscribe((result) => {
@@ -148,18 +148,18 @@ export class ProfilePageComponent implements OnInit {
     const url = `http://localhost:8080/reviewCycle/user-feedback/${this.employee.userId}`;
 
   // Fetch the user details including the userFeedback property
-  this.http.get(url , {responseType:'text'}).subscribe(
+  this.http.get(url).subscribe(
     (response: any) => {
       const dialogRef = this.dialog.open(SelfFeedbackDialogComponent, {
-        data: { feedback: response || '', viewMode: false, userId: this.employee.userId },
+        data: { feedback: response.userFeedback || '', viewMode: false, userId: this.employee.userId },
       });
 
       dialogRef.afterClosed().subscribe((newFeedback) => {
         if (newFeedback !== undefined && newFeedback !== null) {
           // Call API to update user feedback directly using http.put
-          this.http.put(url, { userFeedback: newFeedback }, { responseType: 'text' }).subscribe(
+          this.http.put(url, newFeedback.userFeedback).subscribe(
             () => {
-              console.log('User feedback updated successfully.');
+              console.log('User feedback updated successfully.' + newFeedback);
             },
             (error) => {
               console.error('Error updating user feedback:', error);

@@ -11,11 +11,7 @@ export const navbarData: INavbarData[] = [
         icon: 'alarm_on',
         label: 'Task'
     },
-    {
-        routeLink: 'hierarchy',
-        icon: 'tags',
-        label: 'Hierarchy'
-    },
+    
     {
         routeLink: 'team',
         icon: 'people',

@@ -65,6 +65,13 @@ export class UploadComponent {
         },
         error => {
           console.error(error);
+          if (error.status != 200) {
+            this.showSuccessSnackBar('File not uploaded');
+          }
+          if (error.status == 200)
+            this.showSuccessSnackBar('File uploaded successfully');
+
+          console.error("File uploaded "+error);
           // Handle error (e.g., display an error message)
         }
       );
