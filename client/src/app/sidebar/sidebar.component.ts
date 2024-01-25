@@ -64,7 +64,9 @@ export class SidebarComponent implements OnInit{
   }
 
   ngOnInit(): void {
-      this.screenWidth = window.innerWidth;
+    this.screenWidth = window.innerWidth;
+    this.collapsed = true;
+    this.onToggleSideNav.emit({ collapsed: this.collapsed, screenWidth: this.screenWidth });
   }
 
   toggleCollapse(): void {

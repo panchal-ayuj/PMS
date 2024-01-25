@@ -5,7 +5,7 @@
     z-index: 1;
     top: 0;
     width: 5rem;
-    height: 100vh;
+    height: 125vh;
     box-shadow: 0.063rem 0 1.25rem 0 #8690a3;
     margin-top: 65px;
 
@@ -132,7 +132,7 @@
 .sublevel-nav {
     list-style: none;
     margin-left: -50px;
-    margin-bottom: 50px;
+    margin-bottom: 75px;
 
     .sublevel-nav-item {
         .sublevel-nav-link {
@@ -145,7 +145,7 @@
             transition: all .3s ease;
 
             .sublevel-link-icon {
-                font-size: 4px;
+                font-size: 5px;
                 width: 2rem;
                 min-width: 2rem;
                 margin: 0 0.5rem;
@@ -197,4 +197,9 @@
 .scrollwrap::-webkit-scrollbar-thumb {
     background-color: #556268;
     border-radius: 20px;
+}
+
+.search-form{
+    justify-content: center;
+    align-items: center;
 }

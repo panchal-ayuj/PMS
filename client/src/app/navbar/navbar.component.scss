@@ -50,19 +50,19 @@ $navbar-text-color: #ecf0f1;
       }
     }
     // Responsive styles
-    @media (max-width: 768px) {
-      flex-direction: column;
-      position: absolute;
-      top: 65px;
-      left: 0;
-      right: 0;
-      background-color: $navbar-background;
-      text-align: center;
+    // @media (max-width: 768px) {
+    //   flex-direction: column;
+    //   position: absolute;
+    //   top: 65px;
+    //   left: 0;
+    //   right: 0;
+    //   background-color: $navbar-background;
+    //   text-align: center;
 
-      li {
-        margin: 10px 0;
-      }
-    }
+    //   li {
+    //     margin: 10px 0;
+    //   }
+    // }
   }
 
   .navbar-actions {
