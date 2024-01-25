@@ -1,11 +1,11 @@
 <!-- dashboard.component.html -->
 <div class="dashboard-container">
-  <mat-card>
-    <div style="position: relative; right: 270%" class="table-card">
+  <mat-card style="margin-right: 1%;">
+    <div style="position: relative; right: 240%;" class="table-card">
       <mat-card *ngIf="taskList && taskList.length > 0">
         <mat-card-title style="color: #112d4e">Ongoing tasks</mat-card-title>
         <div class="scrollable-table">
-          <mat-card-content style="width: 500px">
+          <mat-card-content style="width: 400px">
             <mat-table
               class="mat-elevation-z8"
               [dataSource]="taskList"
@@ -25,20 +25,13 @@
                 </mat-cell>
               </ng-container>
 
-              <ng-container matColumnDef="rating">
-                <mat-header-cell *matHeaderCellDef>Rating</mat-header-cell>
-                <mat-cell *matCellDef="let task">
-                  {{ task.rating | number : "1.2-2" }}
-                </mat-cell>
-              </ng-container>
-
               <mat-header-row
-                *matHeaderRowDef="['taskName', 'weight', 'rating']"
+                *matHeaderRowDef="['taskName', 'weight']"
               ></mat-header-row>
               <mat-row
                 *matRowDef="
                   let row;
-                  columns: ['taskName', 'weight', 'rating'];
+                  columns: ['taskName', 'weight'];
                   let even = even;
                   let odd = odd
                 "
@@ -51,7 +44,7 @@
     </div>
     <mat-card style="margin-right: 110%;" *ngIf="topThreeKeyResults && topThreeKeyResults.length > 0" >
       <mat-card-title style="color: #112d4e">Performing well in</mat-card-title>
-      <mat-card-content style="width: 500px">
+      <mat-card-content style="width: 400px">
         <div style="position: relative; " class="table-card">
           <mat-table class="mat-elevation-z8" [dataSource]="topThreeKeyResults">
             <ng-container matColumnDef="keyResultName">
