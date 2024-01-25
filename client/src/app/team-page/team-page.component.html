@@ -20,7 +20,28 @@
     <ng-container matColumnDef="viewDetails">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
       <mat-cell *matCellDef="let member">
-        <button mat-button color="primary" (click)="viewDetails(member.userId)" style="margin-left: 40px;" class="view-details-button">View Details</button>
+        <button
+          mat-button
+          color="primary"
+          (click)="viewDetails(member.userId)"
+          style="
+            margin-left: 60px;
+            background-color: #f9f7f7;
+            color: #000000;
+            border: none;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
+          "
+          class="view-details-button"
+        >
+          View Details
+        </button>
       </mat-cell>
     </ng-container>
 
@@ -30,7 +51,13 @@
       *matHeaderRowDef="['firstName', 'lastName', 'email', 'viewDetails']"
     ></mat-header-row>
     <mat-row
-      *matRowDef="let row; columns: ['firstName', 'lastName', 'email', 'viewDetails']"
+      *matRowDef="
+        let row;
+        columns: ['firstName', 'lastName', 'email', 'viewDetails'];
+        let even = even;
+        let odd = odd
+      "
+      [ngClass]="{ 'even-row': even, 'odd-row': odd }"
     ></mat-row>
   </mat-table>
 </div>

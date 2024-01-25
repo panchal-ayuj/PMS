@@ -46,7 +46,7 @@ export class LogoutComponent implements OnInit {
   averageRating: number = 0;
   topThreeKeyResults!: any[];
   bottomThreeKeyResults!: any[];
-
+  taskList!: any[];
 
 
   constructor(private http: HttpClient,private cookieService: CookieService, private router: Router, private service: AuthService, private _ngZone: NgZone, private userInfoService: UserInfoService, private sharedDataService : SharedDataService) {}
@@ -67,6 +67,9 @@ export class LogoutComponent implements OnInit {
     })
     .then(() => {
       this.fetchBottomThreeKRA();
+    })
+    .then(() => {
+      this.fetchCurrentTasks();
     })
     .catch((error) => {
       console.error('Error handling async response:', error);
@@ -167,6 +170,17 @@ export class LogoutComponent implements OnInit {
     this.http.get<any>(`http://localhost:8080/keyResult/bottomThreeKeyResults/${this.userId}`).subscribe(
       (data) => {
         this.bottomThreeKeyResults = data;
+      },
+      (error) => {
+        console.error('Error fetching overall rating:', error);
+      }
+    );
+  }
+
+  fetchCurrentTasks(){
+    this.http.get<any>(`http://localhost:8080/keyResult/tasks/${this.userId}`).subscribe(
+      (data) => {
+        this.taskList = data;
       },
       (error) => {
         console.error('Error fetching overall rating:', error);
