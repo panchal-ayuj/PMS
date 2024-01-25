@@ -63,7 +63,7 @@
 
             <ng-container matColumnDef="rating">
               <mat-header-cell *matHeaderCellDef>Rating</mat-header-cell>
-              <mat-cell *matCellDef="let keyResult" style="color: rgb(52, 213, 52); display: flex; justify-content: flex-end; margin-right: 3%;">
+              <mat-cell *matCellDef="let keyResult" style="color: rgb(52, 213, 52); display: flex; justify-content: flex-end; margin-right: 3%; font-weight: 550;">
                 {{ keyResult.rating | number : "1.2-2" }}
               </mat-cell>
             </ng-container>
@@ -117,7 +117,7 @@
 
             <ng-container matColumnDef="rating">
               <mat-header-cell *matHeaderCellDef>Rating</mat-header-cell>
-              <mat-cell *matCellDef="let keyResult" style="color: rgb(255, 72, 0); display: flex; justify-content: flex-end; margin-right: 3%;">
+              <mat-cell *matCellDef="let keyResult" style="color: rgb(255, 72, 0); display: flex; justify-content: flex-end; margin-right: 3%; font-weight: 550;">
                 {{ keyResult.rating | number : "1.2-2" }}
               </mat-cell>
             </ng-container>
