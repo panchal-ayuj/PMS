@@ -57,6 +57,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { IdCardComponent } from './id-card/id-card.component';
 import { SublevelMenuComponent } from './sidebar/sublevel-menu.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -93,6 +95,7 @@ import { SublevelMenuComponent } from './sidebar/sublevel-menu.component';
     ParentViewFeedbackComponent,
     IdCardComponent,
     SublevelMenuComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -119,7 +122,10 @@ import { SublevelMenuComponent } from './sidebar/sublevel-menu.component';
     MatAutocompleteModule,
     MatMenuModule,
     MatSnackBarModule,
-    MatGridListModule
+    MatGridListModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+   
     
   ],
   providers: [ExportService, EmployeeService],

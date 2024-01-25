@@ -48,7 +48,7 @@ export class ReviewCycleUploadComponent {
   }
 
   onUpload2(): void {
-    if (this.selectedFile) {
+    if (this.selectedFile && this.selectedBand) {
       const formData: FormData = new FormData();
       formData.append('file', this.selectedFile);
 

@@ -51,7 +51,7 @@ export class KeyResultUploadComponent {
   }
 
   onUpload2(): void {
-    if (this.selectedFile) {
+    if (this.selectedFile && this.selectedBand && this.selectedRole) {
       const formData: FormData = new FormData();
       formData.append('file', this.selectedFile);
 
