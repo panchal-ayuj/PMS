@@ -20,7 +20,7 @@
 
               <ng-container matColumnDef="weight">
                 <mat-header-cell *matHeaderCellDef>Weight</mat-header-cell>
-                <mat-cell *matCellDef="let task" style="margin-left: 13%">
+                <mat-cell *matCellDef="let task" style="display: flex; justify-content: flex-end; margin-right: 2%;">
                   {{ task.weight }}
                 </mat-cell>
               </ng-container>
@@ -42,8 +42,8 @@
         </div>
       </mat-card>
     </div>
-    <mat-card style="margin-right: 110%;" *ngIf="topThreeKeyResults && topThreeKeyResults.length > 0" >
-      <mat-card-title style="color: #112d4e">Performing well in</mat-card-title>
+    <mat-card style="margin-right: 108%;" *ngIf="topThreeKeyResults && topThreeKeyResults.length > 0" >
+      <mat-card-title style="color: #112d4e">Performance Pinnacles</mat-card-title>
       <mat-card-content style="width: 400px">
         <div style="position: relative; " class="table-card">
           <mat-table class="mat-elevation-z8" [dataSource]="topThreeKeyResults">
@@ -56,14 +56,14 @@
 
             <ng-container matColumnDef="weight">
               <mat-header-cell *matHeaderCellDef>Weight</mat-header-cell>
-              <mat-cell *matCellDef="let keyResult" style="margin-left: 13%">
+              <mat-cell *matCellDef="let keyResult" style="display: flex; justify-content: flex-end; margin-right: 0%;">
                 {{ keyResult.weight }}
               </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="rating">
               <mat-header-cell *matHeaderCellDef>Rating</mat-header-cell>
-              <mat-cell *matCellDef="let keyResult">
+              <mat-cell *matCellDef="let keyResult" style="color: rgb(52, 213, 52); display: flex; justify-content: flex-end; margin-right: 3%;">
                 {{ keyResult.rating | number : "1.2-2" }}
               </mat-cell>
             </ng-container>
@@ -89,7 +89,7 @@
           style="position: relative; margin-top: 15%"
           class="table-card"
         >
-        <mat-card-title>Needs Improvement In</mat-card-title>
+        <mat-card-title>Improvement Areas</mat-card-title>
           <!-- <mat-card style="margin-top: 5%;"
         *ngIf="bottomThreeKeyResults && bottomThreeKeyResults.length > 0"
       >
@@ -110,14 +110,14 @@
 
             <ng-container matColumnDef="weight">
               <mat-header-cell *matHeaderCellDef>Weight</mat-header-cell>
-              <mat-cell *matCellDef="let keyResult" style="margin-left: 13%">
+              <mat-cell *matCellDef="let keyResult" style="display: flex; justify-content: flex-end; margin-right: 0%;">
                 {{ keyResult.weight }}
               </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="rating">
               <mat-header-cell *matHeaderCellDef>Rating</mat-header-cell>
-              <mat-cell *matCellDef="let keyResult">
+              <mat-cell *matCellDef="let keyResult" style="color: rgb(255, 72, 0); display: flex; justify-content: flex-end; margin-right: 3%;">
                 {{ keyResult.rating | number : "1.2-2" }}
               </mat-cell>
             </ng-container>

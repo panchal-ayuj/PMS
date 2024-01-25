@@ -19,7 +19,8 @@
         margin-bottom: 7%;
 
         .logo {
-            background: #fff;
+            color: #F9F7F7;
+            background: #112D4E;
             text-align: center;
             width: 3rem;
             min-width: 3rem;
@@ -29,13 +30,32 @@
             font-weight: 900;
             cursor: pointer;
             border: none;
-        }
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 2.2rem; // Adjust the height of the icon bars as needed
+          
+            span {
+              background: #F9F7F7; // Color of the icon bars
+              height: 0.25rem; // Height of each bar
+              width: 100%; // Full width
+              display: block;
+              border-radius: 0.125rem; // Adjust the border radius as needed
+            }
+          }
+          
 
         .logo-text {
-            margin-left: 1.5rem;
-            font-size: 24px;
-            font-weight: 700;
-            color: #fff;
+            color: #F9F7F7;
+            background: #112D4E;
+            width: 3rem;
+            min-width: 3rem;
+            border-radius: 0.313rem;
+            padding: 0.313rem;
+            font-size: 35.2px;
+            font-weight: 900;
+            cursor: pointer;
+            border: none;
         }
 
         .btn-close {

@@ -12,10 +12,18 @@
       <mat-cell *matCellDef="let member"> {{ member.lastName }} </mat-cell>
     </ng-container>
 
+    <ng-container matColumnDef="band">
+      <mat-header-cell *matHeaderCellDef> Band </mat-header-cell>
+      <mat-cell *matCellDef="let member"> {{ member.band }} </mat-cell>
+    </ng-container>
+
+
     <ng-container matColumnDef="email">
       <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
       <mat-cell *matCellDef="let member"> {{ member.email }} </mat-cell>
     </ng-container>
+
+
 
     <ng-container matColumnDef="viewDetails">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
@@ -48,12 +56,12 @@
     <!-- Add more columns as needed -->
 
     <mat-header-row
-      *matHeaderRowDef="['firstName', 'lastName', 'email', 'viewDetails']"
+      *matHeaderRowDef="['firstName', 'lastName', 'band','email', 'viewDetails']"
     ></mat-header-row>
     <mat-row
       *matRowDef="
         let row;
-        columns: ['firstName', 'lastName', 'email', 'viewDetails'];
+        columns: ['firstName', 'lastName', 'band','email', 'viewDetails'];
         let even = even;
         let odd = odd
       "

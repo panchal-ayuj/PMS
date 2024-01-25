@@ -3,9 +3,17 @@
   margin-top: 1%;
 
   h2 {
-    text-align: center;
-    font-size: 24px;
-    margin-bottom: 20px;
+    font-size: 30px;
+    margin-bottom: -1%;
+    margin-top: 1%;
+    margin-right: 70%;
+    // position: relative;
+    // left: -25%; /* Adjusted to center the heading */
+    color: #112D4E; /* Adjust the color as needed */
+    font-family: 'Arial', sans-serif; /* Specify the font family */
+    text-transform: uppercase; /* Convert text to uppercase */
+    letter-spacing: 1px; /* Add letter-spacing for better readability */
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2); /* Add a subtle text shadow */
   }
 
   mat-table {
@@ -59,3 +67,6 @@ button.view-details-button {
   background-color: #dbe2ef; /* Set the background color for even rows */
 }
 
+.mat-column-band {
+  margin-right: -7%;
+}

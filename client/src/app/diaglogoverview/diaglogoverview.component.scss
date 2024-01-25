@@ -64,3 +64,22 @@ mat-header-cell {
 .mat-mdc-cell{
   border: none;
 }
+
+/* Add this to your stylesheet */
+.table-heading {
+  text-align: center;
+  padding-top: 10px;
+  background-color: #F9F7F7; /* Set your desired background color */
+}
+
+.close-icon {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  cursor: pointer;
+  color: #757575; /* Set your desired color */
+}
+
+.close-icon:hover {
+  color: #333; /* Set your desired hover color */
+}

@@ -94,16 +94,13 @@ export class NavbarComponent implements OnInit {
   }
   logout(): void {
     // Display a confirmation dialog before logging out
-    const confirmLogout = confirm('Are you sure you want to logout?');
-    if (confirmLogout) {
-      // Call your logout service or perform logout actions
-      // Example: this.authService.logout();
-      // You may also want to navigate to the login page after logout
-      this.authService.signOutExternal();
-      this._ngZone.run(() => {
-        this.router.navigate(['/']).then(() => window.location.reload());
-      });
-    }
+    // Call your logout service or perform logout actions
+    // Example: this.authService.logout();
+    // You may also want to navigate to the login page after logout
+    this.authService.signOutExternal();
+    this._ngZone.run(() => {
+      this.router.navigate(['/']).then(() => window.location.reload());
+    });
   }
   searchUserIds(userId: string): Observable<any> {
     return this.authService.searchUserIds(userId);

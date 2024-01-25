@@ -1,7 +1,7 @@
 <div class="sidenav" [ngClass]="collapsed ? 'sidenav-collapsed': ''">
     <div class="logo-container">
-        <button class="logo" (click)="toggleCollapse()">P</button>
-        <div class="logo-text" @fadeInOut *ngIf="collapsed">PMS</div>
+        <button class="logo" (click)="toggleCollapse()" *ngIf="!collapsed"><span></span><span></span><span></span></button>
+        <div class="logo-text" *ngIf="collapsed">PMS</div>
         <button class="btn-close" *ngIf="collapsed" (click)="closeSidenav()">
             <mat-icon style="color: white;">close</mat-icon>
         </button>
