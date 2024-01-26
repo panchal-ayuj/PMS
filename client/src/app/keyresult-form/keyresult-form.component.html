@@ -1,5 +1,5 @@
 <!-- user-management.component.html -->
-
+<!-- 
 <div class="key-result-management-container">
   <div class="edit-container">
     <div class="search-form">
@@ -19,7 +19,7 @@
       >
         Search
       </button>
-      <!-- Reset Form Button -->
+
       <div class="reset-button">
         <button mat-raised-button (click)="resetForm()">Reset</button>
       </div>
@@ -43,7 +43,7 @@
   <div class="form-container">
     <h2>KeyResult Management</h2>
 
-    <!-- KeyResult Registration Form -->
+    KeyResult Registration Form 
     <form [formGroup]="keyResultForm" (ngSubmit)="registerOrUpdateKeyResult()">
       <mat-form-field appearance="fill">
         <mat-label>User Id</mat-label>
@@ -105,7 +105,7 @@
       </button>
     </form>
   </div>
-
+</div> -->
   <!-- KeyResult List -->
   <!-- <div class="key-result-list">
     <div class="key-result-card" *ngFor="let keyresult of keyresults">
@@ -116,4 +116,211 @@
       </mat-card>
     </div>
   </div> -->
-</div>
+'
+
+<div class="user-page">
+  <div class="user-container">
+    <h2>Key Result Management</h2>
+    <div class="radio-options">
+      <mat-radio-group aria-label="Select an option" [(ngModel)]="selectedOption">
+        <mat-radio-button value="1">Add Key Result</mat-radio-button>
+        <mat-radio-button value="2">Update Key Result</mat-radio-button>
+      </mat-radio-group>
+    </div>
+  </div>
+
+  <!-- Add Users Options -->
+  <div class="option-types">
+    <div class="opt1" *ngIf="selectedOption === '1'">
+      <div class="single-user-upload">
+        <div class="form-container">
+          <h2>Add Key Result for Single User</h2>
+
+          <form [formGroup]="keyResultAddForm" (ngSubmit)="registerKeyResult()">
+            <mat-form-field appearance="fill">
+              <mat-label>User Id</mat-label>
+              <input matInput type="number" id="userId" formControlName="userId" />
+            </mat-form-field>
+      
+            <mat-form-field appearance="fill">
+              <mat-label>GoalPlan Id</mat-label>
+              <input
+                matInput
+                type="number"
+                id="goalPlanId"
+                formControlName="goalPlanId"
+              />
+            </mat-form-field>
+      
+            <mat-form-field appearance="fill">
+              <mat-label>KeyResult Name</mat-label>
+              <input
+                matInput
+                type="text"
+                id="keyResultName"
+                formControlName="keyResultName"
+              />
+            </mat-form-field>
+      
+            <mat-form-field appearance="fill">
+              <mat-label>Description</mat-label>
+              <input
+                matInput
+                type="text"
+                id="description"
+                formControlName="description"
+              />
+            </mat-form-field>
+      
+            <mat-form-field appearance="fill">
+              <mat-label>Weight</mat-label>
+              <input matInput type="number" id="weight" formControlName="weight" />
+            </mat-form-field>
+      
+            <mat-form-field appearance="fill">
+              <mat-label>Period</mat-label>
+              <input matInput type="text" id="period" formControlName="period" />
+            </mat-form-field>
+      
+            <mat-form-field appearance="fill">
+              <mat-label>Window Id</mat-label>
+              <input
+                matInput
+                type="number"
+                id="windowId"
+                formControlName="windowId"
+              />
+            </mat-form-field>
+      
+            <button mat-raised-button color="primary" type="submit">
+              {{ searchKeyResultId ? "Update Key Result" : "Register Key Result" }}
+            </button>
+          </form>
+          <div class="btn-container">
+            <div class="reset-button">
+              <button mat-raised-button (click)="resetAddForm()" color="primary">Reset</button>
+            </div>
+          </div>
+        </div>
+        <!-- Add form for bulk upload -->
+        <!-- Bind the form submission to the onSubmitAddUser method -->
+      </div>
+
+      <div class="or">
+        <h2 style="text-align: left;">or</h2>
+      </div>
+
+      <div class="bulk-upload">
+        <h2>Bulk Upload Users</h2>
+        <div class="file-upload-container">
+          <app-keyresult-upload></app-keyresult-upload>
+        </div>
+        <!-- Add form for adding a single user -->
+        <!-- Bind the form submission to the onSubmitAddUser method -->
+      </div>
+    </div>
+
+    <!-- Update Users Options -->
+    <div *ngIf="selectedOption === '2'">
+      <div class="form-container">
+        <h2>User Registration</h2>
+      </div>
+
+      <div class="search-form">
+        <mat-form-field appearance="fill">
+          <mat-label>Search Key Result by ID:</mat-label>
+          <input
+            matInput
+            type="number"
+            id="keyResultId"
+            [(ngModel)]="keyResultId"
+          />
+        </mat-form-field>
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="searchKeyResult(keyResultId)"
+        >
+          Search
+        </button>
+  
+        <div class="reset-button">
+          <button mat-raised-button (click)="resetUpdateForm()">Reset</button>
+        </div>
+      </div>
+
+      <div class="update-form-container">
+        <h2>Add Key Result for Single User</h2>
+
+        <form [formGroup]="keyResultUpdateForm" (ngSubmit)="updateKeyResult()">
+          <mat-form-field appearance="fill">
+            <mat-label>User Id</mat-label>
+            <input matInput type="number" id="userId" formControlName="userId" />
+          </mat-form-field>
+    
+          <mat-form-field appearance="fill">
+            <mat-label>GoalPlan Id</mat-label>
+            <input
+              matInput
+              type="number"
+              id="goalPlanId"
+              formControlName="goalPlanId"
+            />
+          </mat-form-field>
+    
+          <mat-form-field appearance="fill">
+            <mat-label>KeyResult Name</mat-label>
+            <input
+              matInput
+              type="text"
+              id="keyResultName"
+              formControlName="keyResultName"
+            />
+          </mat-form-field>
+    
+          <mat-form-field appearance="fill">
+            <mat-label>Description</mat-label>
+            <input
+              matInput
+              type="text"
+              id="description"
+              formControlName="description"
+            />
+          </mat-form-field>
+    
+          <mat-form-field appearance="fill">
+            <mat-label>Weight</mat-label>
+            <input matInput type="number" id="weight" formControlName="weight" />
+          </mat-form-field>
+    
+          <mat-form-field appearance="fill">
+            <mat-label>Period</mat-label>
+            <input matInput type="text" id="period" formControlName="period" />
+          </mat-form-field>
+    
+          <mat-form-field appearance="fill">
+            <mat-label>Window Id</mat-label>
+            <input
+              matInput
+              type="number"
+              id="windowId"
+              formControlName="windowId"
+            />
+          </mat-form-field>
+    
+          <button mat-raised-button color="primary" type="submit">
+            {{ searchKeyResultId ? "Update Key Result" : "Register Key Result" }}
+          </button>
+        </form>
+        <div class="btn-container">
+          <div class="reset-button">
+            <button mat-raised-button (click)="resetUpdateForm()" color="primary">Reset</button>
+          </div>
+        </div>
+      </div>
+      <!-- Add search form -->
+      <!-- Bind the search button click to the onSearchUser method -->
+    </div>
+  </div>
+</div>'
+

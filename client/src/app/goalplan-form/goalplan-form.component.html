@@ -1,23 +1,14 @@
-<div class="goal-plan-management-container">
+<!-- <div class="goal-plan-management-container">
   <div class="edit-container">
     <div class="search-form">
       <mat-form-field appearance="fill">
         <mat-label>Search Goal Plan by ID:</mat-label>
-        <input
-          matInput
-          type="number"
-          id="goalPlanId"
-          [(ngModel)]="goalPlanId"
-        />
+        <input matInput type="number" id="goalPlanId" [(ngModel)]="goalPlanId"/>
       </mat-form-field>
-      <button
-        mat-raised-button
-        color="primary"
-        (click)="searchGoalPlan(goalPlanId)"
-      >
+      <button mat-raised-button color="primary" (click)="searchGoalPlan(goalPlanId)">
         Search
       </button>
-      <!-- Reset Form Button -->
+
       <div class="reset-button">
         <button mat-raised-button (click)="resetForm()">Reset</button>
       </div>
@@ -27,13 +18,7 @@
       <app-upload></app-upload>
     </div>
 
-    <button
-      mat-raised-button
-      color="primary"
-      type="button"
-      (click)="exportGoalPlans()"
-      style="margin-top: 8%;"
-    >
+    <button mat-raised-button color="primary" type="button" (click)="exportGoalPlans()" style="margin-top: 8%;">
       Export Goal Plans
     </button>
   </div>
@@ -41,26 +26,16 @@
   <div class="form-container">
     <h2>Goal Plan Management</h2>
 
-    <!-- GoalPlan Registration Form -->
+
     <form [formGroup]="goalPlanForm" (ngSubmit)="registerOrUpdateGoalPlan()">
       <mat-form-field appearance="fill">
         <mat-label>Financial Year</mat-label>
-        <input
-          matInput
-          type="number"
-          placeholder="Enter financial year"
-          formControlName="financialYear"
-        />
+        <input matInput type="number" placeholder="Enter financial year" formControlName="financialYear"/>
       </mat-form-field>
 
       <mat-form-field appearance="fill">
         <mat-label>User Id</mat-label>
-        <input
-          matInput
-          type="number"
-          placeholder="Enter user ID"
-          formControlName="userId"
-        />
+        <input matInput type="number" placeholder="Enter user ID" formControlName="userId" />
       </mat-form-field>
 
       <button mat-raised-button color="primary" type="submit">
@@ -68,14 +43,99 @@
       </button>
     </form>
   </div>
-  <!-- GoalPlan List -->
-  <!-- <div class="goal-plan-list" *ngFor="let goalplan of goalplans">
-    <mat-card class="goalplan-card">
-      <mat-card-content>
-        <p class="goalplan-info">
-          {{ goalplan.financialYear }} ({{ goalplan.userId }})
-        </p>
-      </mat-card-content>
-    </mat-card>
-  </div> -->
-</div>
+
+</div> -->
+
+<div class="user-page">
+  <div class="user-container">
+    <h2>User Management</h2>
+    <div class="radio-options">
+      <mat-radio-group aria-label="Select an option" [(ngModel)]="selectedOption">
+        <mat-radio-button value="1">Add GoalPlan</mat-radio-button>
+        <mat-radio-button value="2">Update GoalPlan</mat-radio-button>
+      </mat-radio-group>
+    </div>
+  </div>
+
+  <!-- Add Users Options -->
+  <div class="option-types">
+    <div class="opt1" *ngIf="selectedOption === '1'">
+      <div class="single-user-upload">
+        <div class="form-container">
+          <h2>Upload Single Goalplan</h2>
+
+          <form [formGroup]="goalPlanAddForm" (ngSubmit)="registerGoalPlan()">
+            <mat-form-field appearance="fill">
+              <mat-label>Financial Year</mat-label>
+              <input matInput type="number" placeholder="Enter financial year" formControlName="financialYear"/>
+            </mat-form-field>
+      
+            <mat-form-field appearance="fill">
+              <mat-label>User Id</mat-label>
+              <input matInput type="number" placeholder="Enter user ID" formControlName="userId" />
+            </mat-form-field>
+      
+            <button mat-raised-button color="primary" type="submit">
+              {{ searchGoalPlanId ? "Update Goal Plan" : "Register Goal Plan" }}
+            </button>
+          </form>
+          <div class="btn-container">
+            <div class="reset-button">
+              <button mat-raised-button (click)="resetAddForm()" color="primary">Reset</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="or">
+        <h2 style="text-align: left;">or</h2>
+      </div>
+
+      <div class="bulk-upload">
+        <h2>Bulk Upload Users</h2>
+        <div class="file-upload-container">
+          <app-user-upload></app-user-upload>
+        </div>
+
+      </div>
+    </div>
+
+    <div *ngIf="selectedOption === '2'">
+        <div class="search-form">
+          <mat-form-field appearance="fill">
+            <mat-label>Search Goal Plan by ID:</mat-label>
+            <input matInput type="number" id="goalPlanId" [(ngModel)]="goalPlanId"/>
+          </mat-form-field>
+          <button mat-raised-button color="primary" (click)="searchGoalPlan(goalPlanId)">
+            Search
+          </button>
+    
+          <div class="reset-button">
+            <button mat-raised-button (click)="resetUpdateForm()">Reset</button>
+          </div>
+        </div>
+
+
+        <div class="form-container">
+          <h2>User Registration</h2>
+  
+          <form [formGroup]="goalPlanUpdateForm" (ngSubmit)="updateGoalPlan()">
+              <mat-form-field appearance="fill">
+                <mat-label>Financial Year</mat-label>
+                <input matInput type="number" placeholder="Enter financial year" formControlName="financialYear"/>
+              </mat-form-field>
+        
+              <mat-form-field appearance="fill">
+                <mat-label>User Id</mat-label>
+                <input matInput type="number" placeholder="Enter user ID" formControlName="userId" />
+              </mat-form-field>
+        
+              <button mat-raised-button color="primary" type="submit">
+                {{ searchGoalPlanId ? "Update Goal Plan" : "Register Goal Plan" }}
+              </button>
+            </form>
+        </div>
+        
+      </div>
+    </div>
+  </div>

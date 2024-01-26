@@ -106,7 +106,6 @@
       <mat-radio-group aria-label="Select an option" [(ngModel)]="selectedOption">
         <mat-radio-button value="1">Add Users</mat-radio-button>
         <mat-radio-button value="2">Update Users</mat-radio-button>
-        <mat-radio-button value="3">Delete User</mat-radio-button>
       </mat-radio-group>
     </div>
   </div>
@@ -168,16 +167,15 @@
               <mat-label>Teams (comma-separated)</mat-label>
               <input matInput formControlName="teams" />
             </mat-form-field>
-          </form>
-          <div class="btn-container">
-            <div class="reset-button">
-              <button mat-raised-button (click)="resetAddForm()" color="primary">Reset</button>
-            </div>
-
             <div class="submit">
               <button type="submit" mat-raised-button color="primary">
                 Register User
               </button>
+            </div>
+          </form>
+          <div class="btn-container">
+            <div class="reset-button">
+              <button mat-raised-button (click)="resetAddForm()" color="primary">Reset</button>
             </div>
           </div>
         </div>

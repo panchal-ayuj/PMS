@@ -9,7 +9,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrl: './goalplan-form.component.scss'
 })
 export class GoalplanFormComponent {
-  goalPlanForm!: FormGroup;
+
+  selectedOption!: string;
+  goalPlanUpdateForm!: FormGroup;
+  goalPlanAddForm!: FormGroup;
   goalplans: any[] = [];
   goalPlanId: number | undefined;
 
@@ -18,19 +21,64 @@ export class GoalplanFormComponent {
   constructor(private formBuilder: FormBuilder, private http: HttpClient,private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
-    this.initForm();
-    this.loadGoalPlans(); // Assuming you want to load existing users on component initialization
+    this.initUpdateForm();
+    this.loadGoalPlans();
+    this.initAddForm(); // Assuming you want to load existing users on component initialization
   }
 
-  initForm() {
-    this.goalPlanForm = this.formBuilder.group({
+  initUpdateForm() {
+    this.goalPlanUpdateForm = this.formBuilder.group({
       financialYear: [''],
       userId: ['']
     });
   }
 
-  registerOrUpdateGoalPlan() {
-    const goalplan = this.goalPlanForm.value;
+  initAddForm() {
+    this.goalPlanAddForm = this.formBuilder.group({
+      financialYear: [''],
+      userId: ['']
+    });
+  }
+
+  // registerOrUpdateGoalPlan() {
+  //   const goalplan = this.goalPlanForm.value;
+
+  //   const apiUrl = 'http://localhost:8080/';
+
+  //   // Check if ID is present for update
+  //   if (this.searchGoalPlanId) { 
+     
+
+
+  //     this.http.put(`${apiUrl}goalPlanById/${this.searchGoalPlanId}`, goalplan).subscribe(
+  //       (response) => {
+  //         console.log('GoalPlan updated successfully:', response);
+  //         this.showSuccessSnackBar('GoalPlan updated successfully');
+  //         this.loadGoalPlans();
+  //         this.resetForm();
+  //       },
+  //       (error) => {
+  //         console.error('Error updating GoalPlan:', error);
+  //       }
+  //     );
+  //   } else {
+      
+  //     this.http.post('http://localhost:8080/goalPlan/register', goalplan).subscribe(
+  //       (response) => {
+  //         console.log('GoalPlan registered successfully:', response);
+  //         this.showSuccessSnackBar('GoalPlan registered successfully');
+  //         this.loadGoalPlans();
+  //         this.resetForm();
+  //       },
+  //       (error) => {
+  //         console.error('Error registering GoalPlan:', error);
+  //       }
+  //     );
+  //   }
+  // }
+
+  updateGoalPlan() {
+    const goalplan = this.goalPlanUpdateForm.value;
 
     const apiUrl = 'http://localhost:8080/';
 
@@ -44,27 +92,35 @@ export class GoalplanFormComponent {
           console.log('GoalPlan updated successfully:', response);
           this.showSuccessSnackBar('GoalPlan updated successfully');
           this.loadGoalPlans();
-          this.resetForm();
+          this.resetUpdateForm();
         },
         (error) => {
           console.error('Error updating GoalPlan:', error);
         }
       );
-    } else {
-      
-      this.http.post('http://localhost:8080/goalPlan/register', goalplan).subscribe(
+    }
+  }
+
+
+  registerGoalPlan() {
+    const goalplan = this.goalPlanAddForm.value;
+
+    const apiUrl = 'http://localhost:8080/';
+    
+
+    this.http.post('http://localhost:8080/goalPlan/register', goalplan).subscribe(
         (response) => {
           console.log('GoalPlan registered successfully:', response);
           this.showSuccessSnackBar('GoalPlan registered successfully');
           this.loadGoalPlans();
-          this.resetForm();
+          this.resetUpdateForm();
         },
         (error) => {
           console.error('Error registering GoalPlan:', error);
         }
       );
-    }
   }
+
 
 
   loadGoalPlans() {
@@ -111,7 +167,7 @@ export class GoalplanFormComponent {
       const apiUrl = `http://localhost:8080/goalPlanById/${goalPlanId}`;
       this.http.get(apiUrl).subscribe(
         (data: any) => {
-          this.goalPlanForm.patchValue(data); // Autofill the form with the fetched data
+          this.goalPlanUpdateForm.patchValue(data); // Autofill the form with the fetched data
         },
         (error) => {
           console.error('Error fetching GoalPlan:', error);
@@ -120,8 +176,12 @@ export class GoalplanFormComponent {
     }
   }
 
-  resetForm() {
-    this.goalPlanForm.reset();
+  resetUpdateForm() {
+    this.goalPlanUpdateForm.reset();
+    this.searchGoalPlanId = undefined;
+  }
+  resetAddForm() {
+    this.goalPlanAddForm.reset();
     this.searchGoalPlanId = undefined;
   }
   private showSuccessSnackBar(message: string): void {
