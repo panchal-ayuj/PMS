@@ -53,7 +53,7 @@ export const navbarData: INavbarData[] = [
             },
             {
                 routeLink: 'admin/feedback',
-                label: 'View User Feedback',
+                label: 'View Employee Feedback',
             }
         ]
         }

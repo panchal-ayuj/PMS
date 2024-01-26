@@ -23,7 +23,7 @@
             *ngFor="let user of searchResults"
             (click)="selectUserProfile(user)"
           >
-            {{ user.firstName }} {{ user.lastName }} ({{ user.userId }})
+            {{ user.firstName }} {{ user.lastName }} ({{ user.userId }}) - {{ user.roles[0] }}{{ user.roles[1] ? ', ' + user.roles[1] : '' }}
           </mat-option>
         </mat-autocomplete>
       </form>
