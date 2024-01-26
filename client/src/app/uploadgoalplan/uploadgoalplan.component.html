@@ -10,7 +10,7 @@
   </button>
 </div> -->
 <div class="file-upload-container">
-  <mat-form-field style="width: 200px">
+  <mat-form-field style="width: 200px" appearance="outline">
     <mat-label>Band</mat-label>
     <mat-select [(value)]="selectedBand">
       <mat-option *ngFor="let band of bands" [value]="band">{{

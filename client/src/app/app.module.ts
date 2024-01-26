@@ -61,6 +61,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { FeedbackArchivePageComponent } from './feedback-archive-page/feedback-archive-page.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatRadioModule } from '@angular/material/radio';
 
 @NgModule({
   declarations: [
@@ -128,6 +129,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatDatepickerModule,
     MatNativeDateModule,
     MatProgressSpinnerModule,
+    MatRadioModule,
   ],
   providers: [ExportService, EmployeeService],
   bootstrap: [AppComponent],

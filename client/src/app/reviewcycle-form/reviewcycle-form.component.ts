@@ -12,6 +12,7 @@ export class ReviewcycleFormComponent {
   reviewCycleForm!: FormGroup;
   reviewcycles: any[] = [];
   reviewCycleId: number | undefined;
+  selectedOption: string = 'register'; // Default selected option
 
   searchReviewCycleId: number | undefined;
 
