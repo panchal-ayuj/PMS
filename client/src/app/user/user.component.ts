@@ -12,7 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./user.component.scss'],
 })
 export class UserManagementComponent implements OnInit {
-  selectedOption!: string;
+  selectedOption: string = "register";
   value = 'Clear me';
   // Add Users specific options
   // showAddSingleUserOption: boolean = false;

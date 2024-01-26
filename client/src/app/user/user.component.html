@@ -1,288 +1,207 @@
-<!-- <div class="user-management-container">
-  <div class="edit-container">
-    <div class="search-form">
-      <mat-form-field appearance="fill">
-        <mat-label>Search User by ID:</mat-label>
-        <input matInput type="number" id="userId" [(ngModel)]="userId" />
-      </mat-form-field>
-      <button mat-raised-button color="primary" (click)="searchUser(userId)">
-        Search
-      </button>
-      <div class="reset-button">
-        <button mat-raised-button (click)="resetForm()">Reset</button>
+<div class="user-management-container">
+  <div>
+    <mat-radio-group [(ngModel)]="selectedOption">
+      <mat-radio-button value="register">Register user</mat-radio-button>
+      <mat-radio-button value="update">Update user</mat-radio-button>
+      <mat-radio-button value="bulkUpload">Bulk upload user</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <!-- Add Users Options -->
+  <div *ngIf="selectedOption === 'register'">
+    <div class="form-container">
+      <form [formGroup]="addForm" (ngSubmit)="addUser()">
+        <h2>Register User</h2>
+        <mat-form-field appearance="outline">
+          <mat-label>First Name</mat-label>
+          <input matInput formControlName="firstName" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Last Name</mat-label>
+          <input matInput formControlName="lastName" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" formControlName="email" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Status</mat-label>
+          <input matInput formControlName="status" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Joining Date</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            id="joiningDate"
+            formControlName="joiningDate"
+          />
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>HR ID</mat-label>
+          <input matInput formControlName="hrId" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Band</mat-label>
+          <input matInput formControlName="band" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Reporting Manager ID</mat-label>
+          <input matInput formControlName="reportingManagerId" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Roles (comma-separated)</mat-label>
+          <input matInput formControlName="roles" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Teams (comma-separated)</mat-label>
+          <input matInput formControlName="teams" />
+        </mat-form-field>
+        <div class="submit">
+          <button type="submit" mat-raised-button color="primary">
+            Register User
+          </button>
+        </div>
+      </form>
+      <div class="btn-container">
+        <div class="reset-button">
+          <button mat-raised-button (click)="resetAddForm()" color="primary">
+            Reset
+          </button>
+        </div>
       </div>
     </div>
+  </div>
 
-    <div class="file-upload-container">
-      <app-user-upload></app-user-upload>
+  <!-- Update Users Options -->
+  <div *ngIf="selectedOption === 'update'">
+    <h2 style="margin-top: 4%">Search and Edit User</h2>
+    <div class="search-form" style="margin-bottom: -2%">
+        <mat-form-field appearance="outline">
+          <mat-label>Search User by ID:</mat-label>
+          <input matInput type="number" id="userId" [(ngModel)]="userId" />
+          @if (userId) {
+          <button
+            matSuffix
+            mat-icon-button
+            aria-label="Clear"
+            (click)="userId = undefined"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+          }
+        </mat-form-field>
+        <button mat-raised-button color="primary" (click)="searchUser(userId)" style="margin-right: 1%;">
+          Search
+        </button>
+        <div class="reset-button">
+          <button mat-raised-button (click)="resetUpdateForm()">Reset</button>
+        </div>
+
     </div>
 
+    <div class="form-container">
+      <form [formGroup]="updateForm" (ngSubmit)="updateUser()">
+        <mat-form-field appearance="outline">
+          <mat-label>First Name</mat-label>
+          <input matInput formControlName="firstName" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Last Name</mat-label>
+          <input matInput formControlName="lastName" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" formControlName="email" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Status</mat-label>
+          <input matInput formControlName="status" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Joining Date</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            id="joiningDate"
+            formControlName="joiningDate"
+          />
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>HR ID</mat-label>
+          <input matInput formControlName="hrId" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Band</mat-label>
+          <input matInput formControlName="band" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Reporting Manager ID</mat-label>
+          <input matInput formControlName="reportingManagerId" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Roles (comma-separated)</mat-label>
+          <input matInput formControlName="roles" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Teams (comma-separated)</mat-label>
+          <input matInput formControlName="teams" />
+        </mat-form-field>
+        <div class="submit">
+          <button type="submit" mat-raised-button color="primary">
+            Update User
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div *ngIf="selectedOption === 'bulkUpload'">
+    <h2 style="margin-top: 12%">Bulk Upload Users</h2>
+    <div class="file-upload-container" style="margin-top: 8%">
+      <app-user-upload></app-user-upload>
+    </div>
+    <h2 style="margin-top: 12%">Export Users</h2>
     <div>
       <button
         type="button"
         mat-raised-button
         color="primary"
         (click)="exportData()"
-        style="margin-top: 8%"
+        style="margin-top: 2%"
       >
-        Export User Details
+        Export Users
       </button>
-    </div>
-  </div>
-
-  <div class="form-container">
-    <h2>User Registration</h2>
-
-    <form [formGroup]="userForm" (ngSubmit)="registerOrUpdateUser()">
-      <mat-form-field appearance="fill">
-        <mat-label>First Name</mat-label>
-        <input matInput formControlName="firstName" />
-      </mat-form-field>
-
-      <mat-form-field appearance="fill">
-        <mat-label>Last Name</mat-label>
-        <input matInput formControlName="lastName" />
-      </mat-form-field>
-
-      <mat-form-field appearance="fill">
-        <mat-label>Email</mat-label>
-        <input matInput type="email" formControlName="email" />
-      </mat-form-field>
-
-      <mat-form-field appearance="fill">
-        <mat-label>Status</mat-label>
-        <input matInput formControlName="status" />
-      </mat-form-field>
-
-      <mat-form-field appearance="fill">
-        <mat-label>Joining Date</mat-label>
-        <input matInput type="date" formControlName="joiningDate" />
-      </mat-form-field>
-
-      <mat-form-field appearance="fill">
-        <mat-label>HR ID</mat-label>
-        <input matInput formControlName="hrId" />
-      </mat-form-field>
-
-      <mat-form-field appearance="fill">
-        <mat-label>Band</mat-label>
-        <input matInput formControlName="band" />
-      </mat-form-field>
-
-      <mat-form-field appearance="fill">
-        <mat-label>Reporting Manager ID</mat-label>
-        <input matInput formControlName="reportingManagerId" />
-      </mat-form-field>
-
-      <mat-form-field appearance="fill">
-        <mat-label>Roles (comma-separated)</mat-label>
-        <input matInput formControlName="roles" />
-      </mat-form-field>
-
-      <mat-form-field appearance="fill">
-        <mat-label>Teams (comma-separated)</mat-label>
-        <input matInput formControlName="teams" />
-      </mat-form-field>
-
-      <button type="submit" mat-raised-button color="primary">
-        {{ searchUserId ? "Update User" : "Register User" }}
-      </button>
-    </form>
-  </div>
-</div> -->
-<!-- User List -->
-<!-- <div class="user-list" *ngFor="let user of users">
-    <mat-card class="user-card">
-      <mat-card-content>
-        <p>{{ user.firstName }} {{ user.lastName }} ({{ user.email }})</p>
-      </mat-card-content>
-    </mat-card>
-  </div> -->
-
-<div class="user-page">
-  <div class="user-container">
-    <h2>User Management</h2>
-    <div class="radio-options">
-      <mat-radio-group aria-label="Select an option" [(ngModel)]="selectedOption">
-        <mat-radio-button value="1">Add Users</mat-radio-button>
-        <mat-radio-button value="2">Update Users</mat-radio-button>
-      </mat-radio-group>
-    </div>
-  </div>
-
-  <!-- Add Users Options -->
-  <div class="option-types">
-    <div class="opt1" *ngIf="selectedOption === '1'">
-      <div class="single-user-upload">
-        <div class="form-container">
-          <h2>Register Single User</h2>
-
-          <form [formGroup]="addForm" (ngSubmit)="addUser()">
-            <mat-form-field appearance="fill">
-              <mat-label>First Name</mat-label>
-              <input matInput formControlName="firstName" />
-            </mat-form-field>
-
-            <mat-form-field appearance="fill">
-              <mat-label>Last Name</mat-label>
-              <input matInput formControlName="lastName" />
-            </mat-form-field>
-
-            <mat-form-field appearance="fill">
-              <mat-label>Email</mat-label>
-              <input matInput type="email" formControlName="email" />
-            </mat-form-field>
-
-            <mat-form-field appearance="fill">
-              <mat-label>Status</mat-label>
-              <input matInput formControlName="status" />
-            </mat-form-field>
-
-            <mat-form-field appearance="fill">
-              <mat-label>Joining Date</mat-label>
-              <input matInput type="date" formControlName="joiningDate" />
-            </mat-form-field>
-
-            <mat-form-field appearance="fill">
-              <mat-label>HR ID</mat-label>
-              <input matInput formControlName="hrId" />
-            </mat-form-field>
-
-            <mat-form-field appearance="fill">
-              <mat-label>Band</mat-label>
-              <input matInput formControlName="band" />
-            </mat-form-field>
-
-            <mat-form-field appearance="fill">
-              <mat-label>Reporting Manager ID</mat-label>
-              <input matInput formControlName="reportingManagerId" />
-            </mat-form-field>
-
-            <mat-form-field appearance="fill">
-              <mat-label>Roles (comma-separated)</mat-label>
-              <input matInput formControlName="roles" />
-            </mat-form-field>
-
-            <mat-form-field appearance="fill">
-              <mat-label>Teams (comma-separated)</mat-label>
-              <input matInput formControlName="teams" />
-            </mat-form-field>
-            <div class="submit">
-              <button type="submit" mat-raised-button color="primary">
-                Register User
-              </button>
-            </div>
-          </form>
-          <div class="btn-container">
-            <div class="reset-button">
-              <button mat-raised-button (click)="resetAddForm()" color="primary">Reset</button>
-            </div>
-          </div>
-        </div>
-        <!-- Add form for bulk upload -->
-        <!-- Bind the form submission to the onSubmitAddUser method -->
-      </div>
-
-      <div class="or">
-        <h2 style="text-align: left;">or</h2>
-      </div>
-
-      <div class="bulk-upload">
-        <h2>Bulk Upload Users</h2>
-        <div class="file-upload-container">
-          <app-user-upload></app-user-upload>
-        </div>
-        <!-- Add form for adding a single user -->
-        <!-- Bind the form submission to the onSubmitAddUser method -->
-      </div>
-    </div>
-
-    <!-- Update Users Options -->
-    <div *ngIf="selectedOption === '2'">
-      <div class="search-form">
-        <div class="search-form-content">
-          <mat-form-field appearance="fill">
-            <mat-label>Search User by ID:</mat-label>
-            <input matInput type="number" id="userId" [(ngModel)]="userId" />
-            @if (userId) {
-            <button matSuffix mat-icon-button aria-label="Clear" (click)="userId=undefined">
-              <mat-icon>close</mat-icon>
-            </button>
-            }
-          </mat-form-field>
-
-          <div class="reset-button">
-            <button mat-raised-button (click)="resetUpdateForm()">Reset</button>
-          </div>
-          <button mat-raised-button color="primary" (click)="searchUser(userId)">
-            Search
-          </button>
-        </div>
-      </div>
-
-
-
-      <div class="form-container">
-        <h2>User Registration</h2>
-
-        <form [formGroup]="updateForm" (ngSubmit)="updateUser()">
-          <mat-form-field appearance="fill">
-            <mat-label>First Name</mat-label>
-            <input matInput formControlName="firstName" />
-          </mat-form-field>
-
-          <mat-form-field appearance="fill">
-            <mat-label>Last Name</mat-label>
-            <input matInput formControlName="lastName" />
-          </mat-form-field>
-
-          <mat-form-field appearance="fill">
-            <mat-label>Email</mat-label>
-            <input matInput type="email" formControlName="email" />
-          </mat-form-field>
-
-          <mat-form-field appearance="fill">
-            <mat-label>Status</mat-label>
-            <input matInput formControlName="status" />
-          </mat-form-field>
-
-          <mat-form-field appearance="fill">
-            <mat-label>Joining Date</mat-label>
-            <input matInput type="date" formControlName="joiningDate" />
-          </mat-form-field>
-
-          <mat-form-field appearance="fill">
-            <mat-label>HR ID</mat-label>
-            <input matInput formControlName="hrId" />
-          </mat-form-field>
-
-          <mat-form-field appearance="fill">
-            <mat-label>Band</mat-label>
-            <input matInput formControlName="band" />
-          </mat-form-field>
-
-          <mat-form-field appearance="fill">
-            <mat-label>Reporting Manager ID</mat-label>
-            <input matInput formControlName="reportingManagerId" />
-          </mat-form-field>
-
-          <mat-form-field appearance="fill">
-            <mat-label>Roles (comma-separated)</mat-label>
-            <input matInput formControlName="roles" />
-          </mat-form-field>
-
-          <mat-form-field appearance="fill">
-            <mat-label>Teams (comma-separated)</mat-label>
-            <input matInput formControlName="teams" />
-          </mat-form-field>
-
-          <button type="submit" mat-raised-button color="primary">
-            Update Details
-          </button>
-        </form>
-      </div>
-      <!-- Add search form -->
-      <!-- Bind the search button click to the onSearchUser method -->
     </div>
   </div>
 </div>

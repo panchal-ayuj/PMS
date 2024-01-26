@@ -1,150 +1,105 @@
-// .user-management-container {
-//   display: flex;
-//   flex-direction: row; /* Change to row */
-//   align-items: center;
-//   justify-content: space-around; /* Adjust as needed */
-//   padding: 20px;
-//   text-align: center;
-//   height: auto;
-// }
-//   h2 {
-//     font-size: 24px;
-//     margin-bottom: 20px;
-//   }
+.user-management-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  padding: 20px;
+  text-align: center;
+  height: auto;
 
-//   .form-container {
-//     display: flex;
-//     flex-direction: column;
-//     width: 40%; /* Adjust as needed */
+  .radio-group-container {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
 
-//     mat-form-field {
-//       width: 100%;
-//       margin-bottom: 15px;
-//     }
+    mat-radio-button {
+      margin-right: 20px;
+    }
+  }
 
-//   }
+  .form-container {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    margin-left: 30%;
+    margin-top: 4%;
 
-//   .edit-container{
-//     margin-top: -50%;
-//   }
+    h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
 
-//   .search-form {
-//     display: flex;
-//     align-items: center;
-//     margin-top: 3%;
-//     padding: 3%;
+    mat-form-field {
+      width: 100%;
+      margin-bottom: 15px;
+    }
 
-//     mat-form-field {
-//       margin-right: 10px;
-//       width: 250px;
-//       margin-bottom: -10px;
+    button {
+      margin-top: 15px;
+    }
+  }
 
-//       input {
-//         font-size: 14px;
-//       }
-//     }
+  .search-form {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    padding: 20px;
+    margin-left: 32.5%;
 
-//     button {
-//       font-size: 16px;
-//       margin-right: 2%;
-//     }
-//   }
+    mat-form-field {
+      margin-right: 10px;
+      width: 250px;
+      margin-bottom: -10px;
 
-//   .reset-button {
-//     button {
-//       font-size: 16px;
-//     }
-//   }
+      input {
+        font-size: 14px;
+      }
+    }
 
-//   .file-upload-container {
-//     display: flex;
-//     flex-direction: column;
-//     align-items: center;
-//     margin-top: 20px;
+    button {
+      font-size: 16px;
+      margin-right: 2%;
+    }
+  }
 
-//     input {
-//       display: none;
-//     }
+  .reset-button {
+    button {
+      font-size: 16px;
+    }
+  }
 
-//     button {
-//       font-size: 16px;
-//       margin-top: 10px;
-//     }
-//   }
+  .file-upload-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
 
-  .user-list {
+    input {
+      display: none;
+    }
+  }
+
+  .review-cycle-list {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 20px;
   }
 
-  .user-card {
+  .review-cycle-card {
     width: 200px;
   }
 
-  .user-info {
+  .review-cycle-info {
     font-size: 16px;
     margin: 0;
   }
-  .mat-mdc-radio-button ~ .mat-mdc-radio-button {
-    margin-left: 16px;
-  }
-
-.radio-options{
-  text-align: center;
-  zoom: 120%;
+}
+* {
+  background-color: #f4f7fa;
 }
 
-.opt1{
-  display: flex;
-}
-
-h2{
-  text-align: center;
-}
-
-.user-page{
-
-}
-
-.form-container {
-      display: flex;
-      flex-direction: column;
-      width: 45%; /* Adjust as needed */
-  
-      mat-form-field {
-        width: 175%;
-        margin-bottom: 15px;
-      }
-  }
-.single-user-upload{
-  padding-left: 50px;
-  width: 50%
-}
-
-.or{
-  margin-top: 5%;
-  width: 100px;
-}
-
-.search-form {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px;
-}
-
-/* Style for the form container */
-.search-form-content{
-  width: 300px;
-  max-width: 400px;
-  padding: 20px;
-  // background-color: #fff; /* Optional: Set background color for the form container */
-  // border-radius: 8px; /* Optional: Add rounded corners to the form container */
-  // box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add a box shadow for a subtle effect */
-}
-
-.btn-container{
-  display: flex;
+h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
 }
