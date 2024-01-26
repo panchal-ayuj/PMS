@@ -118,4 +118,11 @@ export class NavbarComponent implements OnInit {
       console.error('Error fetching user data:', error);
     }
   }
+  viewDetails(): void {
+    this.sharedDataService.changeUserId(null);
+    // if(userId !== null && userId !== undefined && userId !== ""){
+      // console.log("Hitting profile");
+      this.router.navigate(['/logout']);
+    // } 
+  }
 }
