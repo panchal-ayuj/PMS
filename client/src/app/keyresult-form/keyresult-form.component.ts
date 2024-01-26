@@ -16,7 +16,7 @@ export class KeyresultFormComponent {
   keyResultId: number | undefined;
 
   searchKeyResultId: number | undefined;
-  selectedOption!: string;
+  selectedOption: string = "register";
 
   constructor(private formBuilder: FormBuilder, private http: HttpClient,private snackBar: MatSnackBar) { }
 
