@@ -9,21 +9,25 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrl: './keyresult-form.component.scss'
 })
 export class KeyresultFormComponent {
-  keyResultForm!: FormGroup;
+
+  keyResultAddForm!: FormGroup;
+  keyResultUpdateForm!: FormGroup;
   keyresults: any[] = [];
   keyResultId: number | undefined;
 
   searchKeyResultId: number | undefined;
+  selectedOption!: string;
 
   constructor(private formBuilder: FormBuilder, private http: HttpClient,private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
-    this.initForm();
+    this.initAddForm();
+    this.initUpdateForm();
     this.loadKeyResults(); // Assuming you want to load existing users on component initialization
   }
 
-  initForm() {
-    this.keyResultForm = this.formBuilder.group({
+  initAddForm() {
+    this.keyResultAddForm = this.formBuilder.group({
       userId: [''],
       goalPlanId: [''],
       keyResultName: [''],
@@ -34,8 +38,56 @@ export class KeyresultFormComponent {
     });
   }
 
-  registerOrUpdateKeyResult() {
-    const keyresult = this.keyResultForm.value;
+  initUpdateForm() {
+    this.keyResultUpdateForm = this.formBuilder.group({
+      userId: [''],
+      goalPlanId: [''],
+      keyResultName: [''],
+      description: [''],
+      weight: [''],
+      period: [''],
+      windowId: ['']
+    });
+  }
+
+  // registerOrUpdateKeyResult() {
+  //   const keyresult = this.keyResultForm.value;
+
+  //   const apiUrl = 'http://localhost:8080/keyResult/';
+
+  //   // Check if ID is present for update
+  //   if (this.searchKeyResultId) { 
+  //     this.showSuccessSnackBar('Key Result updated successfully');
+
+
+  //     this.http.put(`${apiUrl}keyResultById/${this.searchKeyResultId}`, keyresult).subscribe(
+  //       (response) => {
+          
+  //         console.log('Key Result updated successfully:', response);
+  //         this.loadKeyResults();
+  //         this.resetForm();
+  //       },
+  //       (error) => {
+  //         console.error('Error updating Key Result:', error);
+  //       }
+  //     );
+  //   } else {
+  //     this.showSuccessSnackBar('Key Result registered successfully');
+  //     this.http.post('http://localhost:8080/keyResult/register', keyresult).subscribe(
+  //       (response) => {
+  //         console.log('Key Result registered successfully:', response);
+  //         this.loadKeyResults();
+  //         this.resetForm();
+  //       },
+  //       (error) => {
+  //         console.error('Error registering Key Result:', error);
+  //       }
+  //     );
+  //   }
+  // }
+
+  updateKeyResult() {
+    const keyresult = this.keyResultUpdateForm.value;
 
     const apiUrl = 'http://localhost:8080/keyResult/';
 
@@ -49,26 +101,32 @@ export class KeyresultFormComponent {
           
           console.log('Key Result updated successfully:', response);
           this.loadKeyResults();
-          this.resetForm();
+          this.resetUpdateForm();
         },
         (error) => {
           console.error('Error updating Key Result:', error);
         }
       );
-    } else {
-      this.showSuccessSnackBar('Key Result registered successfully');
+    } 
+    
+    }
+  registerKeyResult() {
+
+    const keyresult = this.keyResultAddForm.value;
+    const apiUrl = 'http://localhost:8080/keyResult/';
+
+    this.showSuccessSnackBar('Key Result registered successfully');
       this.http.post('http://localhost:8080/keyResult/register', keyresult).subscribe(
         (response) => {
           console.log('Key Result registered successfully:', response);
           this.loadKeyResults();
-          this.resetForm();
+          this.resetAddForm();
         },
         (error) => {
           console.error('Error registering Key Result:', error);
         }
-      );
+      );;
     }
-  }
 
 
   loadKeyResults() {
@@ -115,7 +173,7 @@ export class KeyresultFormComponent {
       const apiUrl = `http://localhost:8080/keyResult/keyResultById/${keyResultId}`;
       this.http.get(apiUrl).subscribe(
         (data: any) => {
-          this.keyResultForm.patchValue(data); // Autofill the form with the fetched data
+          this.keyResultUpdateForm.patchValue(data); // Autofill the form with the fetched data
         },
         (error) => {
           console.error('Error fetching Key Result:', error);
@@ -124,8 +182,13 @@ export class KeyresultFormComponent {
     }
   }
 
-  resetForm() {
-    this.keyResultForm.reset();
+  resetAddForm() {
+    this.keyResultAddForm.reset();
+    this.searchKeyResultId = undefined;
+  }
+
+  resetUpdateForm() {
+    this.keyResultUpdateForm.reset();
     this.searchKeyResultId = undefined;
   }
   private showSuccessSnackBar(message: string): void {
