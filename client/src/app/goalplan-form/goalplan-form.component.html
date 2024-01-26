@@ -1,7 +1,49 @@
 <div class="goal-plan-management-container">
-  <div class="edit-container">
-    <div class="search-form">
-      <mat-form-field appearance="fill">
+  <div class="radio-group-container">
+    <mat-radio-group [(ngModel)]="selectedOption">
+      <mat-radio-button value="register">Register goal plan for particular user</mat-radio-button>
+      <mat-radio-button value="update">Update goal plan for particular user</mat-radio-button>
+      <mat-radio-button value="bulkUpload">Bulk upload goal plans</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <div *ngIf="selectedOption === 'register'">
+    <div class="form-container">
+      <h2>Goal Plan Management</h2>
+
+      <!-- GoalPlan Registration Form -->
+      <form [formGroup]="goalPlanForm" (ngSubmit)="registerOrUpdateGoalPlan()">
+        <mat-form-field appearance="outline">
+          <mat-label>Financial Year</mat-label>
+          <input
+            matInput
+            type="number"
+            placeholder="Enter financial year"
+            formControlName="financialYear"
+          />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>User Id</mat-label>
+          <input
+            matInput
+            type="number"
+            placeholder="Enter user ID"
+            formControlName="userId"
+          />
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit">
+          {{ searchGoalPlanId ? "Update Goal Plan" : "Register Goal Plan" }}
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div *ngIf="selectedOption === 'update'">
+    <h2 style="margin-top: 4%">Search and Edit Goal Plan</h2>
+    <div class="search-form" style="margin-bottom: -2%">
+      <mat-form-field appearance="outline">
         <mat-label>Search Goal Plan by ID:</mat-label>
         <input
           matInput
@@ -17,65 +59,56 @@
       >
         Search
       </button>
-      <!-- Reset Form Button -->
       <div class="reset-button">
         <button mat-raised-button (click)="resetForm()">Reset</button>
       </div>
     </div>
+    <div class="form-container">
+      <!-- GoalPlan Registration Form -->
+      <form [formGroup]="goalPlanForm" (ngSubmit)="registerOrUpdateGoalPlan()">
+        <mat-form-field appearance="outline">
+          <mat-label>Financial Year</mat-label>
+          <input
+            matInput
+            type="number"
+            placeholder="Enter financial year"
+            formControlName="financialYear"
+          />
+        </mat-form-field>
 
-    <div class="file-upload-container">
+        <mat-form-field appearance="outline">
+          <mat-label>User Id</mat-label>
+          <input
+            matInput
+            type="number"
+            placeholder="Enter user ID"
+            formControlName="userId"
+          />
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit">
+          {{ searchGoalPlanId ? "Update Goal Plan" : "Register Goal Plan" }}
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div *ngIf="selectedOption === 'bulkUpload'">
+    <h2 style="margin-top: 12%">Bulk Upload Goal Plans</h2>
+    <div class="file-upload-container" style="margin-top: 8%">
       <app-upload></app-upload>
     </div>
-
-    <button
-      mat-raised-button
-      color="primary"
-      type="button"
-      (click)="exportGoalPlans()"
-      style="margin-top: 8%;"
-    >
-      Export Goal Plans
-    </button>
-  </div>
-
-  <div class="form-container">
-    <h2>Goal Plan Management</h2>
-
-    <!-- GoalPlan Registration Form -->
-    <form [formGroup]="goalPlanForm" (ngSubmit)="registerOrUpdateGoalPlan()">
-      <mat-form-field appearance="fill">
-        <mat-label>Financial Year</mat-label>
-        <input
-          matInput
-          type="number"
-          placeholder="Enter financial year"
-          formControlName="financialYear"
-        />
-      </mat-form-field>
-
-      <mat-form-field appearance="fill">
-        <mat-label>User Id</mat-label>
-        <input
-          matInput
-          type="number"
-          placeholder="Enter user ID"
-          formControlName="userId"
-        />
-      </mat-form-field>
-
-      <button mat-raised-button color="primary" type="submit">
-        {{ searchGoalPlanId ? "Update Goal Plan" : "Register Goal Plan" }}
+    <h2 style="margin-top: 12%">Export Goal Plans</h2>
+    <div>
+      <button
+        mat-raised-button
+        color="primary"
+        type="button"
+        (click)="exportGoalPlans()"
+        style="margin-top: 2%"
+      >
+        Export Goal Plans
       </button>
-    </form>
+    </div>
   </div>
-  <!-- GoalPlan List -->
-  <!-- <div class="goal-plan-list" *ngFor="let goalplan of goalplans">
-    <mat-card class="goalplan-card">
-      <mat-card-content>
-        <p class="goalplan-info">
-          {{ goalplan.financialYear }} ({{ goalplan.userId }})
-        </p>
-      </mat-card-content>
-    </mat-card>
-  </div> -->
 </div>

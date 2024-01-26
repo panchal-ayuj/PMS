@@ -12,6 +12,7 @@ export class GoalplanFormComponent {
   goalPlanForm!: FormGroup;
   goalplans: any[] = [];
   goalPlanId: number | undefined;
+  selectedOption: string = 'register'; // Default selected option
 
   searchGoalPlanId: number | undefined;
 

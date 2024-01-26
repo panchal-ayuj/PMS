@@ -1,37 +1,50 @@
 .review-cycle-management-container {
   display: flex;
-  flex-direction: row; /* Change to row */
+  flex-direction: column;
   align-items: center;
-  justify-content: space-around; /* Adjust as needed */
+  justify-content: space-around;
   padding: 20px;
   text-align: center;
   height: auto;
-  h2 {
-    font-size: 24px;
+
+  .radio-group-container {
+    display: flex;
+    flex-direction: row;
     margin-bottom: 20px;
+
+    mat-radio-button {
+      margin-right: 20px;
+    }
   }
 
   .form-container {
     display: flex;
     flex-direction: column;
-    width: 40%; /* Adjust as needed */
+    width: 40%;
+    margin-left: 30%;
+    margin-top: 4%;
+
+    h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
 
     mat-form-field {
       width: 100%;
       margin-bottom: 15px;
     }
 
-  }
-
-  .edit-container{
-    margin-top: -15%;
+    button {
+      margin-top: 15px;
+    }
   }
 
   .search-form {
     display: flex;
     align-items: center;
-    margin-top: 3%;
-    padding: 3%;
+    margin-top: 20px;
+    padding: 20px;
+    margin-left: 30%;
 
     mat-form-field {
       margin-right: 10px;
@@ -64,11 +77,6 @@
     input {
       display: none;
     }
-
-    button {
-      font-size: 16px;
-      margin-top: 10px;
-    }
   }
 
   .review-cycle-list {
@@ -87,4 +95,11 @@
     margin: 0;
   }
 }
+* {
+  background-color: #f4f7fa;
+}
 
+h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}

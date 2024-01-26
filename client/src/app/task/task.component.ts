@@ -13,6 +13,7 @@ export class TaskComponent implements OnInit {
   taskForm!: FormGroup;
   tasks: any[] = [];
   taskId: number | undefined;
+  selectedOption: string = 'register'; // Default selected option
 
   searchTaskId: number | undefined;
 

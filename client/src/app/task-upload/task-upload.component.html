@@ -30,14 +30,14 @@
   </button>
 </div> -->
 <div class="file-upload-container">
-  <mat-form-field style="width: 200px">
+  <mat-form-field style="width: 200px" appearance="outline">
     <mat-label>Band</mat-label>
     <mat-select [(value)]="selectedBand">
       <mat-option *ngFor="let band of bands" [value]="band">{{ band }}</mat-option>
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field style="width: 200px; margin-left: 20px">
+  <mat-form-field style="width: 200px; margin-left: 20px" appearance="outline">
     <mat-label>Role</mat-label>
     <mat-select [(value)]="selectedRole">
       <mat-option *ngFor="let role of roles" [value]="role">{{ role }}</mat-option>
