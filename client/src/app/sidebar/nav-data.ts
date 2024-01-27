@@ -9,7 +9,7 @@ export const navbarData: INavbarData[] = [
     {
         routeLink: 'keyresult',
         icon: 'alarm_on',
-        label: 'Task'
+        label: 'Key Results'
     },
     {
         routeLink: 'hierarchy',
