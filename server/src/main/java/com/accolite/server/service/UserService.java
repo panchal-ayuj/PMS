@@ -51,6 +51,14 @@ public class UserService {
         // Update user details
         existingUser.setFirstName(updatedUser.getFirstName());
         existingUser.setLastName(updatedUser.getLastName());
+        existingUser.setEmail(updatedUser.getEmail());
+        existingUser.setStatus(updatedUser.getStatus());
+        existingUser.setJoiningDate(updatedUser.getJoiningDate());
+        existingUser.setHrId(updatedUser.getHrId());
+        existingUser.setBand(updatedUser.getBand());
+        existingUser.setReportingManagerId(updatedUser.getReportingManagerId());
+        existingUser.setRoles(updatedUser.getRoles());
+        existingUser.setTeams(updatedUser.getTeams());
         // Update other fields as needed
 
         return userRepository.save(existingUser);
