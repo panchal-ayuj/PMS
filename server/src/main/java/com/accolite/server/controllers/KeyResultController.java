@@ -87,7 +87,7 @@ public class KeyResultController {
     }
 
     @GetMapping("/export")
-    public ResponseEntity<Object> exportReviewCyclesToExcel() {
+    public ResponseEntity<Object> exportKeyResultsToExcel() {
         List<KeyResult> keyResults = keyResultService.getAllKeyResults();
         String filePath = "key_result_data_export.xlsx";
 

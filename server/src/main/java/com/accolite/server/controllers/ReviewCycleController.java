@@ -113,7 +113,7 @@ public class ReviewCycleController {
     }
 
     @GetMapping("")
-    public ResponseEntity<List<ReviewCycle>> getKeyResults() {
+    public ResponseEntity<List<ReviewCycle>> getReviewCycles() {
         List<ReviewCycle> reviewCycles = reviewCycleRepository.findAll();
         return new ResponseEntity<>(reviewCycles, HttpStatus.OK);
     }

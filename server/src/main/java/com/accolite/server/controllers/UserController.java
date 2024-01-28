@@ -56,7 +56,7 @@ public class UserController {
     }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<User> updateUserDetails(@PathVariable Long userId, @RequestBody User updatedUser) {
+    public ResponseEntity<User> updateUserDetailsDeprecated(@PathVariable Long userId, @RequestBody User updatedUser) {
         User user = userService.updateUser(userId, updatedUser);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
@@ -116,7 +116,7 @@ public class UserController {
     }
 
     @GetMapping("/userById/{userId}")
-    public ResponseEntity<User> getGoalPlanById(@PathVariable Long userId) {
+    public ResponseEntity<User> getUserById(@PathVariable Long userId) {
         User user = userService.getUserById(userId);
         if (user != null) {
             return ResponseEntity.ok(user);
@@ -126,7 +126,7 @@ public class UserController {
     }
 
     @PutMapping("/userById/{userId}")
-    public ResponseEntity<User> updateGoalPlan(@PathVariable Long userId, @RequestBody User updatedUser) {
+    public ResponseEntity<User> updateUser(@PathVariable Long userId, @RequestBody User updatedUser) {
         User existingUser = userService.getUserById(userId);
 
         if (existingUser != null) {
