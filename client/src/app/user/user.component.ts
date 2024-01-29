@@ -3,6 +3,23 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { ExportService } from '../export.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+type FormFields = {
+  firstName: ElementRef<any>;
+  lastName: ElementRef<any>;
+  email: ElementRef<any>;
+  status: ElementRef<any>;
+  joiningDate: ElementRef<any>;
+  hrId: ElementRef<any>;
+  band: ElementRef<any>;
+  reportingManagerId: ElementRef<any>;
+  roles: ElementRef<any>;
+  teams: ElementRef<any>;
+};
+
+type FormRefs = {
+  addForm: FormFields;
+  updateForm: FormFields;
+};
 
 @Component({
   selector: 'app-user',
@@ -57,16 +74,16 @@ export class UserManagementComponent implements OnInit {
 
   initAddForm() {
     this.addForm = this.formBuilder.group({
-      firstName: [''],
-      lastName: [''],
-      email: [''],
-      status: [''],
-      joiningDate: [''],
-      hrId: [''],
-      band: [''],
-      reportingManagerId: [''],
-      roles: [''],
-      teams: ['']
+      firstName: ['' , Validators.required],
+      lastName: ['' , Validators.required],
+      email: ['', [Validators.required , Validators.email]],
+      status: ['', Validators.required],
+      joiningDate: ['', Validators.required],
+      hrId: ['', Validators.required],
+      band: ['', Validators.required],
+      reportingManagerId: ['', Validators.required],
+      roles: ['', Validators.required],
+      teams: ['', Validators.required]
     });
   }
 
@@ -189,55 +206,52 @@ export class UserManagementComponent implements OnInit {
     });
   }
   
-  highlightInvalidFields() {
-    Object.keys(this.userForm.controls).forEach((field) => {
-      const control = this.userForm.get(field)!;
+  highlightInvalidFields(formName: 'addForm' | 'updateForm') {
+    const form = this[formName] as FormGroup;
+    const formFields :FormRefs = {
+      addForm: {
+        firstName: this.firstNameField,
+        lastName: this.lastNameField,
+        email: this.emailField,
+        status : this.statusField,
+        joiningDate:this.joiningDateField,
+        hrId : this.hrIdField,
+        band : this.bandField,
+        reportingManagerId:this.reportingManagerIdField,
+        roles:this.rolesField,
+        teams : this.rolesField,
+        // ... Add other fields
+      },
+      updateForm: {
+        firstName: this.firstNameField,
+        lastName: this.lastNameField,
+        email: this.emailField,
+        status : this.statusField,
+        joiningDate:this.joiningDateField,
+        hrId : this.hrIdField,
+        band : this.bandField,
+        reportingManagerId:this.reportingManagerIdField,
+        roles:this.rolesField,
+        teams : this.rolesField
+      },
+    };
+  
+    Object.keys(form.controls).forEach((field) => {
+      const control = form.get(field)!;
+      const fieldRef = (formFields[formName] as any)[field] as ElementRef<any>;
 
-      if (control.invalid) {
+      if (control.invalid && fieldRef) {
         control.markAsTouched();
-
-        switch (field) {
-          case 'firstName':
-            this.firstNameField?.nativeElement.focus();
-            break;
-          case 'lastName':
-            this.lastNameField?.nativeElement.focus();
-            break;
-          case 'email':
-            this.emailField?.nativeElement.focus();
-            break;
-          case 'status':
-            this.statusField?.nativeElement.focus();
-            break;
-          case 'joiningDate':
-            this.joiningDateField?.nativeElement.focus();
-            break;
-          case 'hrId':
-            this.hrIdField?.nativeElement.focus();
-            break;
-          case 'band':
-            this.bandField?.nativeElement.focus();
-            break;
-          case 'reportingManagerId':
-            this.reportingManagerIdField?.nativeElement.focus();
-            break;
-          case 'roles':
-            this.rolesField?.nativeElement.focus();
-            break;
-          case 'teams':
-            this.teamsField?.nativeElement.focus();
-            break;
-          // Add similar cases for other fields
-        }
+        fieldRef.nativeElement.focus();
       }
     });
 
-    if (this.userForm.valid) {
-      this.updateUser();
+    if (form.valid) {
+      // Call the respective method (addUser or updateUser) based on the form name
+      console.log('form valid');
+      formName === 'addForm' ? this.addUser() : this.updateUser();
     }
   }
-  submitForm(event :Event) {
-    event.preventDefault(); // Prevent the default form submission behavior
-    this.highlightInvalidFields();
   }
-}
+ 
+

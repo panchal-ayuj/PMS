@@ -111,10 +111,10 @@ h2{
 .form-container {
       display: flex;
       flex-direction: column;
-      width: 45%; /* Adjust as needed */
+      width: 50%; /* Adjust as needed */
   
       mat-form-field {
-        width: 175%;
+        width: 100%;
         margin-bottom: 15px;
       }
   }
@@ -145,6 +145,10 @@ h2{
   width: 300px;
   max-width: 400px;
   padding: 20px;
+  margin: auto;
+  //display: flex;
+  align-items: center;
+  justify-content: center;
   // background-color: #fff; /* Optional: Set background color for the form container */
   // border-radius: 8px; /* Optional: Add rounded corners to the form container */
   // box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add a box shadow for a subtle effect */
@@ -152,4 +156,15 @@ h2{
 
 .btn-container{
   display: flex;
+}
+.form-container {
+  width: 400px; /* Adjust the width as needed */
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  //height: 100vh; /* Set the height to 100% of the viewport height */
+}
+button{
+  margin: 10px;
 }
