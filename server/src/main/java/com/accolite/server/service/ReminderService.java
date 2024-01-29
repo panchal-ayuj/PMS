@@ -3,6 +3,7 @@ package com.accolite.server.service;
 import com.accolite.server.models.ReviewCycle;
 import com.accolite.server.models.User;
 import com.accolite.server.repository.ReviewCycleRepository;
+import com.accolite.server.repository.UserRepository;
 import com.accolite.server.writers.ReviewCycleWriter;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -34,6 +35,9 @@ public  class ReminderService {
     private UserService userService;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private JavaMailSender javaMailSender;
     @Value("${seniorRMreminder.email.body}")
     private String reminderEmailBody;
@@ -42,7 +46,7 @@ public  class ReminderService {
 
 
 
-    @Scheduled(cron = "0 0 8 * * ?") //
+    @Scheduled(cron = "0 */100 * * * ?")
     public void sendReminderEmailsForPendingReviews() {
         Calendar calendar = Calendar.getInstance();
         Date currentDate = calendar.getTime();
@@ -51,23 +55,31 @@ public  class ReminderService {
         if (!pendingReviews.isEmpty()) {
 
             Map<Long, List<ReviewCycle>> reviewsByReportingManager = pendingReviews.stream()
-                    .collect(Collectors.groupingBy(ReviewCycle::getReviewerId));
+                    .collect(Collectors.groupingBy(reviewCycle ->
+                            userRepository.findByUserId(reviewCycle.getUserId()).getReportingManagerId()));
             for (Map.Entry<Long, List<ReviewCycle>> entry : reviewsByReportingManager.entrySet()) {
                 Long reportingManagerId = entry.getKey();
                 String reportingManagerEmail = userService.getUserEmailById(reportingManagerId);
-                Long seniorReportingManagerId = userService.getReportingManagerId(reportingManagerId);
-                String seniorReportingManagerEmail = userService.getUserEmailById(seniorReportingManagerId);
-                Long uniqueId = entry.getValue().get(0).getWindowId();
-                // Generate the Excel file with details of the pending reviews
-                String excelFilePath = "C:\\Users\\ganesh.raigond\\Desktop\\PMS\\server\\pending_reviews"+uniqueId+".xlsx";
-                generatePendingReviewsExcelFile(entry.getValue(), excelFilePath);
 
-                // Send a single email with the Excel file attached to the reporting manager
-                sendReminderEmailWithAttachment(reportingManagerEmail, excelFilePath);
+                // Check if the user is not null before calling methods on it
+                User reportingManager = userRepository.findByUserId(reportingManagerId);
+                if (reportingManager != null) {
+                    Long seniorReportingManagerId = reportingManager.getReportingManagerId();
+                    String seniorReportingManagerEmail = userService.getUserEmailById(seniorReportingManagerId);
+                    Long uniqueId = entry.getValue().get(0).getWindowId();
 
-                // Send a reminder email to the senior reporting manager without attachment
-                sendReminderEmailToSeniorManager(seniorReportingManagerEmail, reportingManagerId, seniorReportingManagerId);
+                    // Generate the Excel file with details of the pending reviews
+                    String excelFilePath = "C:\\Training\\PMS\\server\\pending_reviews" + uniqueId + ".xlsx";
+                    generatePendingReviewsExcelFile(entry.getValue(), excelFilePath);
+
+                    // Send a single email with the Excel file attached to the reporting manager
+                    sendReminderEmailWithAttachment(reportingManagerEmail, excelFilePath);
+
+                    // Send a reminder email to the senior reporting manager without attachment
+                    sendReminderEmailToSeniorManager(seniorReportingManagerEmail, reportingManagerId, seniorReportingManagerId);
+                }
             }
+
         }
     }
 
@@ -88,6 +100,14 @@ public  class ReminderService {
 
             // Send the email
             javaMailSender.send(mimeMessage);
+            File excelFile = new File(excelFilePath);
+            if (excelFile.exists()) {
+                if (excelFile.delete()) {
+                    System.out.println("Excel file deleted successfully.");
+                } else {
+                    System.err.println("Failed to delete the Excel file.");
+                }
+            }
         } catch (MessagingException e) {
             // Handle or log the exception appropriately
             e.printStackTrace();
@@ -110,17 +130,25 @@ public  class ReminderService {
             e.printStackTrace();
         }
     }
-    private void sendReminderEmailToSeniorManager(String seniorReportingManagerEmail, Long reportingManagerId,Long seniorReportingManagerId) {
+    private void sendReminderEmailToSeniorManager(String seniorReportingManagerEmail, Long reportingManagerId, Long seniorReportingManagerId) {
         // Use JavaMailSender to send a simple reminder email without attachment
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(seniorReportingManagerEmail);
         mailMessage.setSubject("Reminder: Teammate's Pending Review");
 
-        String seniorManagerName = userService.getUserFullName(seniorReportingManagerId);
-        String reviewerName = userService.getUserFullName(reportingManagerId);
-        String formattedBody = String.format(reminderEmailBody, seniorManagerName, reviewerName);
-        mailMessage.setText(formattedBody);
-        javaMailSender.send(mailMessage);
+        // Check if the user is not null before calling methods on it
+        User seniorManager = userService.getUserById(seniorReportingManagerId);
+        if (seniorManager != null) {
+            String seniorManagerName = seniorManager.getFirstName(); // Adjust this line based on your User class properties
+            String reviewerName = userService.getUserFullName(reportingManagerId);
+            String formattedBody = String.format(reminderEmailBody, seniorManagerName, reviewerName);
+            mailMessage.setText(formattedBody);
+            javaMailSender.send(mailMessage);
+        } else {
+            // Handle the case where the senior manager is not found
+            // Log a warning or take appropriate action
+        }
     }
+
 
 }
