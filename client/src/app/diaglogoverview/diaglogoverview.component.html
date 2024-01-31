@@ -10,7 +10,7 @@
 
   <ng-container matColumnDef="weight">
     <mat-header-cell *matHeaderCellDef>Weight</mat-header-cell>
-    <mat-cell *matCellDef="let task" style="margin-left: 5%">{{
+    <mat-cell *matCellDef="let task" style="margin-left: 2.8%">{{
       getWeight(task.weight)
     }}</mat-cell>
   </ng-container>
@@ -24,7 +24,7 @@
   <ng-container matColumnDef="rating">
     <mat-header-cell *matHeaderCellDef>Rating</mat-header-cell>
     <mat-cell *matCellDef="let task">
-      <div *ngIf="data.panelClass === 'true'">
+      <div *ngIf="data.panelClass === 'true'" style="margin-left: -8%;">
         <mat-form-field>
           <mat-label>Enter Rating</mat-label>
           <mat-select
@@ -51,7 +51,7 @@
   <ng-container matColumnDef="feedback">
     <mat-header-cell *matHeaderCellDef>Feedback</mat-header-cell>
     <mat-cell *matCellDef="let task" class="feedback-column">
-      <div *ngIf="data.panelClass === 'true'">
+      <div *ngIf="data.panelClass === 'true'" style="margin-left: -5%">
         <mat-form-field style="width: 100%">
           <textarea
             matInput

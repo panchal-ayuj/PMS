@@ -113,12 +113,15 @@ mat-card-content {
 }
 
 .even-row {
-  background-color: #3f72af;
+  background-color: #DBE2EF;
   /* Change this color to your desired shade of green */
+  // color: #f9f7f7;
 }
 
 .even-row2 {
-  background-color: #dbe2ef;
+  background-color: #DBE2EF;
+  /* Change this color to your desired shade of green */
+  // color: #f9f7f7;
 }
 
 mat-header-cell {
@@ -126,7 +129,7 @@ mat-header-cell {
 }
 
 .even-row3 {
-  background-color: #112d4e;
+  background-color:#3f72af;
   color: #f9f7f7;
 }
 
@@ -159,3 +162,8 @@ mat-table::-webkit-scrollbar-thumb:hover {
   background-color: rgba(85, 85, 85, 0.454); /* Semi-transparent hover color */
 }
 
+
+.mat-column-taskName{
+  min-height: 85px;
+  // height: 90px;
+}

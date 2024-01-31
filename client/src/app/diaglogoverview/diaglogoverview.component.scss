@@ -83,3 +83,8 @@ mat-header-cell {
 .close-icon:hover {
   color: #333; /* Set your desired hover color */
 }
+
+.mat-column-description {
+  min-width: 500px;
+  width: 500px;
+}
