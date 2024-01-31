@@ -72,7 +72,7 @@ export class DiaglogoverviewComponent implements OnInit {
     // Check if any value is selected in the rating dropdown
     // and if there is content in any of the feedback textareas
     return (
-      this.data.tasks.every((task: { rating: undefined; }) => task.rating !== undefined) &&
+      this.data.tasks.every((task: { rating: any; }) => task.rating !== 0) &&
       this.data.tasks.every((task: { feedback: string; }) => task.feedback?.trim() !== '')
     );
   }
