@@ -11,7 +11,6 @@ export class KeyResultUploadComponent {
   bands: string[] = ['B7', 'B6', 'B5', 'B4', 'B3', 'B2', 'B1'];
   roles: string[] = ['Manager', 'Admin', 'Developer'];
   selectedBand!: string;
-  selectedRole!: string;
   selectedFile!: File;
 
   constructor(private http: HttpClient,private snackBar: MatSnackBar) {}
@@ -51,11 +50,11 @@ export class KeyResultUploadComponent {
   }
 
   onUpload2(): void {
-    if (this.selectedFile && this.selectedBand && this.selectedRole) {
+    if (this.selectedFile && this.selectedBand) {
       const formData: FormData = new FormData();
       formData.append('file', this.selectedFile);
 
-      this.http.post<any>(`http://localhost:8080/keyResult/${this.selectedBand}/${this.selectedRole}`, formData).subscribe(
+      this.http.post<any>(`http://localhost:8080/keyResult/${this.selectedBand}`, formData).subscribe(
         response => {
           console.log(response);
           // Handle success (e.g., display a success message)

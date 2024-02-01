@@ -58,10 +58,10 @@ public class TaskController {
         }
     }
 
-    @PostMapping("/{band}/{role}")
-    public ResponseEntity<String> handleFileUploadSpecific(@RequestParam("file") MultipartFile file, @PathVariable String band, @PathVariable String role) {
+    @PostMapping("/{band}")
+    public ResponseEntity<String> handleFileUploadSpecific(@RequestParam("file") MultipartFile file, @PathVariable String band) {
         try {
-            List<User> users = userRepository.findByBandAndRolesContains(band, role);
+            List<User> users = userRepository.findByBand(band);
             List<TaskDTO> taskDTOS = TaskDTOExcelReader.readTasksFromExcel(file);
             for(int i = 0; i < taskDTOS.size()-1 && taskDTOS.get(i).getKeyResultName() != ""; i++){
                 TaskDTO taskDTO = taskDTOS.get(i);

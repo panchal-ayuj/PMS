@@ -11,7 +11,6 @@ export class TaskUploadComponent {
   bands: string[] = ['B7', 'B6', 'B5', 'B4', 'B3', 'B2', 'B1'];
   roles: string[] = ['Manager', 'Admin', 'Developer'];
   selectedBand!: string;
-  selectedRole!: string;
   selectedFile!: File;
 
   constructor(private http: HttpClient, private snackBar: MatSnackBar) {}
@@ -80,12 +79,12 @@ export class TaskUploadComponent {
   //   }
   // }
   onUpload2(): void {
-    if (this.selectedRole && this.selectedBand && this.selectedFile) {
+    if (this.selectedBand && this.selectedFile) {
       const formData = new FormData();
       formData.append('file', this.selectedFile);
   
       this.http
-        .post<any>(`http://localhost:8080/api/tasks/${this.selectedBand}/${this.selectedRole}`, formData)
+        .post<any>(`http://localhost:8080/api/tasks/${this.selectedBand}`, formData)
         .subscribe(
           (response) => {
             console.log(response);
