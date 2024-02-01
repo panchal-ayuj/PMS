@@ -10,26 +10,29 @@
   <!-- Add Users Options -->
   <div *ngIf="selectedOption === 'register'">
     <div class="form-container">
-      <form [formGroup]="addForm" (ngSubmit)="addUser()">
+      <form
+        [formGroup]="addForm"
+        (ngSubmit)="highlightInvalidFields('addForm')"
+      >
         <h2>Register User</h2>
         <mat-form-field appearance="outline">
           <mat-label>First Name</mat-label>
-          <input matInput formControlName="firstName" />
+          <input matInput formControlName="firstName" #firstNameField/>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Last Name</mat-label>
-          <input matInput formControlName="lastName" />
+          <input matInput formControlName="lastName" #lastNameField/>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Email</mat-label>
-          <input matInput type="email" formControlName="email" />
+          <input matInput type="email" formControlName="email" #emailField/>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Status</mat-label>
-          <input matInput formControlName="status" />
+          <input matInput formControlName="status" #statusField/>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
@@ -39,6 +42,7 @@
             [matDatepicker]="picker"
             id="joiningDate"
             formControlName="joiningDate"
+            #joiningDateField
           />
           <mat-hint>MM/DD/YYYY</mat-hint>
           <mat-datepicker-toggle
@@ -50,30 +54,34 @@
 
         <mat-form-field appearance="outline">
           <mat-label>HR ID</mat-label>
-          <input matInput formControlName="hrId" />
+          <input matInput formControlName="hrId" #hrIdField/>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Band</mat-label>
-          <input matInput formControlName="band" />
+          <input matInput formControlName="band" #bandField/>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Reporting Manager ID</mat-label>
-          <input matInput formControlName="reportingManagerId" />
+          <input matInput formControlName="reportingManagerId" #reportingManagerIdField/>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Roles (comma-separated)</mat-label>
-          <input matInput formControlName="roles" />
+          <input matInput formControlName="roles" #rolesField/>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Teams (comma-separated)</mat-label>
-          <input matInput formControlName="teams" />
+          <input matInput formControlName="teams" #teamsField/>
         </mat-form-field>
         <div class="submit">
-          <button type="submit" mat-raised-button color="primary">
+          <button
+            type="submit"
+            mat-raised-button
+            color="primary"
+          >
             Register User
           </button>
         </div>
@@ -92,49 +100,53 @@
   <div *ngIf="selectedOption === 'update'">
     <h2 style="margin-top: 4%">Search and Edit User</h2>
     <div class="search-form" style="margin-bottom: -2%">
-        <mat-form-field appearance="outline">
-          <mat-label>Search User by ID:</mat-label>
-          <input matInput type="number" id="userId" [(ngModel)]="userId" />
-          @if (userId) {
-          <button
-            matSuffix
-            mat-icon-button
-            aria-label="Clear"
-            (click)="userId = undefined"
-          >
-            <mat-icon>close</mat-icon>
-          </button>
-          }
-        </mat-form-field>
-        <button mat-raised-button color="primary" (click)="searchUser(userId)" style="margin-right: 1%;">
-          Search
+      <mat-form-field appearance="outline">
+        <mat-label>Search User by ID:</mat-label>
+        <input matInput type="number" id="userId" [(ngModel)]="userId" />
+        @if (userId) {
+        <button
+          matSuffix
+          mat-icon-button
+          aria-label="Clear"
+          (click)="userId = undefined"
+        >
+          <mat-icon>close</mat-icon>
         </button>
-        <div class="reset-button">
-          <button mat-raised-button (click)="resetUpdateForm()">Reset</button>
-        </div>
-
+        }
+      </mat-form-field>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="searchUser(userId)"
+        style="margin-right: 1%"
+      >
+        Search
+      </button>
+      <div class="reset-button">
+        <button mat-raised-button (click)="resetUpdateForm()">Reset</button>
+      </div>
     </div>
 
     <div class="form-container">
-      <form [formGroup]="updateForm" (ngSubmit)="updateUser()">
+      <form [formGroup]="updateForm" (ngSubmit)="highlightInvalidFields('updateForm')">
         <mat-form-field appearance="outline">
           <mat-label>First Name</mat-label>
-          <input matInput formControlName="firstName" />
+          <input matInput formControlName="firstName" #firstNameField/>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Last Name</mat-label>
-          <input matInput formControlName="lastName" />
+          <input matInput formControlName="lastName" #lastNameField/>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Email</mat-label>
-          <input matInput type="email" formControlName="email" />
+          <input matInput type="email" formControlName="email" #emailField/>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Status</mat-label>
-          <input matInput formControlName="status" />
+          <input matInput formControlName="status" #statusField/>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
@@ -144,6 +156,7 @@
             [matDatepicker]="picker"
             id="joiningDate"
             formControlName="joiningDate"
+            #joiningDateField
           />
           <mat-hint>MM/DD/YYYY</mat-hint>
           <mat-datepicker-toggle
@@ -155,27 +168,27 @@
 
         <mat-form-field appearance="outline">
           <mat-label>HR ID</mat-label>
-          <input matInput formControlName="hrId" />
+          <input matInput formControlName="hrId" #hrIdField/>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Band</mat-label>
-          <input matInput formControlName="band" />
+          <input matInput formControlName="band" #bandField/>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Reporting Manager ID</mat-label>
-          <input matInput formControlName="reportingManagerId" />
+          <input matInput formControlName="reportingManagerId" #reportingManagerIdField/>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Roles (comma-separated)</mat-label>
-          <input matInput formControlName="roles" />
+          <input matInput formControlName="roles" #rolesField/>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Teams (comma-separated)</mat-label>
-          <input matInput formControlName="teams" />
+          <input matInput formControlName="teams" #teamsField/>
         </mat-form-field>
         <div class="submit">
           <button type="submit" mat-raised-button color="primary">
@@ -198,9 +211,11 @@
         mat-raised-button
         color="primary"
         (click)="exportData()"
-        style="margin-top: 2%"
+        style="margin-top: 2%;  padding: 5%;
+
+        width: 30%;"
       >
-        Export Users
+        Download
       </button>
     </div>
   </div>

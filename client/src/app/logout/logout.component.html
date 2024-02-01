@@ -12,26 +12,19 @@
               style="overflow-y: scroll; max-height: 530px"
             >
               <ng-container matColumnDef="taskName">
-                <mat-header-cell *matHeaderCellDef>Task</mat-header-cell>
+                <mat-header-cell *matHeaderCellDef style="font-size: 24px;display: flex; justify-content: center; margin-top: -8%; margin-bottom: -8%;">Task</mat-header-cell>
                 <mat-cell *matCellDef="let task">
                   {{ task.description }}
                 </mat-cell>
               </ng-container>
 
-              <ng-container matColumnDef="weight">
-                <mat-header-cell *matHeaderCellDef>Weight</mat-header-cell>
-                <mat-cell *matCellDef="let task" style="display: flex; justify-content: flex-end; margin-right: 2%;">
-                  {{ task.weight }}
-                </mat-cell>
-              </ng-container>
-
               <mat-header-row
-                *matHeaderRowDef="['taskName', 'weight']"
+                *matHeaderRowDef="['taskName']"
               ></mat-header-row>
               <mat-row
                 *matRowDef="
                   let row;
-                  columns: ['taskName', 'weight'];
+                  columns: ['taskName'];
                   let even = even;
                   let odd = odd
                 "

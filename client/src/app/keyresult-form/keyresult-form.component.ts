@@ -29,7 +29,7 @@ export class KeyresultFormComponent {
   initAddForm() {
     this.keyResultAddForm = this.formBuilder.group({
       userId: [''],
-      goalPlanId: [''],
+      financialYear: [''],
       keyResultName: [''],
       description: [''],
       weight: [''],
@@ -41,7 +41,7 @@ export class KeyresultFormComponent {
   initUpdateForm() {
     this.keyResultUpdateForm = this.formBuilder.group({
       userId: [''],
-      goalPlanId: [''],
+      financialYear: [''],
       keyResultName: [''],
       description: [''],
       weight: [''],

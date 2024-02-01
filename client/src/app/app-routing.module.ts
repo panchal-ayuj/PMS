@@ -5,7 +5,6 @@ import { LogoutComponent } from './logout/logout.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { AdminPageComponent } from './admin-page/admin-page.component';
 import { ParentUserComponent } from './parent-user/parent-user.component';
-import { ParentGoalplanComponent } from './parent-goalplan/parent-goalplan.component';
 import { ParentKeyresultComponent } from './parent-keyresult/parent-keyresult.component';
 import { ParentReviewcycleComponent } from './parent-reviewcycle/parent-reviewcycle.component';
 import { AppComponent } from './app.component';
@@ -14,7 +13,6 @@ import { UserManagementComponent } from './user/user.component';
 import { TaskComponent } from './task/task.component';
 import { ReviewcycleFormComponent } from './reviewcycle-form/reviewcycle-form.component';
 import { KeyresultFormComponent } from './keyresult-form/keyresult-form.component';
-import { GoalplanFormComponent } from './goalplan-form/goalplan-form.component';
 import { AdminGuard } from './admin.guard'; // Import the AdminGuard
 import { UserGuard } from './user.guard'; // Import the AdminGuard
 import { ParentTaskComponent } from './parent-task/parent-task.component';
@@ -33,17 +31,15 @@ const routes: Routes = [
   { path: 'navbar', component: NavbarComponent,canActivate: [UserGuard] },
   { path: 'keyresult', component: KeyresultPageComponent,canActivate: [UserGuard] },
   { path: 'profile',component:ProfilePageComponent,canActivate: [UserGuard] },
-  { path: 'admin', component: AdminPageComponent,canActivate: [AdminGuard]},
-  { path: 'admin/user', component: ParentUserComponent,canActivate: [AdminGuard]},
-  { path: 'admin/goalplan', component: ParentGoalplanComponent,canActivate: [AdminGuard]},
-  { path: 'admin/keyresult', component: ParentKeyresultComponent,canActivate: [AdminGuard]},
-  { path: 'admin/reviewcycle', component: ParentReviewcycleComponent,canActivate: [AdminGuard]},
-  { path: 'admin/feedback', component: ParentViewFeedbackComponent,canActivate: [AdminGuard]},
-  { path: 'admin/task', component:ParentTaskComponent},
-  { path: 'team', component: TeamPageComponent },
-  { path: 'profile',component:ProfilePageComponent },
-  { path: 'feedback',component:FeedbackComponent},
-  { path: 'feedback/archive', component:FeedbackArchivePageComponent},
+  { path: 'team', component: TeamPageComponent,canActivate: [UserGuard] },
+  { path: 'profile',component:ProfilePageComponent,canActivate: [UserGuard] },
+  { path: 'feedback',component:FeedbackComponent,canActivate: [UserGuard]},
+  { path: 'admin', component: AdminPageComponent,canActivate: [UserGuard,AdminGuard]},
+  { path: 'admin/user', component: ParentUserComponent,canActivate: [UserGuard,AdminGuard]},
+  { path: 'admin/keyresult', component: ParentKeyresultComponent,canActivate: [UserGuard,AdminGuard]},
+  { path: 'admin/reviewcycle', component: ParentReviewcycleComponent,canActivate: [UserGuard,AdminGuard]},
+  { path: 'admin/feedback', component: ParentViewFeedbackComponent,canActivate: [UserGuard,AdminGuard]},
+  { path: 'admin/task', component:ParentTaskComponent,canActivate: [UserGuard,AdminGuard]},
 ];
 
 @NgModule({

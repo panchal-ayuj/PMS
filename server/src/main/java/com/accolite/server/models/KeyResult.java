@@ -13,7 +13,7 @@ public class KeyResult {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long keyResultId;
     private Long userId;
-    private Long goalPlanId; // Foreign key referencing GoalPlan
+    private Integer financialYear; // Foreign key referencing GoalPlan
     private String keyResultName;
     private String description;
     private Integer weight;
@@ -24,10 +24,10 @@ public class KeyResult {
     public KeyResult() {
     }
 
-    public KeyResult(Long keyResultId, Long userId, Long goalPlanId, String keyResultName, String description, int weight, String period, Long windowId, Double rating) {
+    public KeyResult(Long keyResultId, Long userId, Integer financialYear, String keyResultName, String description, int weight, String period, Long windowId, Double rating) {
         this.keyResultId = keyResultId;
         this.userId = userId;
-        this.goalPlanId = goalPlanId;
+        this.financialYear = financialYear;
         this.keyResultName = keyResultName;
         this.description = description;
         this.weight = weight;
@@ -52,12 +52,12 @@ public class KeyResult {
         this.userId = userId;
     }
 
-    public Long getGoalPlanId() {
-        return goalPlanId;
+    public Integer getFinancialYear() {
+        return financialYear;
     }
 
-    public void setGoalPlanId(Long goalPlanId) {
-        this.goalPlanId = goalPlanId;
+    public void setFinancialYear(Integer financialYear) {
+        this.financialYear = financialYear;
     }
 
     public String getKeyResultName() {
@@ -113,7 +113,7 @@ public class KeyResult {
         return "KeyResult{" +
                 "keyResultId=" + keyResultId +
                 ", userId=" + userId +
-                ", goalPlanId=" + goalPlanId +
+                ", financialYear=" + financialYear +
                 ", keyResultName='" + keyResultName + '\'' +
                 ", description='" + description + '\'' +
                 ", weight=" + weight +
@@ -126,7 +126,7 @@ public class KeyResult {
         Map<String, Object> map = new HashMap<>();
         map.put("keyResultId", keyResultId);
         map.put("userId", userId);
-        map.put("goalPlanId", goalPlanId);
+        map.put("financialYear", financialYear);
         map.put("keyResultName", keyResultName);
         map.put("description", description);
         map.put("weight", weight);

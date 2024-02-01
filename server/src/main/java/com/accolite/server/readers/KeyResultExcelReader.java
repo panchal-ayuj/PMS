@@ -27,7 +27,7 @@ public class KeyResultExcelReader {
                 KeyResult keyResult = new KeyResult();
                 keyResult.setKeyResultId((long) (row.getCell(0).getNumericCellValue()));
                 keyResult.setUserId((long) (row.getCell(1).getNumericCellValue()));
-                keyResult.setGoalPlanId((long) (row.getCell(2).getNumericCellValue()));
+                keyResult.setFinancialYear((int) (row.getCell(2).getNumericCellValue()));
                 keyResult.setKeyResultName(row.getCell(3).getStringCellValue());
                 keyResult.setDescription(row.getCell(4).getStringCellValue());
                 keyResult.setWeight((int) (row.getCell(5).getNumericCellValue()));

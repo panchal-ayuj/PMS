@@ -1,6 +1,5 @@
 package com.accolite.server.service;
 
-import com.accolite.server.models.GoalPlan;
 import com.accolite.server.models.User;
 import com.accolite.server.repository.UserRepository;
 import com.accolite.server.writers.UserExcelWriter;

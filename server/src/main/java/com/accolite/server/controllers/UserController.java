@@ -1,6 +1,5 @@
 package com.accolite.server.controllers;
 
-import com.accolite.server.models.GoalPlan;
 import com.accolite.server.models.GoogleTokenPayload;
 import com.accolite.server.models.User;
 import com.accolite.server.readers.UserExcelReader;
@@ -20,7 +19,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/api/users")
