@@ -149,7 +149,7 @@ export class LoginComponent implements AfterViewInit {
 
   async handleCredentialResponse(response: any) {
     // Call your AuthService method to check if the user's email is present
-    // console.log(response.credential);
+     //console.log(response.credential);
     const userEmail = await this.service.getEmail(response.credential).toPromise();
     const authToken = await this.service.getAuthToken(response.credential).toPromise();
     // const userEmail = "panchal.kumar@accolitedigital.com";
