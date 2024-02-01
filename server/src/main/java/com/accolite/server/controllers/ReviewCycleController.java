@@ -2,7 +2,6 @@ package com.accolite.server.controllers;
 
 import com.accolite.server.models.*;
 import com.accolite.server.readers.ReviewCycleExcelReader;
-import com.accolite.server.repository.GoalPlanRepository;
 import com.accolite.server.repository.KeyResultRepository;
 import com.accolite.server.repository.ReviewCycleRepository;
 import com.accolite.server.repository.UserRepository;
@@ -39,9 +38,6 @@ public class ReviewCycleController {
 
     @Autowired
     private KeyResultRepository keyResultRepository;
-
-    @Autowired
-    private GoalPlanRepository goalPlanRepository;
 
     @PostMapping("")
     public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
@@ -238,12 +234,10 @@ public class ReviewCycleController {
     public ResponseEntity<List<ReviewCycleDTO>> getFeedbackAndRatingList(@PathVariable Long userId){
         try {
             List<ReviewCycle> reviewCycleList = reviewCycleRepository.findByUserId(userId);
-            List<GoalPlan> goalPlanList = goalPlanRepository.findByUserId(userId);
-            GoalPlan goalPlan = goalPlanList.get(goalPlanList.size()-1);
             List<ReviewCycleDTO> reviewCycleDTOS = new ArrayList<>();
             for(ReviewCycle reviewCycle: reviewCycleList){
                 List<KeyResult> keyResultList = keyResultRepository.findByWindowId(reviewCycle.getWindowId());
-                GoalPlan goalPlan1 = goalPlanRepository.findByGoalPlanId(keyResultList.get(0).getGoalPlanId());
+                Integer finYear = keyResultList.get(0).getFinancialYear();
                 ReviewCycleDTO reviewCycleDTO = new ReviewCycleDTO();
                 reviewCycleDTO.setUserId(reviewCycle.getUserId());
                 reviewCycleDTO.setPeriod(reviewCycle.getPeriod());
@@ -251,7 +245,7 @@ public class ReviewCycleController {
                 reviewCycleDTO.setReviewStatus(reviewCycle.getReviewStatus());
                 reviewCycleDTO.setFeedback(reviewCycle.getFeedback());
                 reviewCycleDTO.setUserFeedback(reviewCycle.getUserFeedback());
-                reviewCycleDTO.setFinancialYear(goalPlan1.getFinancialYear());
+                reviewCycleDTO.setFinancialYear(finYear);
                 reviewCycleDTOS.add(reviewCycleDTO);
             }
             if(reviewCycleDTOS != null){

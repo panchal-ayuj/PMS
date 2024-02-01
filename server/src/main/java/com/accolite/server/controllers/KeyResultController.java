@@ -34,9 +34,6 @@ public class KeyResultController {
     private KeyResultRepository keyResultRepository;
 
     @Autowired
-    private GoalPlanRepository goalPlanRepository;
-
-    @Autowired
     private UserRepository userRepository;
 
     @Autowired
@@ -73,8 +70,7 @@ public class KeyResultController {
                     keyResult1.setDescription(keyResult.getDescription());
                     keyResult1.setWeight(keyResult.getWeight());
                     keyResult1.setPeriod(keyResult.getPeriod());
-                    List<GoalPlan> goalPlanList = goalPlanRepository.findByUserId(user.getUserId());
-                    keyResult1.setGoalPlanId(goalPlanList.get(goalPlanList.size()-1).getGoalPlanId());
+                    keyResult1.setFinancialYear(keyResult.getFinancialYear());
                     List<ReviewCycle> reviewCycleList = reviewCycleRepository.findByUserId(user.getUserId());
                     keyResult1.setWindowId(reviewCycleList.get(reviewCycleList.size()-1).getWindowId());
                     keyResultRepository.save(keyResult1);
@@ -169,7 +165,7 @@ public class KeyResultController {
         List<KeyResult> filteredKeyResults = new ArrayList<>();
 
         for (KeyResult keyResult: keyResults) {
-            if(Objects.equals(goalPlanRepository.findByGoalPlanId(keyResult.getGoalPlanId()).getFinancialYear(), year)){
+            if(Objects.equals(keyResultRepository.findByKeyResultId(keyResult.getKeyResultId()).getFinancialYear(), year)){
                 if(status) {
                     if(keyResult.getRating() != null && keyResult.getRating() != 0) {
                         filteredKeyResults.add(keyResult);

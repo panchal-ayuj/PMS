@@ -1,6 +1,6 @@
 package com.accolite.server.config;
 
-import com.accolite.server.exceptions.EmailNotFoundException;
+import com.accolite.server.Exceptions.EmailNotFoundException;
 import com.accolite.server.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

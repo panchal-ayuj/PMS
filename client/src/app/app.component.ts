@@ -26,7 +26,6 @@ export class AppComponent implements OnInit {
           event.url.includes('/profile') ||
           event.url.includes('/admin') ||
           event.url.includes('/admin/user') ||
-          event.url.includes('/admin/goalplan') ||
           event.url.includes('/admin/keyresult') ||
           event.url.includes('/admin/reviewcycle') ||
           event.url.includes('/admin/feedback') ||

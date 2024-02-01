@@ -36,10 +36,6 @@ export const navbarData: INavbarData[] = [
                 label: 'User Registration',
             },
             {
-                routeLink: '/admin/goalplan',
-                label: 'Goalplan Management',
-            },
-            {
                 routeLink: '/admin/keyresult',
                 label: 'Keyresult Management',
             },

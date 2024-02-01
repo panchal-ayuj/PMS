@@ -5,7 +5,6 @@ import { LogoutComponent } from './logout/logout.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { AdminPageComponent } from './admin-page/admin-page.component';
 import { ParentUserComponent } from './parent-user/parent-user.component';
-import { ParentGoalplanComponent } from './parent-goalplan/parent-goalplan.component';
 import { ParentKeyresultComponent } from './parent-keyresult/parent-keyresult.component';
 import { ParentReviewcycleComponent } from './parent-reviewcycle/parent-reviewcycle.component';
 import { AppComponent } from './app.component';
@@ -14,7 +13,6 @@ import { UserManagementComponent } from './user/user.component';
 import { TaskComponent } from './task/task.component';
 import { ReviewcycleFormComponent } from './reviewcycle-form/reviewcycle-form.component';
 import { KeyresultFormComponent } from './keyresult-form/keyresult-form.component';
-import { GoalplanFormComponent } from './goalplan-form/goalplan-form.component';
 import { AdminGuard } from './admin.guard'; // Import the AdminGuard
 import { UserGuard } from './user.guard'; // Import the AdminGuard
 import { ParentTaskComponent } from './parent-task/parent-task.component';
@@ -38,7 +36,6 @@ const routes: Routes = [
   { path: 'feedback',component:FeedbackComponent,canActivate: [UserGuard]},
   { path: 'admin', component: AdminPageComponent,canActivate: [UserGuard,AdminGuard]},
   { path: 'admin/user', component: ParentUserComponent,canActivate: [UserGuard,AdminGuard]},
-  { path: 'admin/goalplan', component: ParentGoalplanComponent,canActivate: [UserGuard,AdminGuard]},
   { path: 'admin/keyresult', component: ParentKeyresultComponent,canActivate: [UserGuard,AdminGuard]},
   { path: 'admin/reviewcycle', component: ParentReviewcycleComponent,canActivate: [UserGuard,AdminGuard]},
   { path: 'admin/feedback', component: ParentViewFeedbackComponent,canActivate: [UserGuard,AdminGuard]},
