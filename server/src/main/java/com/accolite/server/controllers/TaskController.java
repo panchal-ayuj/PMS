@@ -1,5 +1,7 @@
 package com.accolite.server.controllers;
 
+import com.accolite.server.exceptions.EmailNotFoundException;
+import com.accolite.server.exceptions.UserNotAuthorizedException;
 import com.accolite.server.models.*;
 import com.accolite.server.readers.KeyResultExcelReader;
 import com.accolite.server.readers.TaskDTOExcelReader;
@@ -15,6 +17,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -49,6 +53,7 @@ public class TaskController {
 
     @PostMapping
     public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
+        checkIfAuthorised();
         try {
             List<Task> tasks = TaskExcelReader.readUsersFromExcel(file);
             taskService.saveAll(tasks);
@@ -60,6 +65,7 @@ public class TaskController {
 
     @PostMapping("/{band}")
     public ResponseEntity<String> handleFileUploadSpecific(@RequestParam("file") MultipartFile file, @PathVariable String band) {
+        checkIfAuthorised();
         try {
             List<User> users = userRepository.findByBand(band);
             List<TaskDTO> taskDTOS = TaskDTOExcelReader.readTasksFromExcel(file);
@@ -96,11 +102,13 @@ public class TaskController {
 
     @PostMapping("/create")
     public ResponseEntity<Task> createTask(@RequestBody Task task) {
+        checkIfAuthorised();
         Task createdTask = taskService.createTask(task);
         return new ResponseEntity<>(createdTask, HttpStatus.CREATED);
     }
     @GetMapping("/export")
     public ResponseEntity<?> exportTasksToExcel() {
+        checkIfAuthorised();
         List<Task> tasks = taskService.getAllTasks();
         String filePath = "task_data_export.xlsx";
 
@@ -143,6 +151,7 @@ public class TaskController {
 
     @PutMapping("/taskById/{taskId}")
     public ResponseEntity<Task> updateTask(@PathVariable Long taskId, @RequestBody Task updatedTask) {
+        checkIfAuthorised();
         Task existingTask = taskService.getTaskById(taskId);
 
         if (existingTask != null) {
@@ -182,5 +191,11 @@ public class TaskController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error saving changes: " + e.getMessage());
         }
     }
-    // You can add other methods as needed
+    private void checkIfAuthorised() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByEmail(authentication.getName()).orElseThrow(() -> new EmailNotFoundException("Email not found"));
+        if(!user.getRoles().contains("Admin")) {
+            throw new UserNotAuthorizedException("User is not Authorized");
+        }
+    }
 }

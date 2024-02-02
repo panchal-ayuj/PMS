@@ -1,5 +1,7 @@
 package com.accolite.server.controllers;
 
+import com.accolite.server.exceptions.EmailNotFoundException;
+import com.accolite.server.exceptions.UserNotAuthorizedException;
 import com.accolite.server.models.*;
 import com.accolite.server.readers.ReviewCycleExcelReader;
 import com.accolite.server.repository.KeyResultRepository;
@@ -11,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.http.ResponseEntity;
@@ -41,6 +45,7 @@ public class ReviewCycleController {
 
     @PostMapping("")
     public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
+        checkIfAuthorised();
         try {
             List<ReviewCycle> reviewCycles = ReviewCycleExcelReader.readReviewCyclesFromExcel(file);
             reviewCycleService.saveAll(reviewCycles);
@@ -52,6 +57,7 @@ public class ReviewCycleController {
 
     @PostMapping("/{band}")
     public ResponseEntity<String> handleFileUploadSpecific(@RequestParam("file") MultipartFile file, @PathVariable String band) {
+        checkIfAuthorised();
         try {
             List<User> users = userRepository.findByBand(band);
             List<ReviewCycle> reviewCycles = ReviewCycleExcelReader.readReviewCyclesFromExcel(file);
@@ -74,11 +80,13 @@ public class ReviewCycleController {
 
     @PostMapping("/register")
     public ResponseEntity<ReviewCycle> registerReviewCycle(@RequestBody ReviewCycle reviewCycle) {
+        checkIfAuthorised();
         ReviewCycle registeredReviewCycle = reviewCycleService.registerReviewCycle(reviewCycle);
         return new ResponseEntity<>(registeredReviewCycle, HttpStatus.CREATED);
     }
     @GetMapping("/export")
     public ResponseEntity<Object> exportReviewCyclesToExcel() {
+        checkIfAuthorised();
         List<ReviewCycle> reviewCycles = reviewCycleService.getAllReviewCycles();
         String filePath = "review_cycle_data_export.xlsx";
 
@@ -126,6 +134,7 @@ public class ReviewCycleController {
 
     @PutMapping("/reviewCycleById/{reviewCycleId}")
     public ResponseEntity<ReviewCycle> updateReviewCycle(@PathVariable Long reviewCycleId, @RequestBody ReviewCycle updatedReviewCycle) {
+        checkIfAuthorised();
         ReviewCycle existingReviewCycle = reviewCycleService.getReviewCycleById(reviewCycleId);
 
         if (existingReviewCycle != null) {
@@ -232,6 +241,7 @@ public class ReviewCycleController {
 
     @GetMapping("/list/{userId}")
     public ResponseEntity<List<ReviewCycleDTO>> getFeedbackAndRatingList(@PathVariable Long userId){
+        checkIfAuthorised();
         try {
             List<ReviewCycle> reviewCycleList = reviewCycleRepository.findByUserId(userId);
             List<ReviewCycleDTO> reviewCycleDTOS = new ArrayList<>();
@@ -357,6 +367,13 @@ public class ReviewCycleController {
             }
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+    private void checkIfAuthorised() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByEmail(authentication.getName()).orElseThrow(() -> new EmailNotFoundException("Email not found"));
+        if(!user.getRoles().contains("Admin")) {
+            throw new UserNotAuthorizedException("User is not Authorized");
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.accolite.server.Exceptions;
+package com.accolite.server.exceptions;
 
 public class EmailNotFoundException extends RuntimeException{
     public EmailNotFoundException(String msg) {

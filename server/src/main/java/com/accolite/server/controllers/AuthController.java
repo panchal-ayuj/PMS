@@ -1,6 +1,7 @@
 package com.accolite.server.controllers;
 
 import com.accolite.server.config.JWTService;
+import com.accolite.server.exceptions.EmailNotFoundException;
 import com.accolite.server.models.AuthTokenPayload;
 import com.accolite.server.models.GoogleTokenPayload;
 import com.accolite.server.models.User;
@@ -8,6 +9,8 @@ import com.accolite.server.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -134,24 +137,12 @@ public class AuthController {
         }
     }
 
-    @PostMapping("/getUser")
-    private ResponseEntity<User> User(@RequestBody String googleToken){
-        RestTemplate restTemplate = new RestTemplate();
-        //  System.out.println(googleToken);
+    @GetMapping("/getUser")
+    private ResponseEntity<User> User(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByEmail(authentication.getName()).orElseThrow(() -> new EmailNotFoundException("Email not found"));
 
-        String accessTokenValue = googleToken.substring(1);
-
-        String tokenInfoUrl = googleTokenInfoUrl + "?id_token=" + accessTokenValue;
-        ResponseEntity<GoogleTokenPayload> response = restTemplate.getForEntity(tokenInfoUrl, GoogleTokenPayload.class);
-
-        Optional<User> user = userRepository.findByEmail(response.getBody().getEmail());
-        // System.out.println(response.getBody().getEmail()); To get the email
-
-        if (response.getStatusCode() == HttpStatus.OK) {
-            return ResponseEntity.ok(user.get());
-        } else {
-            return null;
-        }
+        return ResponseEntity.ok(user);
     }
 
 

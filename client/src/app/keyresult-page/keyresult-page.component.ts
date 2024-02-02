@@ -12,7 +12,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DiaglogoverviewComponent } from '../diaglogoverview/diaglogoverview.component';
 import { SharedDataService } from '../shared-data.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
@@ -96,9 +96,11 @@ export class KeyresultPageComponent implements OnInit {
         if (data.length > 0 && 'windowId' in data[0]) {
           this.reviewCycleId = data[0].windowId; // Accessing windowId of the first KeyResult
 
+          const header = new HttpHeaders().set('Content-type', 'application/json')
+                                    .set('Authorization', `Bearer ${localStorage.getItem("authToken")}`);
           this.http
             .get<any>(
-              `http://localhost:8080/reviewCycle/reviewCycleById/${this.reviewCycleId}`
+              `http://localhost:8080/reviewCycle/reviewCycleById/${this.reviewCycleId}`, {headers: header}
             )
             .subscribe(
               (reviewCycle) => {
@@ -142,7 +144,9 @@ export class KeyresultPageComponent implements OnInit {
         .toPromise();
       console.log(user);
       const url = `http://localhost:8080/api/users/list/${this.userId}`;
-      this.http.get<any>(url).subscribe(
+      const header = new HttpHeaders().set('Content-type', 'application/json')
+                                    .set('Authorization', `Bearer ${localStorage.getItem("authToken")}`);
+      this.http.get<any>(url, {headers: header}).subscribe(
         (empList) => {
           this.userName = empList[0].firstName;
           this.startDate = new Date(this.startDate);
@@ -242,7 +246,9 @@ export class KeyresultPageComponent implements OnInit {
       ); //reviewCycleId is windowid
 
       const feedbackEndpoint = `http://localhost:8080/reviewCycle/addFeedback/${this.useApi}/${this.reviewCycleId}/${this.managerId}`;
-      this.http.post(feedbackEndpoint, feedbackData.feedback).subscribe(
+      const header = new HttpHeaders().set('Content-type', 'application/json')
+                                    .set('Authorization', `Bearer ${localStorage.getItem("authToken")}`);
+      this.http.post(feedbackEndpoint, feedbackData.feedback, {headers: header}).subscribe(
         (response: any) => {
           console.log('Feedback submitted successfully', response);
 

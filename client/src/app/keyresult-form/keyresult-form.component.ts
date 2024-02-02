@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -95,8 +95,9 @@ export class KeyresultFormComponent {
     if (this.searchKeyResultId) { 
       this.showSuccessSnackBar('Key Result updated successfully');
 
-
-      this.http.put(`${apiUrl}keyResultById/${this.searchKeyResultId}`, keyresult).subscribe(
+      const header = new HttpHeaders().set('Content-type', 'application/json')
+                                    .set('Authorization', `Bearer ${localStorage.getItem("authToken")}`);
+      this.http.put(`${apiUrl}keyResultById/${this.searchKeyResultId}`, keyresult, {headers: header}).subscribe(
         (response) => {
           
           console.log('Key Result updated successfully:', response);
@@ -116,7 +117,9 @@ export class KeyresultFormComponent {
     const apiUrl = 'http://localhost:8080/keyResult/';
 
     this.showSuccessSnackBar('Key Result registered successfully');
-      this.http.post('http://localhost:8080/keyResult/register', keyresult).subscribe(
+    const header = new HttpHeaders().set('Content-type', 'application/json')
+                                    .set('Authorization', `Bearer ${localStorage.getItem("authToken")}`);
+      this.http.post('http://localhost:8080/keyResult/register', keyresult, {headers: header}).subscribe(
         (response) => {
           console.log('Key Result registered successfully:', response);
           this.loadKeyResults();
@@ -131,7 +134,9 @@ export class KeyresultFormComponent {
 
   loadKeyResults() {
     const apiUrl = 'http://localhost:8080/keyResult';
-    this.http.get(apiUrl).subscribe(
+    const header = new HttpHeaders().set('Content-type', 'application/json')
+                                    .set('Authorization', `Bearer ${localStorage.getItem("authToken")}`);
+    this.http.get(apiUrl, {headers: header}).subscribe(
       (data: any) => {
         if (Array.isArray(data)) {
           this.keyresults = data;
@@ -149,7 +154,9 @@ export class KeyresultFormComponent {
     const apiUrl = 'http://localhost:8080/keyResult/export';
 
     // Make a GET request to the export endpoint
-    this.http.get(apiUrl, { responseType: 'blob' }).subscribe(
+    const header = new HttpHeaders().set('Content-type', 'application/json')
+                                    .set('Authorization', `Bearer ${localStorage.getItem("authToken")}`);
+    this.http.get(apiUrl, {responseType: 'blob', headers: header}).subscribe(
       (data: Blob) => {
         // Create a blob URL and trigger a download
         const blobUrl = window.URL.createObjectURL(data);
@@ -171,7 +178,9 @@ export class KeyresultFormComponent {
     if (keyResultId) {
       this.searchKeyResultId = keyResultId;
       const apiUrl = `http://localhost:8080/keyResult/keyResultById/${keyResultId}`;
-      this.http.get(apiUrl).subscribe(
+      const header = new HttpHeaders().set('Content-type', 'application/json')
+                                    .set('Authorization', `Bearer ${localStorage.getItem("authToken")}`);
+      this.http.get(apiUrl, {headers: header}).subscribe(
         (data: any) => {
           this.keyResultUpdateForm.patchValue(data); // Autofill the form with the fetched data
         },

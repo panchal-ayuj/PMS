@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -21,11 +21,11 @@ export class UserUploadComponent {
     if (this.selectedFile) {
       const formData = new FormData();
       formData.append('file', this.selectedFile);
-      
 
-
+      const header = new HttpHeaders().set('Content-type', 'application/json')
+                                    .set('Authorization', `Bearer ${localStorage.getItem("authToken")}`);
       this.http
-        .post<any>('http://localhost:8080/api/users', formData)
+        .post<any>('http://localhost:8080/api/users', formData, {headers: header})
         .subscribe(
           (response) => {
             

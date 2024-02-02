@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -43,7 +43,9 @@ export class TaskComponent implements OnInit {
 
   loadTasks() {
     const apiUrl = 'http://localhost:8080/api/tasks';
-    this.http.get(apiUrl).subscribe(
+    const header = new HttpHeaders().set('Content-type', 'application/json')
+                                    .set('Authorization', `Bearer ${localStorage.getItem("authToken")}`);
+    this.http.get(apiUrl, {headers: header}).subscribe(
       (data: any) => {
         if (Array.isArray(data)) {
           this.tasks = data;
@@ -65,9 +67,12 @@ export class TaskComponent implements OnInit {
 
     const apiUrl = 'http://localhost:8080/api/tasks/';
 
+    const header = new HttpHeaders().set('Content-type', 'application/json')
+                                    .set('Authorization', `Bearer ${localStorage.getItem("authToken")}`);
+
     // Check if ID is present for update
     if (this.searchTaskId) {
-      this.http.put(`${apiUrl}taskById/${this.searchTaskId}`, task).subscribe(
+      this.http.put(`${apiUrl}taskById/${this.searchTaskId}`, task, {headers: header}).subscribe(
         (response) => {
           console.log('Task updated successfully:', response);
           this.showSuccessSnackBar('Task updated successfully');
@@ -80,7 +85,7 @@ export class TaskComponent implements OnInit {
         }
       );
     } else {
-      this.http.post('http://localhost:8080/api/tasks/create', task).subscribe(
+      this.http.post('http://localhost:8080/api/tasks/create', task, {headers: header}).subscribe(
         (response) => {
           console.log('Task registered successfully:', response);
           this.showSuccessSnackBar('Task registered successfully');
@@ -99,7 +104,9 @@ export class TaskComponent implements OnInit {
     if (taskId) {
       this.searchTaskId = taskId;
       const apiUrl = `http://localhost:8080/api/tasks/taskById/${taskId}`;
-      this.http.get(apiUrl).subscribe(
+      const header = new HttpHeaders().set('Content-type', 'application/json')
+                                    .set('Authorization', `Bearer ${localStorage.getItem("authToken")}`);
+      this.http.get(apiUrl, {headers: header}).subscribe(
         (data: any) => {
           this.taskForm.patchValue(data); // Autofill the form with the fetched data
         },
@@ -119,8 +126,10 @@ export class TaskComponent implements OnInit {
   exportTasks() {
     const apiUrl = 'http://localhost:8080/api/tasks/export';
 
+    const header = new HttpHeaders().set('Content-type', 'application/json')
+                                    .set('Authorization', `Bearer ${localStorage.getItem("authToken")}`);
     // Make a GET request to the export endpoint
-    this.http.get(apiUrl, { responseType: 'blob' }).subscribe(
+    this.http.get(apiUrl, { responseType: 'blob', headers: header }).subscribe(
       (data: Blob) => {
         // Create a blob URL and trigger a download
         const blobUrl = window.URL.createObjectURL(data);

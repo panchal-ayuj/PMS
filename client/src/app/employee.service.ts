@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -11,7 +11,9 @@ export class EmployeeService {
     constructor(private http: HttpClient) {}
   
     getUsersAndReportingChain(userId: any): Observable<any> {
+      const header = new HttpHeaders().set('Content-type', 'application/json')
+                                    .set('Authorization', `Bearer ${localStorage.getItem("authToken")}`);
       const endpoint = `${this.apiUrl}/api/users/reporting-chain/${userId}`;
-      return this.http.get<any>(endpoint);
+      return this.http.get<any>(endpoint, {headers: header});
     }
 }

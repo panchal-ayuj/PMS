@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AuthService } from '../auth.service';
@@ -54,7 +54,10 @@ export class DiaglogoverviewComponent implements OnInit {
     // Implement logic to save changes
     // For example, you can send an HTTP request to update the tasks on the server
     console.log('Saving changes:', this.data.tasks);
-    this.http.post('http://localhost:8080/api/tasks/saveChanges', this.data.tasks)
+    const header = new HttpHeaders().set('Content-type', 'application/json')
+                                    .set('Authorization', `Bearer ${localStorage.getItem("authToken")}`);
+    this.http.post('http://localhost:8080/api/tasks/saveChanges', this.data.tasks
+    ,  {headers: header})
     .subscribe(response => {
       console.log('Changes saved on the server:', response);
     });

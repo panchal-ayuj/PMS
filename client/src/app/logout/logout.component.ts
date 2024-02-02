@@ -30,7 +30,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { AuthService } from '../auth.service';
 import { UserInfoService } from '../user-info.service';
 import { SharedDataService } from '../shared-data.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-logout',
@@ -122,7 +122,9 @@ export class LogoutComponent implements OnInit {
   fetchUserCounts() {
     // Replace with your API endpoint
     const managerId = this.userId; // Replace with the actual managerId
-    this.http.get<UserCountsDTO>(`http://localhost:8080/reviewCycle/userCounts/${managerId}`).subscribe(
+    const header = new HttpHeaders().set('Content-type', 'application/json')
+                                    .set('Authorization', `Bearer ${localStorage.getItem("authToken")}`);
+    this.http.get<UserCountsDTO>(`http://localhost:8080/reviewCycle/userCounts/${managerId}`, {headers: header}).subscribe(
       (data) => {
         this.completedReviewCount = data.completedReviewCount;
         this.totalUserCount = data.totalUserCount;
@@ -134,7 +136,9 @@ export class LogoutComponent implements OnInit {
   }
 
   fetchRating(){
-    this.http.get<any>(`http://localhost:8080/reviewCycle/secondLatestFeedbackAndRating/${this.userId}`).subscribe(
+    const header = new HttpHeaders().set('Content-type', 'application/json')
+    .set('Authorization', `Bearer ${localStorage.getItem("authToken")}`);
+    this.http.get<any>(`http://localhost:8080/reviewCycle/secondLatestFeedbackAndRating/${this.userId}`, {headers: header}).subscribe(
       (data) => {
         this.secondLatestReviewCycle = data;
       },
@@ -145,7 +149,9 @@ export class LogoutComponent implements OnInit {
   }
 
   fetchOverallRating(){
-    this.http.get<any>(`http://localhost:8080/reviewCycle/averageRating/${this.userId}`).subscribe(
+    const header = new HttpHeaders().set('Content-type', 'application/json')
+    .set('Authorization', `Bearer ${localStorage.getItem("authToken")}`);
+    this.http.get<any>(`http://localhost:8080/reviewCycle/averageRating/${this.userId}`, {headers: header}).subscribe(
       (data) => {
         this.averageRating = data;
       },
@@ -156,7 +162,9 @@ export class LogoutComponent implements OnInit {
   }
 
   fetchTopThreeKRA(){
-    this.http.get<any>(`http://localhost:8080/keyResult/topThreeKeyResults/${this.userId}`).subscribe(
+    const header = new HttpHeaders().set('Content-type', 'application/json')
+    .set('Authorization', `Bearer ${localStorage.getItem("authToken")}`);
+    this.http.get<any>(`http://localhost:8080/keyResult/topThreeKeyResults/${this.userId}`, {headers: header}).subscribe(
       (data) => {
         this.topThreeKeyResults = data;
       },
@@ -167,7 +175,9 @@ export class LogoutComponent implements OnInit {
   }
 
   fetchBottomThreeKRA(){
-    this.http.get<any>(`http://localhost:8080/keyResult/bottomThreeKeyResults/${this.userId}`).subscribe(
+    const header = new HttpHeaders().set('Content-type', 'application/json')
+    .set('Authorization', `Bearer ${localStorage.getItem("authToken")}`);
+    this.http.get<any>(`http://localhost:8080/keyResult/bottomThreeKeyResults/${this.userId}`, {headers: header}).subscribe(
       (data) => {
         this.bottomThreeKeyResults = data;
       },
@@ -178,7 +188,9 @@ export class LogoutComponent implements OnInit {
   }
 
   fetchCurrentTasks(){
-    this.http.get<any>(`http://localhost:8080/keyResult/tasks/${this.userId}`).subscribe(
+    const header = new HttpHeaders().set('Content-type', 'application/json')
+    .set('Authorization', `Bearer ${localStorage.getItem("authToken")}`);
+    this.http.get<any>(`http://localhost:8080/keyResult/tasks/${this.userId}`, {headers: header}).subscribe(
       (data) => {
         this.taskList = data;
       },

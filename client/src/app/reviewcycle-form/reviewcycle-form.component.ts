@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -37,10 +37,12 @@ export class ReviewcycleFormComponent {
     const reviewcycle = this.reviewCycleForm.value;
 
     const apiUrl = 'http://localhost:8080/reviewCycle/';
+    const header = new HttpHeaders().set('Content-type', 'application/json')
+                                    .set('Authorization', `Bearer ${localStorage.getItem("authToken")}`);
 
     // Check if ID is present for update
     if (this.searchReviewCycleId) {
-      this.http.put(`${apiUrl}reviewCycleById/${this.searchReviewCycleId}`, reviewcycle).subscribe(
+      this.http.put(`${apiUrl}reviewCycleById/${this.searchReviewCycleId}`, reviewcycle, {headers: header}).subscribe(
         (response) => {
           console.log('Review Cycle updated successfully:', response);
           this.showSuccessSnackBar('Review Cycle updated successfully');
@@ -53,7 +55,7 @@ export class ReviewcycleFormComponent {
         }
       );
     } else {
-      this.http.post('http://localhost:8080/reviewCycle/register', reviewcycle).subscribe(
+      this.http.post('http://localhost:8080/reviewCycle/register', reviewcycle, {headers: header}).subscribe(
         (response) => {
           console.log('Review Cycle registered successfully:', response);
           this.showSuccessSnackBar('Review Cycle registered successfully');
@@ -70,7 +72,9 @@ export class ReviewcycleFormComponent {
 
   loadReviewCycles() {
     const apiUrl = 'http://localhost:8080/reviewCycle';
-    this.http.get(apiUrl).subscribe(
+    const header = new HttpHeaders().set('Content-type', 'application/json')
+                                    .set('Authorization', `Bearer ${localStorage.getItem("authToken")}`);
+    this.http.get(apiUrl, {headers: header}).subscribe(
       (data: any) => {
         if (Array.isArray(data)) {
           this.reviewcycles = data;
@@ -87,8 +91,10 @@ export class ReviewcycleFormComponent {
   exportReviewCycles() {
     const apiUrl = 'http://localhost:8080/reviewCycle/export';
 
+    const header = new HttpHeaders().set('Content-type', 'application/json')
+                                    .set('Authorization', `Bearer ${localStorage.getItem("authToken")}`);
     // Make a GET request to the export endpoint
-    this.http.get(apiUrl, { responseType: 'blob' }).subscribe(
+    this.http.get(apiUrl, {responseType: 'blob', headers: header}).subscribe(
       (data: Blob) => {
         // Create a blob URL and trigger a download
         const blobUrl = window.URL.createObjectURL(data);
@@ -112,7 +118,9 @@ export class ReviewcycleFormComponent {
     if (reviewCycleId) {
       this.searchReviewCycleId = reviewCycleId;
       const apiUrl = `http://localhost:8080/reviewCycle/reviewCycleById/${reviewCycleId}`;
-      this.http.get(apiUrl).subscribe(
+      const header = new HttpHeaders().set('Content-type', 'application/json')
+                                    .set('Authorization', `Bearer ${localStorage.getItem("authToken")}`);
+      this.http.get(apiUrl, {headers: header}).subscribe(
         (data: any) => {
           this.reviewCycleForm.patchValue(data); // Autofill the form with the fetched data
         },

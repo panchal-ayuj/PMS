@@ -57,9 +57,8 @@ export class AuthService {
         .set('Content-Type', 'application/json')
         .set('Authorization', 'Bearer ' + authToken);
       console.log(header);
-      return this.httpClient.post<any>(
+      return this.httpClient.get<any>(
         this.path + 'getUser',
-        JSON.stringify(googleToken),
         { headers: header }
       );
     } else {
@@ -79,7 +78,8 @@ export class AuthService {
       const searchQuery = name; // Adjust the API request payload as needed
 
       return this.httpClient.get<any>(
-        `${this.path}api/users/searchUsersByName/${searchQuery}`
+        `${this.path}api/users/searchUsersByName/${searchQuery}`,
+        { headers: header }
       );
     } else {
       console.error('Authentication token is missing');
@@ -97,7 +97,8 @@ export class AuthService {
       const searchQuery = userId; // Adjust the API request payload as needed
   
       return this.httpClient.get<any>(
-        `${this.path}api/users/searchUsersById/${searchQuery}`
+        `${this.path}api/users/searchUsersById/${searchQuery}`,
+        { headers: header }
       );
     } else {
       console.error('Authentication token is missing');

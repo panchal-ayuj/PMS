@@ -2,7 +2,7 @@
 
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ExportService } from '../export.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -189,7 +189,9 @@ export class UserManagementComponent implements OnInit {
     }
 
     const apiUrl = 'http://localhost:8080/api/users/';
-    this.http.post(`${apiUrl}register`, user).subscribe(
+    const header = new HttpHeaders().set('Content-type', 'application/json')
+                                    .set('Authorization', `Bearer ${localStorage.getItem("authToken")}`);
+    this.http.post(`${apiUrl}register`, user, {headers: header}).subscribe(
       (response) => {
         console.log('User registered successfully:', response);
         this.showSuccessSnackBar('User registered successfully');
@@ -214,10 +216,12 @@ export class UserManagementComponent implements OnInit {
     }
 
     const apiUrl = 'http://localhost:8080/api/users/';
+    const header = new HttpHeaders().set('Content-type', 'application/json')
+                                    .set('Authorization', `Bearer ${localStorage.getItem("authToken")}`);
 
     // Check if ID is present for update
     if (this.searchUserId) {
-      this.http.put(`${apiUrl}userById/${this.searchUserId}`, user).subscribe(
+      this.http.put(`${apiUrl}userById/${this.searchUserId}`, user, {headers: header}).subscribe(
         (response) => {
           console.log('User updated successfully:', response);
           this.showSuccessSnackBar('User updated successfully');
@@ -232,7 +236,9 @@ export class UserManagementComponent implements OnInit {
   }
   loadUsers() {
     const apiUrl = 'http://localhost:8080/api/users';
-    this.http.get(apiUrl).subscribe(
+    const header = new HttpHeaders().set('Content-type', 'application/json')
+                                    .set('Authorization', `Bearer ${localStorage.getItem("authToken")}`);
+    this.http.get(apiUrl, {headers: header}).subscribe(
       (data: any) => {
         if (Array.isArray(data)) {
           this.users = data;
@@ -271,7 +277,9 @@ export class UserManagementComponent implements OnInit {
     if (userId) {
       this.searchUserId = userId;
       const apiUrl = `http://localhost:8080/api/users/userById/${userId}`;
-      this.http.get(apiUrl).subscribe(
+      const header = new HttpHeaders().set('Content-type', 'application/json')
+                                    .set('Authorization', `Bearer ${localStorage.getItem("authToken")}`);
+      this.http.get(apiUrl, {headers: header}).subscribe(
         (data: any) => {
           this.updateForm.patchValue(data); // Autofill the form with the fetched data
         },

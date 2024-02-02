@@ -69,7 +69,7 @@ public  class ReminderService {
                     Long uniqueId = entry.getValue().get(0).getWindowId();
 
                     // Generate the Excel file with details of the pending reviews
-                    String excelFilePath = "C:\\Training\\PMS\\server\\pending_reviews" + uniqueId + ".xlsx";
+                    String excelFilePath = "C:\\Users\\sahil.agarwal\\Desktop\\PMS\\server\\pending_reviews" + uniqueId + ".xlsx";
                     generatePendingReviewsExcelFile(entry.getValue(), excelFilePath);
 
                     // Send a single email with the Excel file attached to the reporting manager

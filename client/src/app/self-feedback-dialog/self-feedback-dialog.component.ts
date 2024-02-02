@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { NgForm } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-self-feedback-dialog',
@@ -23,8 +23,10 @@ export class SelfFeedbackDialogComponent {
   submitFeedback() {
     const url = `http://localhost:8080/reviewCycle/user-feedback/${this.userId}`;
 
+    const header = new HttpHeaders().set('Content-type', 'application/json')
+                                    .set('Authorization', `Bearer ${localStorage.getItem("authToken")}`);
     // Call API to update user feedback directly using http.put
-    this.http.put(url, { userFeedback: this.feedbackInput }, { responseType: 'text' }).subscribe(
+    this.http.put(url, { userFeedback: this.feedbackInput },  {headers: header, responseType: 'text' }).subscribe(
       () => {
         console.log('User feedback updated successfully.');
       },

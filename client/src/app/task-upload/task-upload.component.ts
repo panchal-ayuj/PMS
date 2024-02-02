@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -20,12 +20,14 @@ export class TaskUploadComponent {
   }
 
   onUpload(): void {
+    const header = new HttpHeaders().set('Content-type', 'application/json')
+                                    .set('Authorization', `Bearer ${localStorage.getItem("authToken")}`);
     if (this.selectedFile) {
       const formData = new FormData();
       formData.append('file', this.selectedFile);
 
       this.http
-        .post<any>('http://localhost:8080/api/tasks', formData)
+        .post<any>('http://localhost:8080/api/tasks', formData, {headers: header})
         .subscribe(
           (response) => {
             console.log(response);
@@ -79,12 +81,14 @@ export class TaskUploadComponent {
   //   }
   // }
   onUpload2(): void {
+    const header = new HttpHeaders().set('Content-type', 'application/json')
+                                    .set('Authorization', `Bearer ${localStorage.getItem("authToken")}`);
     if (this.selectedBand && this.selectedFile) {
       const formData = new FormData();
       formData.append('file', this.selectedFile);
   
       this.http
-        .post<any>(`http://localhost:8080/api/tasks/${this.selectedBand}`, formData)
+        .post<any>(`http://localhost:8080/api/tasks/${this.selectedBand}`, formData, {headers: header})
         .subscribe(
           (response) => {
             console.log(response);

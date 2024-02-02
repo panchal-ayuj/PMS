@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -23,8 +23,10 @@ export class ReviewCycleUploadComponent {
       const formData: FormData = new FormData();
       formData.append('file', this.selectedFile);
 
+      const header = new HttpHeaders().set('Content-type', 'application/json')
+                                    .set('Authorization', `Bearer ${localStorage.getItem("authToken")}`);
       this.http
-        .post<any>('http://localhost:8080/reviewCycle', formData)
+        .post<any>('http://localhost:8080/reviewCycle', formData, {headers: header})
         .subscribe(
           (response) => {
             // console.log(response);
@@ -52,10 +54,12 @@ export class ReviewCycleUploadComponent {
       const formData: FormData = new FormData();
       formData.append('file', this.selectedFile);
 
+      const header = new HttpHeaders().set('Content-type', 'application/json')
+                                    .set('Authorization', `Bearer ${localStorage.getItem("authToken")}`);
       this.http
         .post<any>(
           `http://localhost:8080/reviewCycle/${this.selectedBand}`,
-          formData
+          formData, {headers: header}
         )
         .subscribe(
           (response) => {

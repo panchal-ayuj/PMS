@@ -1,5 +1,7 @@
 package com.accolite.server.controllers;
 
+import com.accolite.server.exceptions.EmailNotFoundException;
+import com.accolite.server.exceptions.UserNotAuthorizedException;
 import com.accolite.server.models.*;
 import com.accolite.server.readers.KeyResultExcelReader;
 import com.accolite.server.repository.*;
@@ -9,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.http.ResponseEntity;
@@ -47,6 +51,7 @@ public class KeyResultController {
 
     @PostMapping("")
     public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
+        checkIfAuthorised();
         try {
             List<KeyResult> keyResults = KeyResultExcelReader.readKeyResultsFromExcel(file);
             keyResultService.saveAll(keyResults);
@@ -58,6 +63,7 @@ public class KeyResultController {
 
     @PostMapping("/{band}")
     public ResponseEntity<String> handleFileUploadSpecific(@RequestParam("file") MultipartFile file, @PathVariable String band) {
+        checkIfAuthorised();
         try {
             List<User> users = userRepository.findByBand(band);
             List<KeyResult> keyResults = KeyResultExcelReader.readKeyResultsFromExcel(file);
@@ -84,6 +90,7 @@ public class KeyResultController {
 
     @GetMapping("/export")
     public ResponseEntity<Object> exportKeyResultsToExcel() {
+        checkIfAuthorised();
         List<KeyResult> keyResults = keyResultService.getAllKeyResults();
         String filePath = "key_result_data_export.xlsx";
 
@@ -115,6 +122,7 @@ public class KeyResultController {
 
     @PostMapping("/register")
     public ResponseEntity<KeyResult> registerKeyResult(@RequestBody KeyResult keyResult) {
+        checkIfAuthorised();
         KeyResult registeredKeyResult = keyResultService.registerKeyResult(keyResult);
         return new ResponseEntity<>(registeredKeyResult, HttpStatus.CREATED);
     }
@@ -138,6 +146,7 @@ public class KeyResultController {
 
     @PutMapping("/keyResultById/{keyResultId}")
     public ResponseEntity<KeyResult> updateKeyResult(@PathVariable Long keyResultId, @RequestBody KeyResult updatedKeyResult) {
+        checkIfAuthorised();
         KeyResult existingKeyResult = keyResultService.getKeyResultById(keyResultId);
 
         if (existingKeyResult != null) {
@@ -263,5 +272,11 @@ public class KeyResultController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
-
+    private void checkIfAuthorised() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByEmail(authentication.getName()).orElseThrow(() -> new EmailNotFoundException("Email not found"));
+        if(!user.getRoles().contains("Admin")) {
+            throw new UserNotAuthorizedException("User is not Authorized");
+        }
+    }
 }

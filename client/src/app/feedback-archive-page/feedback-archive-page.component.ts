@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { AuthService } from '../auth.service';
@@ -32,8 +32,10 @@ export class FeedbackArchivePageComponent {
   fetchFeedbackAndRatingList(): void {
     const userId = this.userId; // Replace with the actual userId or get it dynamically
 
+    const header = new HttpHeaders().set('Content-type', 'application/json')
+                                    .set('Authorization', `Bearer ${localStorage.getItem("authToken")}`);
     this.http
-      .get<any[]>(`http://localhost:8080/reviewCycle/list/${userId}`)
+      .get<any[]>(`http://localhost:8080/reviewCycle/list/${userId}`, {headers: header})
       .subscribe(
         (data) => {
           this.reviews = data;
@@ -44,7 +46,7 @@ export class FeedbackArchivePageComponent {
           console.error('Error fetching feedback and rating list:', error);
         }
       );
-    this.http.get<any>(`http://localhost:8080/api/users/${userId}`).subscribe(
+    this.http.get<any>(`http://localhost:8080/api/users/${userId}`, {headers: header}).subscribe(
       (data) => {
         this.userEmail = data.email;
         console.log('User Email!!!: ', this.userEmail);

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -24,9 +24,9 @@ export class KeyResultUploadComponent {
       const formData: FormData = new FormData();
       formData.append('file', this.selectedFile);
       
-
-
-      this.http.post<any>('http://localhost:8080/keyResult', formData).subscribe(
+      const header = new HttpHeaders().set('Content-type', 'application/json')
+                                    .set('Authorization', `Bearer ${localStorage.getItem("authToken")}`);
+      this.http.post<any>('http://localhost:8080/keyResult', formData, {headers: header}).subscribe(
         response => {
           console.log(response);
           
@@ -54,7 +54,9 @@ export class KeyResultUploadComponent {
       const formData: FormData = new FormData();
       formData.append('file', this.selectedFile);
 
-      this.http.post<any>(`http://localhost:8080/keyResult/${this.selectedBand}`, formData).subscribe(
+      const header = new HttpHeaders().set('Content-type', 'application/json')
+                                    .set('Authorization', `Bearer ${localStorage.getItem("authToken")}`);
+      this.http.post<any>(`http://localhost:8080/keyResult/${this.selectedBand}`, formData, {headers: header}).subscribe(
         response => {
           console.log(response);
           // Handle success (e.g., display a success message)

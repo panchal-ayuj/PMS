@@ -1,5 +1,7 @@
 package com.accolite.server.controllers;
 
+import com.accolite.server.exceptions.EmailNotFoundException;
+import com.accolite.server.exceptions.UserNotAuthorizedException;
 import com.accolite.server.models.GoogleTokenPayload;
 import com.accolite.server.models.User;
 import com.accolite.server.readers.UserExcelReader;
@@ -11,6 +13,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,6 +36,7 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
+        checkIfAuthorised();
         try {
             List<User> users = UserExcelReader.readUsersFromExcel(file);
             userService.saveAll(users);
@@ -43,6 +48,7 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<User> registerUser(@RequestBody User user) {
+        checkIfAuthorised();
         User registeredUser = userService.registerUser(user);
         return new ResponseEntity<>(registeredUser, HttpStatus.CREATED);
     }
@@ -55,6 +61,7 @@ public class UserController {
 
     @PutMapping("/{userId}")
     public ResponseEntity<User> updateUserDetailsDeprecated(@PathVariable Long userId, @RequestBody User updatedUser) {
+        checkIfAuthorised();
         User user = userService.updateUser(userId, updatedUser);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
@@ -73,6 +80,7 @@ public class UserController {
 
     @GetMapping("/export")
     public ResponseEntity<Object> exportEmployeesToExcel() {
+        checkIfAuthorised();
         List<User> users = userRepository.findAll();
         String filePath = "employee_data_export.xlsx";
 
@@ -125,6 +133,7 @@ public class UserController {
 
     @PutMapping("/userById/{userId}")
     public ResponseEntity<User> updateUser(@PathVariable Long userId, @RequestBody User updatedUser) {
+        checkIfAuthorised();
         User existingUser = userService.getUserById(userId);
 
         if (existingUser != null) {
@@ -228,5 +237,12 @@ public class UserController {
             userList.add(user3);
         }
         return new ResponseEntity<>(userList, HttpStatus.OK);
+    }
+    private void checkIfAuthorised() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByEmail(authentication.getName()).orElseThrow(() -> new EmailNotFoundException("Email not found"));
+        if(!user.getRoles().contains("Admin")) {
+            throw new UserNotAuthorizedException("User is not Authorized");
+        }
     }
 }

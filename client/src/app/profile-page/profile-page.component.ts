@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from '../auth.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { SharedDataService } from '../shared-data.service';
 import { UserInfoService } from '../user-info.service';
 import { Router } from '@angular/router';
@@ -98,7 +98,9 @@ export class ProfilePageComponent implements OnInit {
     }
 
     const url = `http://localhost:8080/api/users/list/${userId}`;
-    this.http.get<any>(url).subscribe(
+    const header = new HttpHeaders().set('Content-type', 'application/json')
+                                    .set('Authorization', `Bearer ${localStorage.getItem("authToken")}`);
+    this.http.get<any>(url, {headers: header}).subscribe(
       (userList) => {
         
         this.employee = userList[0];
@@ -129,8 +131,10 @@ export class ProfilePageComponent implements OnInit {
   viewSelfFeedback() {
 
     const url = `http://localhost:8080/reviewCycle/user-feedback/${this.employee.userId}`;
+    const header = new HttpHeaders().set('Content-type', 'application/json')
+                                    .set('Authorization', `Bearer ${localStorage.getItem("authToken")}`);
 
-    this.http.get(url).subscribe(
+    this.http.get(url, {headers: header}).subscribe(
       (response: any) => {
         // Open the dialog with the received feedback
         const dialogRef = this.dialog.open(SelfFeedbackDialogComponent, {
@@ -152,8 +156,10 @@ export class ProfilePageComponent implements OnInit {
   giveSelfFeedback() {
     const url = `http://localhost:8080/reviewCycle/user-feedback/${this.employee.userId}`;
 
+    const header = new HttpHeaders().set('Content-type', 'application/json')
+                                    .set('Authorization', `Bearer ${localStorage.getItem("authToken")}`);
   // Fetch the user details including the userFeedback property
-  this.http.get(url).subscribe(
+  this.http.get(url, {headers: header}).subscribe(
     (response: any) => {
       const dialogRef = this.dialog.open(SelfFeedbackDialogComponent, {
         data: { feedback: response.userFeedback || '', viewMode: false, userId: this.employee.userId },
@@ -162,7 +168,9 @@ export class ProfilePageComponent implements OnInit {
       dialogRef.afterClosed().subscribe((newFeedback) => {
         if (newFeedback !== undefined && newFeedback !== null) {
           // Call API to update user feedback directly using http.put
-          this.http.put(url, newFeedback.userFeedback).subscribe(
+          const header = new HttpHeaders().set('Content-type', 'application/json')
+                                    .set('Authorization', `Bearer ${localStorage.getItem("authToken")}`);
+          this.http.put(url, newFeedback.userFeedback, {headers: header}).subscribe(
             () => {
               console.log('User feedback updated successfully.' + newFeedback);
             },

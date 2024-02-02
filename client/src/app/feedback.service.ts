@@ -1,7 +1,7 @@
 // feedback.service.ts
 
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 
@@ -33,8 +33,10 @@ export class FeedbackService {
   // private backendUrl = 'http://localhost:8080/api/tasks';
 
   getFeedback(userId: number): Observable<any> {
+    const header = new HttpHeaders().set('Content-type', 'application/json')
+                                    .set('Authorization', `Bearer ${localStorage.getItem("authToken")}`);
     const url = `${this.backendUrl}/listOld/${userId}`;
    
-    return this.http.get(url);
+    return this.http.get(url, {headers: header});
   }
 }

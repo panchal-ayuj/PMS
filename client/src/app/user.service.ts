@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -11,13 +11,17 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   getUsersByReportingManagerId(reportingManagerId: number): Observable<any[]> {
+    const header = new HttpHeaders().set('Content-type', 'application/json')
+                                    .set('Authorization', `Bearer ${localStorage.getItem("authToken")}`);
     const url = `${this.apiUrl}/team-members/${reportingManagerId}`;
-    return this.http.get<any[]>(url);
+    return this.http.get<any[]>(url, {headers: header});
   }
 
   getUserById(userId: any): Observable<any> {
+    const header = new HttpHeaders().set('Content-type', 'application/json')
+                                    .set('Authorization', `Bearer ${localStorage.getItem("authToken")}`);
     const url = `${this.apiUrl}/${userId}`;
-    return this.http.get<any>(url);
+    return this.http.get<any>(url, {headers: header});
   }
   // Add more methods as needed
 }

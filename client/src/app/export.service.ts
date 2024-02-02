@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -10,7 +10,9 @@ export class ExportService {
 
   constructor(private http: HttpClient) {}
 
-  exportData(): Observable<Blob> {
-    return this.http.get(this.apiUrl, { responseType: 'blob' });
+  exportData(): Observable<any> {
+    const header = new HttpHeaders().set('Content-type', 'application/json')
+                                    .set('Authorization', `Bearer ${localStorage.getItem("authToken")}`);
+    return this.http.get(this.apiUrl,  {headers: header});
   }
 }
