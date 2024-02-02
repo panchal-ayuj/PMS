@@ -56,10 +56,10 @@ public class KeyResultController {
         }
     }
 
-    @PostMapping("/{band}/{role}")
-    public ResponseEntity<String> handleFileUploadSpecific(@RequestParam("file") MultipartFile file, @PathVariable String band, @PathVariable String role) {
+    @PostMapping("/{band}")
+    public ResponseEntity<String> handleFileUploadSpecific(@RequestParam("file") MultipartFile file, @PathVariable String band) {
         try {
-            List<User> users = userRepository.findByBandAndRolesContains(band, role);
+            List<User> users = userRepository.findByBand(band);
             List<KeyResult> keyResults = KeyResultExcelReader.readKeyResultsFromExcel(file);
             for(int i = 0; i < keyResults.size()-1 && keyResults.get(i).getKeyResultName() != ""; i++){
                 KeyResult keyResult = keyResults.get(i);

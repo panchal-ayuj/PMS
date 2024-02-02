@@ -34,11 +34,10 @@ public class TaskDTOExcelReader {
                 taskDTO.setDeadline(row.getCell(3).getDateCellValue());
                 taskDTO.setWeight((int) row.getCell(4).getNumericCellValue());
                 taskDTO.setCompletionStatus(row.getCell(5).getStringCellValue());
-                taskDTO.setUserId((int) row.getCell(6).getNumericCellValue());
-                taskDTO.setWindowId((int) row.getCell(7).getNumericCellValue());
-                taskDTO.setRating((int) row.getCell(8).getNumericCellValue());
-                taskDTO.setFeedback(row.getCell(9).getStringCellValue());
-                taskDTO.setPeriod(row.getCell(10).getStringCellValue());
+                taskDTO.setWindowId((int) row.getCell(6).getNumericCellValue());
+                taskDTO.setRating((int) row.getCell(7).getNumericCellValue());
+                taskDTO.setFeedback(row.getCell(8).getStringCellValue());
+                taskDTO.setPeriod(row.getCell(9).getStringCellValue());
                 taskDTOs.add(taskDTO);
             }
         }
