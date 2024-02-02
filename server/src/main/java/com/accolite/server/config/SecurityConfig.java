@@ -29,7 +29,7 @@ public class SecurityConfig{
     @Autowired
     private AuthenticationProvider authenticationProvider;
 
-    public static final String[] WHITE_LIST_URL = {"/LoginWithGoogle", "/getEmail", "/api/users/checkEmail", "/getAuthToken", "/swagger-ui/**", "/api-docs/**"};
+    public static final String[] WHITE_LIST_URL = {"/LoginWithGoogle", "/getEmail", "/api/users/checkEmail", "/getAuthToken", "/swagger-ui/**", "v3/api-docs/**"};
     public static final String[] PROTECTED_LIST_URL = {};
 
     @Bean
