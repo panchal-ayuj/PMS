@@ -63,6 +63,12 @@ export class KeyResultUploadComponent {
         },
         error => {
           console.error(error);
+          if (error.status !== 200) {
+            this.showSuccessSnackBar('File not uploaded');
+          }
+          if (error.status === 200) {
+            this.showSuccessSnackBar('File uploaded successfully');
+          }
           // Handle error (e.g., display an error message)
         }
       );
