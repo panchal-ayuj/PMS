@@ -11,13 +11,16 @@ export class KeyResultService {
   constructor(private http: HttpClient) {}
 
   getKeyResults(userId: number, period: string, year: string, status: string): Observable<any[]> {
+    const header = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('Authorization', 'Bearer ' + localStorage.getItem("authToken"));
     const params = new HttpParams()
       .set('userId', userId.toString())
       .set('period', period)
       .set('year', year)
       .set('status', status);
 
-    return this.http.get<any[]>(`${this.apiUrl}/keyResults`, { params });
+    return this.http.get<any[]>(`${this.apiUrl}/keyResults`, { params, headers: header });
   }
 
   getTasksByKeyResultId(keyResultId: number): Observable<any[]> {
